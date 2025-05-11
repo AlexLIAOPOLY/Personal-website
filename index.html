@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Liao Wang - Personal Portfolio. Aspiring AI & Technology Professional, specializing in AI Chip Design and Logistics Engineering.">
+    <title>Liao Wang - Personal Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS (Animate On Scroll) Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        /* 由于无法下载实际图片，使用CSS创建背景色和渐变代替图片 */
+        .ai-chip-bg {
+            background: linear-gradient(135deg, #0366d6, #6c47ff);
+            width: 220px;
+            height: 140px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            margin: 0 auto 20px;
+        }
+        
+        .ai-chip-bg::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 4px;
+        }
+        
+        .ai-chip-bg::after {
+            content: 'AI';
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            color: #0366d6;
+        }
+        
+        .logistics-bg {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            width: 220px;
+            height: 140px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            margin: 0 auto 20px;
+        }
+        
+        .logistics-bg i {
+            font-size: 48px;
+            color: #f39c12;
+        }
+        
+        .education-parallax-bg {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            position: relative;
+            z-index: 0;
+        }
+        
+        /* 修复轮播图片问题 */
+        .hero-slider {
+            background-color: #24292e;
+        }
+        
+        .hero-slide {
+            background-color: #272c34;
+        }
+        
+        .hero-slide img {
+            opacity: 0.8;
+            z-index: 0;
+        }
+        
+        .hero-slide-content {
+            z-index: 2;
+            position: relative;
+        }
+        
+        /* 确保教育部分可见 */
+        #education.education-section {
+            color: white;
+        }
+        
+        #education .timeline {
+            color: white;
+        }
+        
+        #education .timeline-content {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #24292e;
+        }
+        
+        /* 修复轮播控件 */
+        .hero-slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .hero-slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero-slider-dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+        
+        /* Custom icon for Bilibili */
+        .fab.fa-bilibili:before {
+            content: '\f27d'; /* Using Font Awesome's video icon as a substitute */
+            color: #00a1d6; /* Bilibili blue color */
+        }
+        
+        /* Improved Hero Background */
+        .hero-section {
+            background: linear-gradient(135deg, #24292e, #2b3137);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h100v100H0z" fill="none"/><path d="M0 0h10v10H0zm20 0h10v10H20zm20 0h10v10H40zm20 0h10v10H60zm20 0h10v10H80zM10 10h10v10H10zm20 0h10v10H30zm20 0h10v10H50zm20 0h10v10H70zm20 0h10v10H90zM0 20h10v10H0zm20 0h10v10H20zm20 0h10v10H40zm20 0h10v10H60zm20 0h10v10H80zM10 30h10v10H10zm20 0h10v10H30zm20 0h10v10H50zm20 0h10v10H70zm20 0h10v10H90zM0 40h10v10H0zm20 0h10v10H20zm20 0h10v10H40zm20 0h10v10H60zm20 0h10v10H80zM10 50h10v10H10zm20 0h10v10H30zm20 0h10v10H50zm20 0h10v10H70zm20 0h10v10H90zM0 60h10v10H0zm20 0h10v10H20zm20 0h10v10H40zm20 0h10v10H60zm20 0h10v10H80zM10 70h10v10H10zm20 0h10v10H30zm20 0h10v10H50zm20 0h10v10H70zm20 0h10v10H90zM0 80h10v10H0zm20 0h10v10H20zm20 0h10v10H40zm20 0h10v10H60zm20 0h10v10H80zM10 90h10v10H10zm20 0h10v10H30zm20 0h10v10H50zm20 0h10v10H70zm20 0h10v10H90z" fill="rgba(255,255,255,0.03)"/></svg>');
+            opacity: 0.5;
+            background-size: 30px;
+            z-index: 0;
+        }
+        
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(76, 175, 255, 0.1) 0%, rgba(3, 102, 214, 0) 70%),
+                      radial-gradient(circle at 70% 60%, rgba(108, 71, 255, 0.1) 0%, rgba(108, 71, 255, 0) 70%);
+            z-index: 0;
+        }
+        
+        /* 改善头像样式 */
+        .profile-container {
+            display: inline-block;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            padding: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            transition: all 0.3s ease;
+            background-color: #f0f0f0;
+            transform: scale(0.98);
+        }
+        
+        /* 修复物流部分的百分比 */
+        .skill-category:nth-of-type(2) .skill-bar:nth-child(1) .skill-bar-percent {
+            width: 90%;
+        }
+        
+        .skill-category:nth-of-type(2) .skill-bar:nth-child(2) .skill-bar-percent {
+            width: 85%;
+        }
+        
+        .skill-category:nth-of-type(2) .skill-bar:nth-child(3) .skill-bar-percent {
+            width: 80%;
+        }
+        
+        /* 确保第二张幻灯片没有无关元素 */
+        .hero-slide:nth-child(2) .hero-slide-content h2::after {
+            content: none;
+            display: none;
+        }
+        
+        /* 修复问号图标 */
+        .hero-slide .hero-slide-content h2 + p {
+            position: relative;
+            z-index: 5;
+            margin-top: 15px;
+        }
+        
+        /* 移除可能导致问号显示的CSS */
+        .hero-slide-content h2::after {
+            content: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">Liao Wang</a>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About Me</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#awards">Awards</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <div class="container">
+                    <div class="hero-slider" data-aos="fade-up">
+                        <div class="hero-slider-container">
+                            <div class="hero-slide">
+                                <img src="images/slider/slide1.jpg" alt="Welcome Slide">
+                                <div class="hero-slide-overlay"></div>
+                                <div class="hero-slide-content">
+                                    <div class="profile-container">
+                                        <img src="images/profile.jpg" alt="Liao Wang" class="profile-image">
+                                    </div>
+                                    <h2>Welcome to My Portfolio</h2>
+                                    <p>Aspiring AI & Technology Professional</p>
+                                </div>
+                            </div>
+                            <div class="hero-slide">
+                                <img src="images/slider/slide2.jpg" alt="AI Chip Design">
+                                <div class="hero-slide-overlay"></div>
+                                <div class="hero-slide-content">
+                                    <h2>AI Chip Designer</h2>
+                                    <p>Specializing in cutting-edge AI hardware solutions</p>
+                                </div>
+                            </div>
+                            <div class="hero-slide">
+                                <img src="images/slider/slide3.jpg" alt="Logistics Engineering">
+                                <div class="hero-slide-overlay"></div>
+                                <div class="hero-slide-content">
+                                    <h2>Logistics Engineer</h2>
+                                    <p>Optimizing supply chains with innovative solutions</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-slider-nav"></div>
+                    </div>
+                    
+                    <h1 data-aos="fade-up" data-aos-delay="200">Liao Wang</h1>
+                    <p class="subtitle" data-aos="fade-up" data-aos-delay="300">Aspiring AI & Technology Professional | Master of Science Student</p>
+                    <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
+                        <a href="#contact" class="btn primary-btn">Contact Me</a>
+                        <a href="廖望-简历.pdf" class="btn secondary-btn" download>Download CV</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 data-aos="fade-up">About Me</h2>
+                
+                <div class="about-cards" data-aos="fade-up" data-aos-delay="200">
+                    <div class="about-card">
+                        <i class="fas fa-microchip"></i>
+                        <h3>AI Technology</h3>
+                        <p>Passionate about artificial intelligence and its applications in various domains.</p>
+                    </div>
+                    <div class="about-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Academic Excellence</h3>
+                        <p>SGPA 3.92/4.00, Dean's List at The Hong Kong Polytechnic University.</p>
+                    </div>
+                    <div class="about-card">
+                        <i class="fas fa-briefcase"></i>
+                        <h3>Industry Experience</h3>
+                        <p>Multiple internships in AI chip design, new media operations, and project management.</p>
+                    </div>
+                </div>
+                
+                <div class="about-content" data-aos="fade-up" data-aos-delay="300">
+                    <p>
+                        I am a highly motivated Master's student at The University of Hong Kong, specializing in Microelectronics Science and Technology. With a background in Logistics Engineering from The Hong Kong Polytechnic University, I bring a unique blend of engineering principles and technical expertise to the field of technology and AI.
+                    </p>
+                    <p>
+                        My academic journey has been marked by excellence, having achieved a SGPA of 3.92/4.00 and being recognized on the Dean's List. My experiences across various industries, including AI chip design, new media operations, and project management, have equipped me with a versatile skill set and a practical understanding of technological applications in different sectors.
+                    </p>
+                    <p>
+                        I am particularly interested in AI, semiconductor design, and emerging technologies, and I am eager to contribute to innovative projects that push the boundaries of what's possible in these fields.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="education-section parallax-bg education-parallax-bg" data-speed="0.1">
+            <div class="parallax-overlay"></div>
+            <div class="container parallax-content">
+                <h2 data-aos="fade-up">Education</h2>
+                
+                <div class="timeline" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-item timeline-item-right">
+                        <div class="timeline-content">
+                            <span class="timeline-date">2024.08 - 2025.07 (Expected)</span>
+                            <h3><i class="fas fa-graduation-cap"></i> Master of Science in Microelectronics Science and Technology</h3>
+                            <p><strong>University of Hong Kong</strong></p>
+                            <p>Key Courses: Physical Properties of Materials, Integrated Circuit System Design, Nanotechnology, Nanophotonics.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-content">
+                            <span class="timeline-date">2020.08 - 2024.06</span>
+                            <h3><i class="fas fa-graduation-cap"></i> Bachelor of Engineering in Logistics Engineering</h3>
+                            <p><strong>The Hong Kong Polytechnic University</strong></p>
+                            <p>Key Courses: Inventory Management, Supply Chain Management, Industrial Engineering, Marketing, Financial Accounting, Management Science, Project Management.</p>
+                            <p>SGPA: 3.92/4.00, Dean's List</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="experience-section">
+            <div class="container">
+                <h2 data-aos="fade-up">Work Experience</h2>
+                
+                <div class="timeline" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-content">
+                            <span class="timeline-date">2023.06 - 2023.09</span>
+                            <h3><i class="fas fa-briefcase"></i> Summer Intern</h3>
+                            <p><strong>MEGVII Technology (Beijing)</strong></p>
+                            <p>Assisted the AI chip department in chip testing and analysis. Participated in the AI chip design process, gaining practical experience in semiconductor development.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item timeline-item-right">
+                        <div class="timeline-content">
+                            <span class="timeline-date">2022.06 - 2022.09</span>
+                            <h3><i class="fas fa-briefcase"></i> New Media Operations Intern</h3>
+                            <p><strong>Bilibili Inc. (Shanghai)</strong></p>
+                            <p>Managed social media accounts and content creation. Analyzed user engagement metrics to optimize content strategy. Collaborated with cross-functional teams to develop marketing campaigns.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item timeline-item-left">
+                        <div class="timeline-content">
+                            <span class="timeline-date">2021.07 - 2021.09</span>
+                            <h3><i class="fas fa-briefcase"></i> Project Management Intern</h3>
+                            <p><strong>Ningbo Bureau of Commerce</strong></p>
+                            <p>Assisted in coordinating international trade projects. Prepared and analyzed trade data reports. Participated in meetings with international partners and stakeholders.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects-section">
+            <div class="container">
+                <h2 data-aos="fade-up">Projects</h2>
+                
+                <div class="projects-filter" data-aos="fade-up" data-aos-delay="200">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ai">AI</button>
+                    <button class="filter-btn" data-filter="logistics">Logistics</button>
+                    <button class="filter-btn" data-filter="web">Web Development</button>
+                </div>
+                
+                <div class="projects-grid" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-card" data-categories="ai">
+                        <div class="project-image">
+                            <div class="ai-chip-bg"></div>
+                            <i class="fas fa-microchip project-icon"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>AI Chip Design Project</h3>
+                            <p>Designed and implemented a specialized AI accelerator chip for edge computing applications, focusing on power efficiency and performance optimization.</p>
+                            <div class="project-tags">
+                                <span>ASIC Design</span>
+                                <span>Neural Networks</span>
+                                <span>Edge Computing</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#"><i class="fas fa-external-link-alt"></i> More Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card" data-categories="logistics">
+                        <div class="project-image">
+                            <div class="logistics-bg">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <i class="fas fa-route project-icon"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Supply Chain Optimization System</h3>
+                            <p>Developed a comprehensive supply chain optimization system using advanced algorithms to minimize costs and improve delivery times for a medium-sized manufacturing company.</p>
+                            <div class="project-tags">
+                                <span>Supply Chain</span>
+                                <span>Optimization</span>
+                                <span>Logistics</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#"><i class="fas fa-external-link-alt"></i> More Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card" data-categories="web,ai">
+                        <div class="project-image">
+                            <div class="ai-chip-bg"></div>
+                            <i class="fas fa-code project-icon"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>AI-Powered Web Application</h3>
+                            <p>Created a web-based tool that uses machine learning algorithms to analyze and visualize complex data sets, helping users make data-driven decisions.</p>
+                            <div class="project-tags">
+                                <span>Web Development</span>
+                                <span>Machine Learning</span>
+                                <span>Data Visualization</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#"><i class="fas fa-external-link-alt"></i> More Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills-section">
+            <div class="container">
+                <h2 data-aos="fade-up">Skills & Expertise</h2>
+                
+                <div class="skills-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skills-column">
+                        <div class="skill-category">
+                            <h4><i class="fas fa-microchip"></i> Technical Skills</h4>
+                            <div class="skill-bars">
+                                <div class="skill-bar">
+                                    <div class="skill-bar-title">
+                                        <span>AI/Machine Learning</span>
+                                    </div>
+                                    <div class="skill-bar-progress">
+                                        <div class="skill-bar-percent" data-percent="90" style="width: 0;"></div>
+                                        <span class="skill-bar-percent-text">90%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-bar">
+                                    <div class="skill-bar-title">
+                                        <span>ASIC/FPGA Design</span>
+                                    </div>
+                                    <div class="skill-bar-progress">
+                                        <div class="skill-bar-percent" data-percent="85" style="width: 0;"></div>
+                                        <span class="skill-bar-percent-text">85%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-bar">
+                                    <div class="skill-bar-title">
+                                        <span>Python Programming</span>
+                                    </div>
+                                    <div class="skill-bar-progress">
+                                        <div class="skill-bar-percent" data-percent="95" style="width: 0;"></div>
+                                        <span class="skill-bar-percent-text">95%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-bar">
+                                    <div class="skill-bar-title">
+                                        <span>Web Development</span>
+                                    </div>
+                                    <div class="skill-bar-progress">
+                                        <div class="skill-bar-percent" data-percent="80" style="width: 0;"></div>
+                                        <span class="skill-bar-percent-text">80%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h4><i class="fas fa-laptop-code"></i> Programming Languages</h4>
+                            <ul>
+                                <li>Python - Advanced</li>
+                                <li>C/C++ - Intermediate</li>
+                                <li>Verilog/VHDL - Intermediate</li>
+                                <li>JavaScript/HTML/CSS - Intermediate</li>
+                                <li>MATLAB - Intermediate</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-column">
+                        <div class="skill-category">
+                            <h4><i class="fas fa-truck"></i> Logistics Skills</h4>
+                            <div class="skill-bars">
+                                <div class="skill-bar">
+                                    <div class="skill-bar-title">
+                                        <span>Supply Chain Management</span>
+                                    </div>
+                                    <div class="skill-bar-progress">
+                                        <div class="skill-bar-percent" data-percent="90" style="width: 0;"></div>
+                                        <span class="skill-bar-percent-text">90%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-bar">
+                                    <div class="skill-bar-title">
+                                        <span>Inventory Optimization</span>
+                                    </div>
+                                    <div class="skill-bar-progress">
+                                        <div class="skill-bar-percent" data-percent="85" style="width: 0;"></div>
+                                        <span class="skill-bar-percent-text">85%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="skill-bar">
+                                    <div class="skill-bar-title">
+                                        <span>Project Management</span>
+                                    </div>
+                                    <div class="skill-bar-progress">
+                                        <div class="skill-bar-percent" data-percent="80" style="width: 0;"></div>
+                                        <span class="skill-bar-percent-text">80%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h4><i class="fas fa-comments"></i> Soft Skills</h4>
+                            <ul>
+                                <li>Communication & Presentation</li>
+                                <li>Problem Solving & Critical Thinking</li>
+                                <li>Time Management</li>
+                                <li>Team Leadership</li>
+                                <li>Intercultural Awareness</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h4><i class="fas fa-language"></i> Languages</h4>
+                            <ul>
+                                <li>Chinese (Mandarin) - Native</li>
+                                <li>English - Fluent</li>
+                                <li>Cantonese - Intermediate</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="awards" class="awards-section">
+            <div class="container">
+                <h2 data-aos="fade-up">Awards & Achievements</h2>
+                
+                <div class="awards-grid" data-aos="fade-up" data-aos-delay="200">
+                    <div class="award-card">
+                        <i class="fas fa-award"></i>
+                        <h3>Dean's List</h3>
+                        <p>The Hong Kong Polytechnic University, 2020-2024</p>
+                    </div>
+                    
+                    <div class="award-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3>Outstanding Student Award</h3>
+                        <p>Department of Industrial and Systems Engineering, 2023</p>
+                    </div>
+                    
+                    <div class="award-card">
+                        <i class="fas fa-medal"></i>
+                        <h3>AI Innovation Competition</h3>
+                        <p>First Prize, Hong Kong Technology Challenge, 2022</p>
+                    </div>
+                    
+                    <div class="award-card">
+                        <i class="fas fa-certificate"></i>
+                        <h3>Supply Chain Case Competition</h3>
+                        <p>Second Place, Asia Pacific Region, 2021</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2 data-aos="fade-up">Contact Me</h2>
+                
+                <div class="contact-cards" data-aos="fade-up" data-aos-delay="200">
+                    <div class="contact-card">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p><a href="mailto:2997725873a@gmail.com">2997725873a@gmail.com</a></p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Location</h3>
+                        <p>Hong Kong SAR, China</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-share-alt"></i>
+                        <h3>Social Media</h3>
+                        <p>
+                            <a href="#" target="_blank">LinkedIn</a> | 
+                            <a href="https://github.com/AlexLIAOPOLY" target="_blank">GitHub</a> | 
+                            <a href="https://x.com/wangliao256442?s=21" target="_blank">Twitter</a>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="contact-form" data-aos="fade-up" data-aos-delay="300">
+                    <h3>Send Me a Message</h3>
+                    <div id="form-message" class="form-message"></div>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/AlexLIAOPOLY" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://x.com/wangliao256442?s=21" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-bilibili"></i></a>
+            </div>
+            <p>&copy; <span id="current-year">2023</span> Liao Wang. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- AOS (Animate On Scroll) Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    
+    <!-- 图片加载完成后添加类，处理懒加载 -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 处理图片加载
+        const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        lazyImages.forEach(img => {
+            img.addEventListener('load', function() {
+                this.classList.add('loaded');
+            });
+            
+            // 如果图片已经缓存，则直接添加类
+            if (img.complete) {
+                img.classList.add('loaded');
+            }
+        });
+    });
+    </script>
+</body>
+</html> 

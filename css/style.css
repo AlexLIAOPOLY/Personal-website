@@ -301,14 +301,61 @@ header nav ul li a.active::after {
 .hero-slide-content {
     z-index: 5;
     position: relative;
-    padding: 20px;
+    padding: 40px;
     max-width: 90%;
     margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
     box-shadow: 0 5px 15px rgba(74, 108, 247, 0.1);
     backdrop-filter: blur(5px);
     color: #3e4555;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 添加动态背景效果 */
+.hero-slide-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center,
+        rgba(240, 248, 255, 0.2) 0%,
+        rgba(230, 240, 255, 0.15) 20%,
+        rgba(220, 230, 255, 0.1) 40%,
+        rgba(200, 220, 255, 0.05) 60%,
+        transparent 80%
+    );
+    animation: rotateBackground 15s linear infinite;
+    z-index: -1;
+}
+
+.hero-slide-content::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center,
+        rgba(220, 230, 255, 0.15) 0%,
+        rgba(210, 220, 255, 0.1) 30%,
+        rgba(200, 210, 255, 0.05) 50%,
+        transparent 70%
+    );
+    animation: rotateBackground 12s linear infinite reverse;
+    z-index: -1;
+}
+
+@keyframes rotateBackground {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .hero-slide.active img {
@@ -383,16 +430,76 @@ header nav ul li a.active::after {
 
 .profile-container {
     display: inline-block;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    padding: 3px;
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 10px 25px rgba(74, 108, 247, 0.25);
-    width: 130px;
-    height: 130px;
     position: relative;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.3);
     overflow: hidden;
-    border: 5px solid rgba(255, 255, 255, 0.8);
+    width: 150px;
+    height: 150px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* 头像周围的动态背景效果 */
+.profile-container::before,
+.profile-container::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* 第一层动态光环 */
+.profile-container::before {
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background: radial-gradient(circle at center, 
+        rgba(173, 216, 230, 0.3) 0%, 
+        rgba(135, 206, 250, 0.2) 30%, 
+        rgba(240, 248, 255, 0.1) 60%, 
+        rgba(240, 248, 255, 0) 80%);
+    animation: pulse1 4s ease-in-out infinite;
+}
+
+/* 第二层动态光环 */
+.profile-container::after {
+    top: -25px;
+    left: -25px;
+    right: -25px;
+    bottom: -25px;
+    background: radial-gradient(circle at center, 
+        rgba(135, 206, 250, 0.2) 0%, 
+        rgba(173, 216, 230, 0.15) 40%, 
+        rgba(200, 230, 255, 0.1) 70%, 
+        rgba(240, 248, 255, 0) 90%);
+    animation: pulse2 5s ease-in-out infinite 0.5s;
+}
+
+/* 添加柔和的脉动动画 */
+@keyframes pulse1 {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes pulse2 {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1.05);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
 }
 
 .profile-image {
@@ -494,29 +601,28 @@ header nav ul li a.active::after {
 /* Timeline styles */
 .timeline {
     position: relative;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 0;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
 }
 
 .timeline::after {
     content: '';
     position: absolute;
     width: 4px;
-    background-color: #4a6cf7;
+    background: #0366d6;
     top: 0;
     bottom: 0;
     left: 50%;
     margin-left: -2px;
     border-radius: 2px;
-    opacity: 0.7;
 }
 
 .timeline-item {
-    padding: 15px 30px;
+    padding: 10px 30px;
     position: relative;
     width: 50%;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .timeline-item::after {
@@ -554,11 +660,11 @@ header nav ul li a.active::after {
 }
 
 .timeline-content {
-    padding: 20px 25px;
-    background-color: white;
-    position: relative;
+    padding: 15px;
+    background: #fff;
     border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
     transition: all 0.3s ease;
 }
 
@@ -568,11 +674,9 @@ header nav ul li a.active::after {
 }
 
 .timeline-content h3 {
-    font-size: 1.3em;
     margin-bottom: 10px;
-    color: #24292e;
-    display: flex;
-    align-items: center;
+    color: #0366d6;
+    font-size: 1.2em;
 }
 
 .timeline-content h3 i {
@@ -609,12 +713,10 @@ header nav ul li a.active::after {
 }
 
 .timeline-date {
-    display: block;
-    margin-bottom: 10px;
     font-size: 0.9em;
+    color: #0366d6;
+    margin-bottom: 8px;
     font-weight: 600;
-    color: #4a6cf7;
-    letter-spacing: 0.5px;
 }
 
 /* Parallax Elements */
@@ -1533,14 +1635,14 @@ img.loaded {
 
 /* Education Section - Fix visibility issues */
 .education-section {
-    padding: 80px 0;
+    padding: 40px 0;
     position: relative;
-    color: white;
-    z-index: 1;
+    background-color: #f8f9fa; /* 保持原有的浅灰色背景 */
+    margin-top: -60px;
 }
 
 .education-section h2 {
-    color: white;
+    margin-bottom: 30px;
 }
 
 .education-section .parallax-content {
@@ -1642,4 +1744,32 @@ header .language-switch a.active {
 header .language-switch .divider {
     color: rgba(255, 255, 255, 0.3);
     margin: 0 5px;
+}
+
+.experience-section {
+    padding: 40px 0;
+    position: relative;
+    background-color: #f0f4f8; /* 稍微深一点的浅蓝灰色背景 */
+}
+
+/* 实习经历的样式 */
+.internship-experience {
+    padding: 40px 0;
+    background-color: #f8f9fc; /* 浅蓝灰色背景 */
+    border-radius: 12px;
+    margin-bottom: 40px;
+}
+
+/* 实践经历的样式 */
+.practical-experience {
+    padding: 40px 0;
+    background-color: #f8f9fa; /* 非常浅的灰色背景，与实习经历仅有微小色差 */
+    border-radius: 12px;
+}
+
+/* 确保内容区域有合适的间距和过渡 */
+.internship-experience .timeline-content,
+.practical-experience .timeline-content {
+    margin: 15px 0;
+    transition: transform 0.3s ease;
 } 

@@ -1,6 +1,44 @@
+// Set default language to English if not set
+if (!localStorage.getItem('preferredLanguage')) {
+    localStorage.setItem('preferredLanguage', 'en');
+}
+
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded');
+    
+    // Apply the default language
+    const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+    document.documentElement.lang = currentLang;
+    
+    // Language switch functionality
+    const langSwitchers = document.querySelectorAll('.language-switch a');
+    langSwitchers.forEach(switcher => {
+        switcher.addEventListener('click', function(e) {
+            e.preventDefault();
+            const lang = this.getAttribute('data-lang');
+            
+            // Update localStorage
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Update active state
+            langSwitchers.forEach(s => s.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update content (if you have translations)
+            updateContent(lang);
+        });
+        
+        // Set initial active state
+        if (switcher.getAttribute('data-lang') === currentLang) {
+            switcher.classList.add('active');
+        } else {
+            switcher.classList.remove('active');
+        }
+    });
     
     // 延迟一会儿检查荣誉奖项和联系方式部分
     setTimeout(function() {

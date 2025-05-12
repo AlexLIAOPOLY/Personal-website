@@ -1,5 +1,44 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
+    
+    // 延迟一会儿检查荣誉奖项和联系方式部分
+    setTimeout(function() {
+        console.log('Checking awards and contact sections...');
+        
+        // 检查奖项部分
+        const awardsTitle = document.querySelector('#awards h2');
+        if (awardsTitle) {
+            console.log('Awards title:', awardsTitle.textContent);
+            console.log('Awards data-i18n:', awardsTitle.getAttribute('data-i18n'));
+        } else {
+            console.warn('Awards title element not found!');
+        }
+        
+        // 检查联系方式部分
+        const contactTitle = document.querySelector('#contact h2');
+        if (contactTitle) {
+            console.log('Contact title:', contactTitle.textContent);
+            console.log('Contact data-i18n:', contactTitle.getAttribute('data-i18n'));
+        } else {
+            console.warn('Contact title element not found!');
+        }
+        
+        // 检查当前语言
+        const savedLang = localStorage.getItem('preferredLanguage');
+        console.log('Current language from localStorage:', savedLang);
+        
+        // 确保translations对象存在并包含正确的键
+        if (window.translations) {
+            console.log('EN awards-title:', window.translations.en['awards-title']);
+            console.log('ZH awards-title:', window.translations.zh['awards-title']);
+            console.log('EN contact-title:', window.translations.en['contact-title']);
+            console.log('ZH contact-title:', window.translations.zh['contact-title']);
+        } else {
+            console.warn('Translations object not found!');
+        }
+    }, 1000);
+
     // Initialize AOS (Animate on Scroll) library
     AOS.init({
         duration: 800,
@@ -430,17 +469,47 @@ document.addEventListener('DOMContentLoaded', function() {
             const messageInput = document.getElementById('message');
             const submitBtn = document.querySelector('#contact-form button[type="submit"]');
             
-            // Basic validation
-            if (!nameInput.value || !emailInput.value || !messageInput.value) {
-                showFormMessage('Please fill all required fields', 'error');
+            // Clear any previous messages
+            showFormMessage('', '');
+            
+            // More strict validation
+            if (!nameInput.value.trim()) {
+                showFormMessage('Please enter your name', 'error');
+                nameInput.focus();
+                return;
+            }
+            
+            if (!emailInput.value.trim()) {
+                showFormMessage('Please enter your email', 'error');
+                emailInput.focus();
+                return;
+            }
+            
+            // Simple email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value.trim())) {
+                showFormMessage('Please enter a valid email address', 'error');
+                emailInput.focus();
+                return;
+            }
+            
+            if (!messageInput.value.trim()) {
+                showFormMessage('Please enter your message', 'error');
+                messageInput.focus();
                 return;
             }
             
             // Disable submit button and show loading
             submitBtn.disabled = true;
+            const originalBtnText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             
             try {
+                // 添加网络连接检查
+                if (!navigator.onLine) {
+                    throw new Error('您的网络连接似乎已断开。请检查您的互联网连接后重试。');
+                }
+                
                 // Send form data to the server
                 const response = await fetch('/send-email', {
                     method: 'POST',
@@ -448,44 +517,81 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        name: nameInput.value,
-                        email: emailInput.value,
-                        subject: subjectInput.value,
-                        message: messageInput.value
-                    })
+                        name: nameInput.value.trim(),
+                        email: emailInput.value.trim(),
+                        subject: subjectInput.value.trim(),
+                        message: messageInput.value.trim()
+                    }),
+                    timeout: 10000 // 10秒超时
                 });
+                
+                if (!response.ok) {
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || '发送消息失败。请稍后再试。');
+                    } else {
+                        throw new Error(`服务器错误: ${response.status} ${response.statusText}`);
+                    }
+                }
                 
                 const data = await response.json();
                 
                 if (data.status === 'success') {
                     // Show success message
-                    showFormMessage('Message sent successfully!', 'success');
+                    showFormMessage('Message sent successfully! I will get back to you soon.', 'success');
                     // Reset form
                     contactForm.reset();
                 } else {
-                    // Show error message
-                    showFormMessage(data.message || 'Failed to send message. Please try again.', 'error');
+                    console.error('Form submission error:', data);
+                    // Show detailed error message
+                    showFormMessage(data.message || 'Failed to send message. Please try again later.', 'error');
                 }
             } catch (error) {
-                console.error('Error:', error);
-                showFormMessage('Failed to send message. Please try again.', 'error');
+                console.error('Network or Server Error:', error);
+                
+                // 更详细的错误信息
+                if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
+                    showFormMessage('Network error. The server may be down or unreachable. Please check your connection and try again.', 'error');
+                } else {
+                    showFormMessage(error.message || 'Network error. Please check your connection and try again.', 'error');
+                }
             } finally {
                 // Re-enable submit button
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Send Message';
+                submitBtn.innerHTML = originalBtnText;
             }
         });
         
         function showFormMessage(message, type) {
             const messageElement = document.getElementById('form-message');
-            if (messageElement) {
-                messageElement.textContent = message;
-                messageElement.className = `form-message ${type}`;
-                messageElement.style.display = 'block';
-                
-                // Hide message after 5 seconds
+            if (!messageElement) return;
+            
+            if (!message) {
+                messageElement.style.display = 'none';
+                return;
+            }
+            
+            messageElement.textContent = message;
+            messageElement.className = `form-message ${type}`;
+            messageElement.style.display = 'block';
+            
+            // Auto-scroll to message if not in view
+            const rect = messageElement.getBoundingClientRect();
+            const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+            
+            if (!isInView) {
+                messageElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            // Hide success message after 5 seconds
+            if (type === 'success') {
                 setTimeout(() => {
-                    messageElement.style.display = 'none';
+                    messageElement.style.opacity = '0';
+                    setTimeout(() => {
+                        messageElement.style.display = 'none';
+                        messageElement.style.opacity = '1';
+                    }, 500);
                 }, 5000);
             }
         }

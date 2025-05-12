@@ -13,7 +13,7 @@
     <style>
         /* 由于无法下载实际图片，使用CSS创建背景色和渐变代替图片 */
         .ai-chip-bg {
-            background: linear-gradient(135deg, #0366d6, #2188ff);
+            background: linear-gradient(135deg, #0366d6, #6c47ff);
             width: 220px;
             height: 140px;
             border-radius: 8px;
@@ -43,7 +43,7 @@
         }
         
         .logistics-bg {
-            background: linear-gradient(135deg, #24292e, #2b3137);
+            background: linear-gradient(135deg, #34495e, #2c3e50);
             width: 220px;
             height: 140px;
             border-radius: 8px;
@@ -57,11 +57,11 @@
         
         .logistics-bg i {
             font-size: 48px;
-            color: #f9826c; /* GitHub橙色变体 */
+            color: #f39c12;
         }
         
         .education-parallax-bg {
-            background: linear-gradient(135deg, #0366d6, #044289);
+            background: linear-gradient(135deg, #3498db, #2980b9);
             position: relative;
             z-index: 0;
         }
@@ -72,7 +72,7 @@
         }
         
         .hero-slide {
-            background-color: #2b3137;
+            background-color: #272c34;
         }
         
         .hero-slide img {
@@ -95,7 +95,7 @@
         }
         
         #education .timeline-content {
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255, 255, 255, 0.9);
             color: #24292e;
         }
         
@@ -133,7 +133,7 @@
         
         /* Improved Hero Background */
         .hero-section {
-            background: #24292e; /* GitHub深色背景 */
+            background: linear-gradient(135deg, #24292e, #2b3137);
             position: relative;
             overflow: hidden;
         }
@@ -157,15 +157,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 30% 40%, rgba(33, 136, 255, 0.1) 0%, rgba(3, 102, 214, 0) 70%),
-                      radial-gradient(circle at 70% 60%, rgba(249, 130, 108, 0.1) 0%, rgba(249, 130, 108, 0) 70%);
+            background: radial-gradient(circle at 30% 40%, rgba(76, 175, 255, 0.1) 0%, rgba(3, 102, 214, 0) 70%),
+                      radial-gradient(circle at 70% 60%, rgba(108, 71, 255, 0.1) 0%, rgba(108, 71, 255, 0) 70%);
             z-index: 0;
         }
         
         /* 改善头像样式 */
         .profile-container {
             display: inline-block;
-            position: relative;
             margin-bottom: 20px;
             border-radius: 50%;
             padding: 4px;
@@ -174,82 +173,6 @@
             width: 150px;
             height: 150px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            z-index: 2;
-        }
-        
-        /* 头像周围的渐变背景 - 使用多个元素实现动态效果 */
-        .profile-container::before,
-        .profile-container::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            z-index: -1;
-        }
-        
-        /* 第一个发光圆 */
-        .profile-container::before {
-            top: -40px;
-            left: -40px;
-            right: -40px;
-            bottom: -40px;
-            background: radial-gradient(circle at center, 
-                rgba(173, 216, 230, 0.7) 0%, 
-                rgba(135, 206, 250, 0.5) 30%, 
-                rgba(240, 248, 255, 0.2) 60%, 
-                rgba(240, 248, 255, 0) 80%);
-            animation: pulse1 4s ease-in-out infinite;
-        }
-        
-        /* 第二个发光圆 */
-        .profile-container::after {
-            top: -50px;
-            left: -50px;
-            right: -50px;
-            bottom: -50px;
-            background: radial-gradient(circle at center, 
-                rgba(135, 206, 250, 0.5) 0%, 
-                rgba(173, 216, 230, 0.3) 40%, 
-                rgba(200, 230, 255, 0.1) 70%, 
-                rgba(240, 248, 255, 0) 90%);
-            animation: pulse2 5s ease-in-out infinite 0.5s;
-        }
-        
-        /* 添加动画类名到头像容器，确保动画能被触发 */
-        .profile-container {
-            animation: profileShadow 3s ease-in-out infinite alternate;
-        }
-        
-        /* 明显的脉动动画 */
-        @keyframes pulse1 {
-            0%, 100% {
-                opacity: 0.8;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.15);
-            }
-        }
-        
-        @keyframes pulse2 {
-            0%, 100% {
-                opacity: 0.7;
-                transform: scale(1.1);
-            }
-            50% {
-                opacity: 0.9;
-                transform: scale(1);
-            }
-        }
-        
-        /* 头像容器的光影动画 */
-        @keyframes profileShadow {
-            0% {
-                box-shadow: 0 4px 15px rgba(0, 148, 255, 0.5);
-            }
-            100% {
-                box-shadow: 0 4px 25px rgba(0, 148, 255, 0.8);
-            }
         }
         
         .profile-image {
@@ -884,10 +807,10 @@
                     <li><a href="#contact" data-i18n="contact">Contact</a></li>
                 </ul>
             </nav>
-            <div class="language-switch">
-                <a href="#" class="active" data-lang="en">EN</a>
-                <span class="divider">|</span>
-                <a href="#" data-lang="zh">中文</a>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <span class="lang-divider">|</span>
+                <button class="lang-btn" data-lang="zh">中文</button>
             </div>
         </div>
     </header>
@@ -896,7 +819,7 @@
         <section id="hero" class="hero-section">
             <div class="hero-background"></div>
             <div class="hero-content">
-                                <div class="container">
+                <div class="container">
                     <div class="hero-slider" data-aos="fade-up">
                         <div class="hero-slider-container">
                             <div class="hero-slide">
@@ -911,7 +834,7 @@
                                 </div>
                             </div>
                             <div class="hero-slide">
-                                <img src="images/1.jpeg" alt="AI Chip Design">
+                                <img src="images/slider/slide2.jpg" alt="AI Chip Design">
                                 <div class="hero-slide-overlay"></div>
                                 <div class="hero-slide-content">
                                     <h2 data-i18n="ai-chip">AI Chip Designer</h2>
@@ -919,7 +842,7 @@
                                 </div>
                             </div>
                             <div class="hero-slide">
-                                <img src="images/2.jpeg" alt="Logistics Engineering">
+                                <img src="images/slider/slide3.jpg" alt="Logistics Engineering">
                                 <div class="hero-slide-overlay"></div>
                                 <div class="hero-slide-content">
                                     <h2 data-i18n="logistics">Logistics Engineer</h2>
@@ -1055,30 +978,30 @@
                     <div class="timeline-item timeline-item-left">
                         <div class="timeline-content">
                             <span class="timeline-date">2024.08</span>
-                            <h3><i class="fas fa-users"></i> <span data-i18n="practical1-title">Zhuhai·Hengqin 2024 Global Renowned Universities Outstanding Young Talents Summer Practice Project (Government Practice)</span></h3>
-                            <p><strong data-i18n="team-label">Practice Team:</strong> <span data-i18n="practical1-team">30 master's and doctoral students from renowned universities including Oxford, Cambridge, Tsinghua, Peking, HKU, University of Macau, etc.</span></p>
-                            <p><strong data-i18n="org-label">Organizing Unit:</strong> <span data-i18n="practical1-org">Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Committee of the Communist Youth League, Hengqin Guangdong-Macao In-Depth Cooperation Zone Economic Development Bureau, Macao-Zhuhai Talent Development Promotion Association</span></p>
-                            <p><strong data-i18n="content-label">Practice Content:</strong> <span data-i18n="practical1-content">Enterprise visits to "Chip Trend (Zhuhai), Zhuhai Yunzhou Intelligent, Kingsoft, Huafa Group, AVIC General Aircraft, Zhuhai Hefang Jewelry" and other companies for learning. Technology and entrepreneurship awareness: Participated in academic discussions about "Brain-like Chips" at the "Guangdong Institute of Intelligent Science and Technology"; engaged in communication about "Youth Independent Entrepreneurship" at the "Macao Youth Entrepreneurship Incubation Center".</span></p>
+                            <h3><i class="fas fa-users"></i> <span data-i18n="practice1-title">Zhuhai·Hengqin 2024 Global Renowned Universities Outstanding Young Talents Summer Practice Project (Government Practice)</span></h3>
+                            <p><strong data-i18n="practice-team">Practice Team:</strong> <span data-i18n="practice1-team">30 master's and doctoral students from renowned universities including Oxford, Cambridge, Tsinghua, Peking, HKU, University of Macau, etc.</span></p>
+                            <p><strong data-i18n="organizing-unit">Organizing Unit:</strong> <span data-i18n="practice1-org">Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Committee of the Communist Youth League, Hengqin Guangdong-Macao In-Depth Cooperation Zone Economic Development Bureau, Macao-Zhuhai Talent Development Promotion Association</span></p>
+                            <p><strong data-i18n="practice-content">Practice Content:</strong> <span data-i18n="practice1-content">Enterprise visits to "Chip Trend (Zhuhai), Zhuhai Yunzhou Intelligent, Kingsoft, Huafa Group, AVIC General Aircraft, Zhuhai Hefang Jewelry" and other companies for learning. Technology and entrepreneurship awareness: Participated in academic discussions about "Brain-like Chips" at the "Guangdong Institute of Intelligent Science and Technology"; engaged in communication about "Youth Independent Entrepreneurship" at the "Macao Youth Entrepreneurship Incubation Center".</span></p>
                         </div>
                     </div>
                     
                     <div class="timeline-item timeline-item-right">
                         <div class="timeline-content">
                             <span class="timeline-date">2024.08</span>
-                            <h3><i class="fas fa-users"></i> <span data-i18n="practical2-title">"Doctoral Gathering at Xiangshan" 6th Domestic and Foreign Young Doctors and Postdoctoral Zhuhai Innovation and Entrepreneurship Fair (Academic Forum)</span></h3>
-                            <p><strong data-i18n="team-label">Practice Team:</strong> <span data-i18n="practical2-team">Over 400 high-end talents including academicians, high-end talent think tank experts, outstanding young doctors and post-doctoral researchers from domestic and foreign renowned universities in professional fields such as artificial intelligence and integrated circuits.</span></p>
-                            <p><strong data-i18n="org-label">Organizing Unit:</strong> <span data-i18n="practical2-org">Guangdong Provincial Talent Service Bureau, Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Human Resources and Social Security Bureau</span></p>
-                            <p><strong data-i18n="content-label">Practice Content:</strong> <span data-i18n="practical2-content">Participated in the opening ceremony of the fair as a talent representative, listening to and experiencing sharing from multiple national-level academician engineers of major national equipment and multiple entrepreneurs including Dong Mingzhu. Communicated face-to-face with Zhuhai's top ten young doctors and post-doctoral innovation figures as a talent representative, exchanging academic experiences.</span></p>
+                            <h3><i class="fas fa-users"></i> <span data-i18n="practice2-title">"Doctoral Gathering at Xiangshan" 6th Domestic and Foreign Young Doctors and Postdoctoral Zhuhai Innovation and Entrepreneurship Fair (Academic Forum)</span></h3>
+                            <p><strong data-i18n="practice-team">Practice Team:</strong> <span data-i18n="practice2-team">Over 400 high-end talents including academicians, high-end talent think tank experts, outstanding young doctors and post-doctoral researchers from domestic and foreign renowned universities in professional fields such as artificial intelligence and integrated circuits.</span></p>
+                            <p><strong data-i18n="organizing-unit">Organizing Unit:</strong> <span data-i18n="practice2-org">Guangdong Provincial Talent Service Bureau, Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Human Resources and Social Security Bureau</span></p>
+                            <p><strong data-i18n="practice-content">Practice Content:</strong> <span data-i18n="practice2-content">Participated in the opening ceremony of the fair as a talent representative, listening to and experiencing sharing from multiple national-level academician engineers of major national equipment and multiple entrepreneurs including Dong Mingzhu. Communicated face-to-face with Zhuhai's top ten young doctors and post-doctoral innovation figures as a talent representative, exchanging academic experiences.</span></p>
                         </div>
                     </div>
                     
                     <div class="timeline-item timeline-item-left">
                         <div class="timeline-content">
                             <span class="timeline-date">2024.05</span>
-                            <h3><i class="fas fa-users"></i> <span data-i18n="practical3-title">Guangdong-Hong Kong-Macao Platform Zhuoyue Program: Elite Talent Summit - Songshan Lake Research Camp (Enterprise Practice)</span></h3>
-                            <p><strong data-i18n="team-label">Practice Team:</strong> <span data-i18n="practical3-team">35 master's students from Hong Kong's top three universities</span></p>
-                            <p><strong data-i18n="org-label">Organizing Unit:</strong> <span data-i18n="practical3-org">Huawei Technologies Co., Ltd. (Guangdong-Hong Kong-Macao Division)</span></p>
-                            <p><strong data-i18n="content-label">Practice Content:</strong> <span data-i18n="practical3-content">Visited Huawei's Songshan Lake base to comprehensively understand the company's history, scale, and achievements. Gained insights into Huawei's internship and campus recruitment policies and positions.</span></p>
+                            <h3><i class="fas fa-users"></i> <span data-i18n="practice3-title">Guangdong-Hong Kong-Macao Platform Zhuoyue Program: Elite Talent Summit - Songshan Lake Research Camp (Enterprise Practice)</span></h3>
+                            <p><strong data-i18n="practice-team">Practice Team:</strong> <span data-i18n="practice3-team">35 master's students from Hong Kong's top three universities</span></p>
+                            <p><strong data-i18n="organizing-unit">Organizing Unit:</strong> <span data-i18n="practice3-org">Huawei Technologies Co., Ltd. (Guangdong-Hong Kong-Macao Division)</span></p>
+                            <p><strong data-i18n="practice-content">Practice Content:</strong> <span data-i18n="practice3-content">Visited Huawei's Songshan Lake base to comprehensively understand the company's history, scale, and achievements. Gained insights into Huawei's internship and campus recruitment policies and positions.</span></p>
                         </div>
                     </div>
                 </div>
@@ -1161,7 +1084,7 @@
 
         <section id="certifications" class="certifications-section">
             <div class="container">
-                <h2 data-aos="fade-up" data-i18n="cert-title">Professional Certifications & Roles</h2>
+                <h2 data-aos="fade-up">Professional Certifications & Roles</h2>
                 
                 <div class="certifications-grid" data-aos="fade-up" data-aos-delay="200">
                     <div class="certification-card">
@@ -1399,24 +1322,24 @@
 
         <section id="contact" class="contact-section">
             <div class="container">
-                <h2 data-aos="fade-up" data-i18n="contact-title">Contact Me</h2>
+                <h2 data-aos="fade-up">Contact Me</h2>
                 
                 <div class="contact-cards" data-aos="fade-up" data-aos-delay="200">
                     <div class="contact-card">
                         <i class="fas fa-envelope"></i>
-                        <h3 data-i18n="email">Email</h3>
+                        <h3>Email</h3>
                         <p><a href="mailto:2997725873a@gmail.com">2997725873a@gmail.com</a></p>
                     </div>
                     
                     <div class="contact-card">
                         <i class="fas fa-map-marker-alt"></i>
-                        <h3 data-i18n="location">Location</h3>
+                        <h3>Location</h3>
                         <p>Hong Kong SAR, China</p>
                     </div>
                     
                     <div class="contact-card">
                         <i class="fas fa-share-alt"></i>
-                        <h3 data-i18n="social-media">Social Media</h3>
+                        <h3>Social Media</h3>
                         <p>
                             <a href="#" target="_blank">LinkedIn</a> | 
                             <a href="https://github.com/AlexLIAOPOLY" target="_blank">GitHub</a> | 
@@ -1426,26 +1349,26 @@
                 </div>
                 
                 <div class="contact-form" data-aos="fade-up" data-aos-delay="300">
-                    <h3 data-i18n="send-message">Send Me a Message</h3>
+                    <h3>Send Me a Message</h3>
                     <div id="form-message" class="form-message"></div>
                     <form id="contact-form">
                         <div class="form-group">
-                            <label for="name" data-i18n="name">Name *</label>
-                            <input type="text" id="name" name="name" placeholder="Your name" required aria-required="true">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email" data-i18n="email">Email *</label>
-                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required aria-required="true">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="subject" data-i18n="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" placeholder="Message subject">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject">
                         </div>
                         <div class="form-group">
-                            <label for="message" data-i18n="message">Message *</label>
-                            <textarea id="message" name="message" rows="5" placeholder="Your message here..." required aria-required="true"></textarea>
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn primary-btn" data-i18n="send">Send Message</button>
+                        <button type="submit" class="btn primary-btn">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -1490,7 +1413,7 @@
     <!-- 多语言支持 -->
     <script>
     // 定义翻译对象
-    window.translations = {
+    const translations = {
         en: {
             // 导航菜单
             "home": "Home",
@@ -1542,9 +1465,9 @@
             "practical-exp": "Practical Experience",
             "responsibilities": "Responsibilities:",
             "achievements": "Achievements:",
-            "team-label": "Practice Team:",
-            "org-label": "Organizing Unit:",
-            "content-label": "Practice Content:",
+            "practice-team": "Practice Team:",
+            "organizing-unit": "Organizing Unit:",
+            "practice-content": "Practice Content:",
             
             // 项目经验
             "projects-title": "Projects",
@@ -1678,20 +1601,20 @@
             "job4-resp": "Fault reporting and tracking: Ensuring fault information accuracy and timely processing. Participating in fault handling: Analyzing faults, proposing solutions, and assisting with implementation.",
             
             // 实践经历
-            "practical1-title": "Zhuhai·Hengqin 2024 Global Renowned Universities Outstanding Young Talents Summer Practice Project (Government Practice)",
-            "practical1-team": "30 master's and doctoral students from renowned universities including Oxford, Cambridge, Tsinghua, Peking, HKU, University of Macau, etc.",
-            "practical1-org": "Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Committee of the Communist Youth League, Hengqin Guangdong-Macao In-Depth Cooperation Zone Economic Development Bureau, Macao-Zhuhai Talent Development Promotion Association",
-            "practical1-content": "Enterprise visits to \"Chip Trend (Zhuhai), Zhuhai Yunzhou Intelligent, Kingsoft, Huafa Group, AVIC General Aircraft, Zhuhai Hefang Jewelry\" and other companies for learning. Technology and entrepreneurship awareness: Participated in academic discussions about \"Brain-like Chips\" at the \"Guangdong Institute of Intelligent Science and Technology\"; engaged in communication about \"Youth Independent Entrepreneurship\" at the \"Macao Youth Entrepreneurship Incubation Center\".",
+            "practice1-title": "Zhuhai·Hengqin 2024 Global Renowned Universities Outstanding Young Talents Summer Practice Project (Government Practice)",
+            "practice1-team": "30 master's and doctoral students from renowned universities including Oxford, Cambridge, Tsinghua, Peking, HKU, University of Macau, etc.",
+            "practice1-org": "Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Committee of the Communist Youth League, Hengqin Guangdong-Macao In-Depth Cooperation Zone Economic Development Bureau, Macao-Zhuhai Talent Development Promotion Association",
+            "practice1-content": "Enterprise visits to 'Chip Trend (Zhuhai), Zhuhai Yunzhou Intelligent, Kingsoft, Huafa Group, AVIC General Aircraft, Zhuhai Hefang Jewelry' and other companies for learning. Technology and entrepreneurship awareness: Participated in academic discussions about 'Brain-like Chips' at the 'Guangdong Institute of Intelligent Science and Technology'; engaged in communication about 'Youth Independent Entrepreneurship' at the 'Macao Youth Entrepreneurship Incubation Center'.",
             
-            "practical2-title": "\"Doctoral Gathering at Xiangshan\" 6th Domestic and Foreign Young Doctors and Postdoctoral Zhuhai Innovation and Entrepreneurship Fair (Academic Forum)",
-            "practical2-team": "Over 400 high-end talents including academicians, high-end talent think tank experts, outstanding young doctors and post-doctoral researchers from domestic and foreign renowned universities in professional fields such as artificial intelligence and integrated circuits.",
-            "practical2-org": "Guangdong Provincial Talent Service Bureau, Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Human Resources and Social Security Bureau",
-            "practical2-content": "Participated in the opening ceremony of the fair as a talent representative, listening to and experiencing sharing from multiple national-level academician engineers of major national equipment and multiple entrepreneurs including Dong Mingzhu. Communicated face-to-face with Zhuhai's top ten young doctors and post-doctoral innovation figures as a talent representative, exchanging academic experiences.",
+            "practice2-title": "'Doctoral Gathering at Xiangshan' 6th Domestic and Foreign Young Doctors and Postdoctoral Zhuhai Innovation and Entrepreneurship Fair (Academic Forum)",
+            "practice2-team": "Over 400 high-end talents including academicians, high-end talent think tank experts, outstanding young doctors and post-doctoral researchers from domestic and foreign renowned universities in professional fields such as artificial intelligence and integrated circuits.",
+            "practice2-org": "Guangdong Provincial Talent Service Bureau, Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Human Resources and Social Security Bureau",
+            "practice2-content": "Participated in the opening ceremony of the fair as a talent representative, listening to and experiencing sharing from multiple national-level academician engineers of major national equipment and multiple entrepreneurs including Dong Mingzhu. Communicated face-to-face with Zhuhai's top ten young doctors and post-doctoral innovation figures as a talent representative, exchanging academic experiences.",
             
-            "practical3-title": "Guangdong-Hong Kong-Macao Platform Zhuoyue Program: Elite Talent Summit - Songshan Lake Research Camp (Enterprise Practice)",
-            "practical3-team": "35 master's students from Hong Kong's top three universities",
-            "practical3-org": "Huawei Technologies Co., Ltd. (Guangdong-Hong Kong-Macao Division)",
-            "practical3-content": "Visited Huawei's Songshan Lake base to comprehensively understand the company's history, scale, and achievements. Gained insights into Huawei's internship and campus recruitment policies and positions.",
+            "practice3-title": "Guangdong-Hong Kong-Macao Platform Zhuoyue Program: Elite Talent Summit - Songshan Lake Research Camp (Enterprise Practice)",
+            "practice3-team": "35 master's students from Hong Kong's top three universities",
+            "practice3-org": "Huawei Technologies Co., Ltd. (Guangdong-Hong Kong-Macao Division)",
+            "practice3-content": "Visited Huawei's Songshan Lake base to comprehensively understand the company's history, scale, and achievements. Gained insights into Huawei's internship and campus recruitment policies and positions.",
         },
         zh: {
             // 导航菜单
@@ -1744,9 +1667,9 @@
             "practical-exp": "实践经历",
             "responsibilities": "职责:",
             "achievements": "成就:",
-            "team-label": "实践团队:",
-            "org-label": "组织单位:",
-            "content-label": "实践内容:",
+            "practice-team": "实践团队:",
+            "organizing-unit": "组织单位:",
+            "practice-content": "实践内容:",
             
             // 项目经验
             "projects-title": "项目经验",
@@ -1862,55 +1785,54 @@
             // 实习经历
             "job1-title": "AI芯片设计师",
             "job1-company": "珠海杰理科技有限公司",
-            "job1-resp": "进行AI芯片市场调研，研究整个AI芯片设计流程。为智能人形机器人系统设计并规划AI芯片产品。",
-            "job1-achieve": "完成了对30多家AI芯片制造公司的研究。与团队合作设计了一个适合公司当前发展的新AI芯片设计流程，个人负责研究未来AI芯片发展趋势。",
+            "job1-resp": "对AI芯片进行市场调研，研究整个AI芯片设计流程。为智能人形机器人系统设计并规划AI芯片产品。",
+            "job1-achieve": "完成了对30多家AI芯片制造公司的研究。与团队协作，在30天内设计出适合公司当前发展的新型AI芯片设计流程，个人负责研究未来AI芯片发展趋势。",
             
             "job2-title": "新媒体运营与行政管理",
-            "job2-company": "Cana Elite（香港STEM政府暑期实习）",
-            "job2-resp": "负责定期更新网站，确保内容新鲜、及时且符合公司品牌形象。管理并发布微信公众号/小红书账号内容，以增加粉丝量和互动。参与公司平面广告的设计和制作，确保视觉效果和信息传递的准确性。",
-            "job2-achieve": "成功获得香港特区政府创新科技署和香港理工大学共计22,380港币的补贴。通过有效的网站更新和微信/小红书内容发布，成功提高了公司的品牌知名度和影响力。",
+            "job2-company": "Cana Elite (香港STEM政府暑期实习)",
+            "job2-resp": "负责定期更新网站，确保内容新鲜、及时并符合公司品牌形象。管理并发布微信公众号/小红书账号内容，增加粉丝和互动。参与公司印刷广告的设计和制作，确保视觉效果和信息传递的准确性。",
+            "job2-achieve": "成功获得香港特别行政区政府创新科技署和香港理工大学共计22,380港币的补贴。通过有效的网站更新和微信/小红书内容发布，成功提高了公司的品牌知名度和影响力。",
             
             "job3-title": "招投标经理助理",
             "job3-company": "中国电信",
-            "job3-resp": "投标前：了解项目背景，系统了解客户需求，现场勘察，了解客户决策链，熟悉关键决策者，在客户组织中发展内部教练。投标期间：了解竞争对手，根据招标文件编制满足客户要求的投标文件，准确计算报价。投标后：对于成功投标，注重客户满意度，严格按照投标文件要求交付；对于未成功投标，进行复盘、总结，及时拜访客户了解投标过程中的不足，在今后的工作中改进。",
-            "job3-achieve": "成功投标：协助团队以50万元的价格中标江西中国银行井冈山培训中心项目。",
+            "job3-resp": "投标前：了解项目背景，系统了解客户需求，现场考察，了解客户决策链，熟悉关键决策者，在客户组织内发展内部教练。投标中：了解竞争对手，根据招标文件编制满足客户要求的投标文件，准确计算报价。投标后：对于成功的投标，注重客户满意度，严格按照投标文件要求交付；对于不成功的投标，进行复盘、总结，及时走访客户了解投标过程中的不足，在未来工作中予以改进。",
+            "job3-achieve": "成功投标：协助团队以50万元的价格赢得江西中国银行井冈山培训中心项目。",
             
             "job4-title": "流量与客户监控经理助理",
             "job4-company": "中国移动通信",
-            "job4-resp": "故障报告与跟踪：确保故障信息的准确性和及时处理。参与故障处理：分析故障，提出解决方案，协助实施。",
+            "job4-resp": "故障报告和跟踪：确保故障信息准确性和及时处理。参与故障处理：分析故障，提出解决方案，协助实施。",
             
             // 实践经历
-            "practical1-title": "珠海·横琴2024全球知名高校优秀青年人才暑期实践项目（政府实践）",
-            "practical1-team": "来自牛津、剑桥、清华、北大、港大、澳门大学等知名高校的30名硕博研究生",
-            "practical1-org": "珠海市委人才工作领导小组办公室、珠海市团委、横琴粤港澳深度合作区经济发展局、澳珠人才发展促进会",
-            "practical1-content": "企业参访学习\"芯动力（珠海）、珠海云洲智能、金山软件、华发集团、中航通用飞机、珠海赫芳珠宝\"等企业。科技与创业意识：在\"广东智能科学与技术研究院\"参与\"类脑芯片\"学术交流；在\"澳门青年创业孵化中心\"进行\"青年自主创业\"交流。",
+            "practice1-title": "珠海·横琴2024全球知名高校优秀青年人才暑期实践项目（政府实践）",
+            "practice1-team": "来自牛津、剑桥、清华、北大、港大、澳门大学等知名高校的30名硕博研究生",
+            "practice1-org": "珠海市委人才工作领导小组办公室、珠海市委共青团、横琴广东澳门深度合作区经济发展局、澳珠人才发展促进会",
+            "practice1-content": "企业参访学习：'芯动力（珠海）、珠海云洲智能、金山软件、华发集团、中航通飞、珠海赫芳珠宝'等企业。科技创业意识：在'广东智能科学与技术研究院'参与关于'类脑芯片'的学术交流；在'澳门青年创业孵化中心'进行关于'青年自主创业'的交流。",
             
-            "practical2-title": "\"博士汇香山\"第六届国内外青年博士及博士后珠海创新创业交流会（学术论坛）",
-            "practical2-team": "400多名高端人才，包括院士、高端人才智库专家、国内外知名高校在人工智能和集成电路等专业领域的优秀青年博士和博士后研究人员",
-            "practical2-org": "广东省人才服务局、珠海市委人才工作领导小组办公室、珠海市人力资源和社会保障局",
-            "practical2-content": "作为人才代表参加交流会开幕式，聆听和体验多位国家级重大装备院士工程师和包括董明珠在内的多位企业家分享。作为人才代表与珠海市十大青年博士后创新人物面对面交流，交换学术体验。",
+            "practice2-title": "'博士汇香山'第六届国内外青年博士及博士后珠海创新创业交流会（学术论坛）",
+            "practice2-team": "包括院士、高端人才智库专家、国内外知名高校在人工智能和集成电路等专业领域的优秀青年博士和博士后研究人员在内的400多名高端人才",
+            "practice2-org": "广东省人才服务局、珠海市委人才工作领导小组办公室、珠海市人力资源和社会保障局",
+            "practice2-content": "作为人才代表参加了交流会开幕式，聆听并体验多位国家级院士工程师重大国家装备和包括董明珠在内的多位企业家的分享。作为人才代表与珠海十大青年博士后创新人物面对面交流，进行学术经验交流。",
             
-            "practical3-title": "粤港澳平台卓越计划：精英人才峰会-松山湖研习营（企业实践）",
-            "practical3-team": "来自香港前三大学的35名硕士研究生",
-            "practical3-org": "华为技术有限公司（粤港澳区域）",
-            "practical3-content": "参观华为松山湖基地，全面了解公司历史、规模及成就。了解华为实习和校园招聘政策和岗位。",
+            "practice3-title": "粤港澳平台卓越计划：精英人才峰会 - 松山湖研修营（企业实践）",
+            "practice3-team": "来自香港三大顶尖高校的35名硕士研究生",
+            "practice3-org": "华为技术有限公司（粤港澳大区）",
+            "practice3-content": "参访华为松山湖基地，全面了解公司历史、规模和成就。了解华为的实习和校园招聘政策与岗位。",
         }
     };
 
     // 在DOM加载完成后初始化
     document.addEventListener('DOMContentLoaded', function() {
         // 获取所有需要切换语言的元素
-        const langSwitchers = document.querySelectorAll('.language-switch a');
+        const langBtns = document.querySelectorAll('.lang-btn');
         
         // 为每个语言按钮添加点击事件
-        langSwitchers.forEach(switcher => {
-            switcher.addEventListener('click', function(e) {
-                e.preventDefault();
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
                 const lang = this.getAttribute('data-lang');
                 changeLanguage(lang);
                 
                 // 更新活跃按钮
-                langSwitchers.forEach(s => s.classList.remove('active'));
+                langBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 
                 // 保存语言选择到本地存储
@@ -1924,11 +1846,11 @@
             changeLanguage(savedLang);
             
             // 更新活跃按钮
-            langSwitchers.forEach(s => {
-                if (s.getAttribute('data-lang') === savedLang) {
-                    s.classList.add('active');
+            langBtns.forEach(b => {
+                if (b.getAttribute('data-lang') === savedLang) {
+                    b.classList.add('active');
                 } else {
-                    s.classList.remove('active');
+                    b.classList.remove('active');
                 }
             });
         }
@@ -1938,11 +1860,11 @@
             const userLang = navigator.language || navigator.userLanguage;
             if (userLang.includes('zh')) {
                 changeLanguage('zh');
-                langSwitchers.forEach(s => {
-                    if (s.getAttribute('data-lang') === 'zh') {
-                        s.classList.add('active');
+                langBtns.forEach(b => {
+                    if (b.getAttribute('data-lang') === 'zh') {
+                        b.classList.add('active');
                     } else {
-                        s.classList.remove('active');
+                        b.classList.remove('active');
                     }
                 });
             }
@@ -1951,9 +1873,6 @@
 
     // 切换语言的函数
     function changeLanguage(lang) {
-        console.log('Changing language to: ' + lang); // 添加调试信息
-        
-        // 更新所有带有data-i18n属性的元素
         const elements = document.querySelectorAll('[data-i18n]');
         
         elements.forEach(el => {
@@ -1963,48 +1882,12 @@
                     el.placeholder = translations[lang][key];
                 } else {
                     el.textContent = translations[lang][key];
-                    // 调试输出
-                    console.log('Updated element with key:', key, 'text:', translations[lang][key]);
                 }
-            } else {
-                console.warn('Missing translation for key:', key, 'in language:', lang);
             }
         });
         
         // 针对特殊元素的处理，比如按钮内容、标题等
         updateSpecialElements(lang);
-        
-        // 更新页面上所有section的标题
-        document.querySelectorAll('section').forEach(section => {
-            const sectionId = section.id;
-            if (sectionId) {
-                const titleKey = sectionId + '-title';
-                if (translations[lang] && translations[lang][titleKey]) {
-                    const titleElement = section.querySelector('h2');
-                    if (titleElement && !titleElement.hasAttribute('data-i18n')) {
-                        titleElement.textContent = translations[lang][titleKey];
-                        console.log('Updated section title:', sectionId, 'with:', translations[lang][titleKey]);
-                    }
-                }
-            }
-        });
-        
-        // 修复特定section的问题（荣誉奖项和联系方式）
-        if (translations[lang]['awards-title']) {
-            const awardsTitle = document.querySelector('#awards h2');
-            if (awardsTitle) {
-                awardsTitle.textContent = translations[lang]['awards-title'];
-                console.log('Explicitly updated awards title to:', translations[lang]['awards-title']);
-            }
-        }
-        
-        if (translations[lang]['contact-title']) {
-            const contactTitle = document.querySelector('#contact h2');
-            if (contactTitle) {
-                contactTitle.textContent = translations[lang]['contact-title'];
-                console.log('Explicitly updated contact title to:', translations[lang]['contact-title']);
-            }
-        }
     }
 
     // 更新特殊元素的函数
@@ -2026,6 +1909,14 @@
                 '&copy; <span id="current-year">' + yearText + '</span> Liao Wang. ' + 
                 translations[lang]["copyright"];
         }
+        
+        // 更新标题
+        document.querySelectorAll('section h2').forEach(heading => {
+            const sectionId = heading.closest('section').id;
+            if (translations[lang][sectionId + "-title"]) {
+                heading.textContent = translations[lang][sectionId + "-title"];
+            }
+        });
         
         // 更新按钮文字
         document.querySelectorAll('.btn.primary-btn').forEach(btn => {

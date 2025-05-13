@@ -847,12 +847,35 @@
         @media (max-width: 768px) {
             header .container {
                 flex-wrap: wrap;
+                position: relative;
             }
             
-            .language-switcher {
+            .language-switch {
                 position: absolute;
-                top: 20px;
-                right: 70px;
+                top: 15px;
+                right: 60px;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 4px;
+            }
+            
+            .language-switch a {
+                font-size: 12px;
+                padding: 4px 6px;
+                color: #fff;
+            }
+            
+            .language-switch .divider {
+                margin: 0 2px;
+                color: rgba(255, 255, 255, 0.5);
+            }
+            
+            .language-switch a.active {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 3px;
             }
         }
     </style>

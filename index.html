@@ -975,7 +975,7 @@
         .project-card {
             opacity: 0;
             transform: translateY(20px);
-            transition: all 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
         }
         
         .project-card.animate {
@@ -2019,7 +2019,7 @@
                     
                     card.classList.add('animate'); // 添加动画类
                 });
-            }, 0); // 使用0毫秒延迟将操作推迟到下一个事件循环
+            }, 50); // 使用0毫秒延迟将操作推迟到下一个事件循环
         }
 
         if (mobileFilterSelect) {
@@ -2047,6 +2047,9 @@
                 filterAndAnimateProjects(category);
             });
         });
+
+        // Explicitly trigger initial animation for all projects
+        filterAndAnimateProjects('all');
     });
     </script>
 

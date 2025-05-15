@@ -1087,6 +1087,10 @@
             font-size: 14px;
             color: #586069;
         }
+
+        .subtitle .uni-name-highlight {
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -1146,16 +1150,16 @@
                                 <img src="images/1.jpeg" alt="AI Chip Design">
                                 <div class="hero-slide-overlay"></div>
                                 <div class="hero-slide-content">
-                                    <h2 data-i18n="ai-chip">AI Chip Designer</h2>
-                                    <p data-i18n="ai-chip-desc">Specializing in cutting-edge AI hardware solutions</p>
+                                    <h2 data-i18n="hero-title-ai-researcher">AI Researcher</h2>
+                                    <p data-i18n="hero-desc-ai-researcher">Exploring the infinite possibilities of AI</p>
                                 </div>
                             </div>
                             <div class="hero-slide">
                                 <img src="images/2.jpeg" alt="Logistics Engineering">
                                 <div class="hero-slide-overlay"></div>
                                 <div class="hero-slide-content">
-                                    <h2 data-i18n="logistics">Logistics Engineer</h2>
-                                    <p data-i18n="logistics-desc">Optimizing supply chains with innovative solutions</p>
+                                    <h2 data-i18n="hero-title-litho-explorer">Lithography Explorer</h2>
+                                    <p data-i18n="hero-desc-litho-explorer">Dedicated to advancing cutting-edge lithography</p>
                                 </div>
                             </div>
                         </div>
@@ -1163,7 +1167,7 @@
                     </div>
                     
                     <h1 data-aos="fade-up" data-aos-delay="200" data-i18n="logo">Liao Wang</h1>
-                    <p class="subtitle" data-aos="fade-up" data-aos-delay="300" data-i18n="subtitle">Aspiring AI & Technology Professional | Master of Science Student</p>
+                    <p class="subtitle" data-aos="fade-up" data-aos-delay="300" data-i18n="hero-subtitle-education">Aspiring AI & Technology Professional | Master of Science Student</p>
                     <div class="hero-buttons" data-aos="fade-up" data-aos-delay="400">
                         <a href="#contact" class="btn primary-btn" data-i18n="contact-me">Contact Me</a>
                         <a href="廖望-简历.pdf" class="btn secondary-btn" download data-i18n="download-cv">Download CV</a>
@@ -2072,11 +2076,11 @@
             // 首页
             "welcome": "Welcome to My Website",
             "aspiring": "Aspiring AI & Technology Professional",
-            "ai-chip": "AI Chip Designer",
-            "ai-chip-desc": "Specializing in cutting-edge AI hardware solutions",
-            "logistics": "Logistics Engineer",
-            "logistics-desc": "Optimizing supply chains with innovative solutions",
-            "subtitle": "Aspiring AI & Technology Professional | Master of Science Student",
+            "hero-title-ai-researcher": "AI Researcher",
+            "hero-desc-ai-researcher": "Exploring the infinite possibilities of AI",
+            "hero-title-litho-explorer": "Lithography Explorer",
+            "hero-desc-litho-explorer": "Dedicated to advancing cutting-edge lithography",
+            "hero-subtitle-education": "MSc in Microelectronics, <span class=\"uni-name-highlight\">HKU</span> | BEng in Logistics Engineering, <span class=\"uni-name-highlight\">PolyU</span>",
             "contact-me": "Contact Me",
             "download-cv": "Download CV",
             
@@ -2174,10 +2178,6 @@
             "location": "Location",
             "social-media": "Social Media",
             "send-message": "Send Me a Message",
-            "name": "Name *",
-            "subject": "Subject",
-            "message": "Message *",
-            "send": "Send Message",
             
             // 页脚
             "copyright": "All Rights Reserved.",
@@ -2415,11 +2415,11 @@
             // 首页
             "welcome": "欢迎访问我的网站",
             "aspiring": "AI与技术领域专业人员",
-            "ai-chip": "AI芯片设计师",
-            "ai-chip-desc": "专注于尖端AI硬件解决方案",
-            "logistics": "物流工程师",
-            "logistics-desc": "优化供应链和创新解决方案",
-            "subtitle": "AI与技术领域专业人员 | 理学硕士研究生",
+            "hero-title-ai-researcher": "人工智能领域研究者",
+            "hero-desc-ai-researcher": "探索AI的无限可能",
+            "hero-title-litho-explorer": "光刻领域探索者",
+            "hero-desc-litho-explorer": "致力于推进尖端光刻技术",
+            "hero-subtitle-education": "<span class=\"uni-name-highlight\">香港大学</span>微电子理学硕士 | <span class=\"uni-name-highlight\">香港理工大学</span>物流工程工学学士",
             "contact-me": "联系我",
             "download-cv": "下载简历",
             
@@ -2896,9 +2896,9 @@
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     el.placeholder = translations[lang][key];
                 } else {
-                    el.textContent = translations[lang][key];
+                    el.innerHTML = translations[lang][key]; // 使用 innerHTML 允许渲染 HTML 标签
                     // 调试输出
-                    console.log('Updated element with key:', key, 'text:', translations[lang][key]);
+                    console.log('Updated element with key:', key, 'innerHTML:', translations[lang][key]);
                 }
             } else {
                 console.warn('Missing translation for key:', key, 'in language:', lang);
@@ -3165,7 +3165,8 @@
 
             /* 减小移动端项目卡片之间的间距 */
             .projects-grid {
-                gap: 15px; /* 将桌面端的30px间距减小到15px */
+                grid-template-columns: 1fr; /* 强制单列布局，消除水平间隙 */
+                gap: 20px; /* 调整垂直间距，可以根据视觉效果微调 */
             }
         }
     </style>

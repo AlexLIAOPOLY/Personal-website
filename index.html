@@ -590,14 +590,15 @@
         
         .project-header {
             position: relative;
-            height: 180px;
+            width: 100%;
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #f6f8fa;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
         }
         
-        .ai-chip-bg, .logistics-bg {
+        .project-header .ai-chip-bg, 
+        .project-header .logistics-bg {
             position: absolute;
             top: 0;
             left: 0;
@@ -605,35 +606,56 @@
             height: 100%;
             margin: 0;
             border-radius: 0;
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-header .ai-chip-bg,
+        .project-card:hover .project-header .logistics-bg {
+            transform: scale(1.05);
         }
         
         .project-icon {
             position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 40px;
             color: white;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 1;
+            z-index: 2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
         }
         
+        .project-card:hover .project-icon {
+            transform: translate(-50%, -50%) scale(1.15);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        }
+        
+        /* 项目描述悬停效果 */
         .project-content {
             padding: 25px;
+            position: relative;
+            z-index: 1;
+            background: white;
+            transition: all 0.3s ease;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         
         .project-content h3 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #24292e;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
         }
         
         .project-content p {
             color: #586069;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             flex-grow: 1;
+            transition: all 0.2s ease;
         }
         
+        /* 项目标签改进 */
         .project-tags {
             display: flex;
             flex-wrap: wrap;
@@ -648,9 +670,20 @@
             border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
+            transition: all 0.2s ease;
         }
         
+        .project-tags span:hover {
+            background-color: #0366d6;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* 改进项目链接 */
         .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             border-top: 1px solid #eaecef;
             padding-top: 15px;
         }
@@ -661,45 +694,104 @@
             font-weight: 500;
             display: inline-flex;
             align-items: center;
-            transition: color 0.2s ease;
+            margin-right: 15px;
+            transition: all 0.2s ease;
         }
         
         .project-link i {
             margin-right: 5px;
+            transition: all 0.2s ease;
         }
         
         .project-link:hover {
             color: #2188ff;
-            text-decoration: underline;
+            text-decoration: none;
         }
         
-        .project-card.hidden {
-            display: none;
+        .project-link:hover i {
+            transform: translateX(-3px);
         }
         
-        .project-card.animate {
-            animation: fadeInUp 0.5s ease forwards;
+        /* 统一图标样式 */
+        .project-link i {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #f1f8ff;
+            border-radius: 50%;
+            color: #0366d6;
+            margin-right: 6px;
+            font-size: 12px;
+            transition: all 0.3s ease;
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .project-link:hover i {
+            background: #0366d6;
+            color: white;
+            transform: scale(1.1);
         }
         
+        /* 工具提示效果 - 鼠标悬停时显示详细描述 */
+        .project-tooltip {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(36, 41, 46, 0.95);
+            color: white;
+            padding: 15px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 10;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .project-card:hover .project-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* 响应式调整 */
         @media (max-width: 768px) {
-            .projects-grid {
-                grid-template-columns: 1fr;
+            .projects-filter {
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             .filter-btn {
-                font-size: 14px;
+                margin: 5px;
+                font-size: 13px;
                 padding: 8px 15px;
+            }
+            
+            .project-content h3 {
+                font-size: 18px;
+            }
+            
+            .project-content p {
+                font-size: 14px;
+            }
+            
+            .project-tags span {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+            
+            .project-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .project-link {
+                font-size: 14px;
             }
         }
         
@@ -878,6 +970,123 @@
                 border-radius: 3px;
             }
         }
+        
+        /* 项目卡片动画效果 */
+        .project-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-card.hidden {
+            display: none;
+        }
+        
+        /* 图片占位符动画 */
+        .project-header {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-header .ai-chip-bg,
+        .project-header .logistics-bg {
+            transition: transform 0.5s ease;
+        }
+        
+        .project-card:hover .project-header .ai-chip-bg,
+        .project-card:hover .project-header .logistics-bg {
+            transform: scale(1.05);
+        }
+        
+        /* 区块背景色交替变化 */
+        .certifications-section {
+            background-color: #f8fafc;
+        }
+        
+        .skills-section {
+            background-color: #f0f7ff;
+        }
+        
+        .awards-section {
+            background-color: #f8fafc;
+        }
+        
+        .contact-section {
+            background-color: #f0f7ff;
+        }
+        
+        /* 分页控件样式 */
+        .pagination-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* 工作经验区块样式 */
+        .work-experience {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .pagination {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: none;
+            border: none;
+            font-weight: 500;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            color: #586069;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .page-btn:hover {
+            background: #f6f8fa;
+            color: #0366d6;
+        }
+        
+        .page-btn.active {
+            background: #0366d6;
+            color: white;
+        }
+        
+        .page-indicator {
+            margin-left: 15px;
+            font-size: 14px;
+            color: #586069;
+        }
     </style>
 </head>
 <body>
@@ -1005,7 +1214,7 @@
                 <div class="timeline">
                     <div class="timeline-item timeline-item-right">
                         <div class="timeline-content">
-                            <div class="timeline-date" data-i18n="edu1-date">2024.08 - 2025.07 (Expected)</div>
+                            <div class="timeline-date" data-i18n="edu1-date">2024.08 - 2025.07</div>
                             <h3 data-i18n="edu1-degree">Master of Science in Microelectronics Science and Technology</h3>
                             <p><strong data-i18n="edu1-school">University of Hong Kong</strong></p>
                             <p data-i18n="edu1-courses">Key Courses: Physical Properties of Materials, Integrated Circuit System Design, Nanotechnology, Nanophotonics.</p>
@@ -1026,6 +1235,20 @@
         <section id="experience" class="experience-section">
             <div class="container">
                 <h2 data-aos="fade-up" data-i18n="work-experience">Work Experience</h2>
+                
+                <div class="work-experience">
+                    <h3 data-aos="fade-up" data-aos-delay="100" class="section-subtitle" data-i18n="work-exp">Work Experience</h3>
+                    <div class="timeline" data-aos="fade-up" data-aos-delay="200">
+                        <div class="timeline-item timeline-item-left">
+                            <div class="timeline-content">
+                                <span class="timeline-date">2025.02 - Present</span>
+                                <h3><i class="fas fa-flask"></i> <span data-i18n="job-ra-title">Research Assistant</span></h3>
+                                <p><strong data-i18n="job-ra-company">The University of Hong Kong</strong></p>
+                                <p><strong data-i18n="responsibilities">Responsibilities:</strong> <span data-i18n="job-ra-resp">Working in a research team focusing on lithography, deep learning and artificial intelligence. Responsible for model training, feature extraction, mask optimization, and validation through accurate simulations. Using deep learning methods to optimize lithography processes.</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="internship-experience">
                     <h3 data-aos="fade-up" data-aos-delay="100" class="section-subtitle" data-i18n="internship-exp">Internship Experience</h3>
@@ -1080,7 +1303,7 @@
                                 <h3><i class="fas fa-users"></i> <span data-i18n="practical1-title">Zhuhai·Hengqin 2024 Global Renowned Universities Outstanding Young Talents Summer Practice Project (Government Practice)</span></h3>
                                 <p><strong data-i18n="team-label">Practice Team:</strong> <span data-i18n="practical1-team">30 master's and doctoral students from renowned universities including Oxford, Cambridge, Tsinghua, Peking, HKU, University of Macau, etc.</span></p>
                                 <p><strong data-i18n="org-label">Organizing Unit:</strong> <span data-i18n="practical1-org">Zhuhai Municipal Committee Talent Work Leading Group Office, Zhuhai Municipal Committee of the Communist Youth League, Hengqin Guangdong-Macao In-Depth Cooperation Zone Economic Development Bureau, Macao-Zhuhai Talent Development Promotion Association</span></p>
-                                <p><strong data-i18n="content-label">Practice Content:</strong> <span data-i18n="practical1-content">Enterprise visits to "Chip Trend (Zhuhai), Zhuhai Yunzhou Intelligent, Kingsoft, Huafa Group, AVIC General Aircraft, Zhuhai Hefang Jewelry" and other companies for learning. Technology and entrepreneurship awareness: Participated in academic discussions about "Brain-like Chips" at the "Guangdong Institute of Intelligent Science and Technology"; engaged in communication about "Youth Independent Entrepreneurship" at the "Macao Youth Entrepreneurship Incubation Center".</span></p>
+                                <p><strong data-i18n="content-label">Practice Content:</strong> <span data-i18n="practical1-content">Enterprise visits to "Chip Trend (Zhuhai), Zhuhai Yunzhou Intelligent, Kingsoft, Huafa Group, AVIC General Aircraft, Zhuhai Hefang Jewelry\" and other companies for learning. Technology and entrepreneurship awareness: Participated in academic discussions about "Brain-like Chips" at the "Guangdong Institute of Intelligent Science and Technology"; engaged in communication about "Youth Independent Entrepreneurship" at the "Macao Youth Entrepreneurship Incubation Center".</span></p>
                             </div>
                         </div>
                         
@@ -1114,68 +1337,303 @@
                 
                 <div class="projects-filter" data-aos="fade-up" data-aos-delay="200">
                     <button class="filter-btn active" data-filter="all" data-i18n="all">All</button>
+                    <button class="filter-btn" data-filter="litho" data-i18n="litho">Lithography & Microelectronics</button>
                     <button class="filter-btn" data-filter="ai" data-i18n="ai">AI</button>
                     <button class="filter-btn" data-filter="logistics" data-i18n="logistics-filter">Logistics</button>
                     <button class="filter-btn" data-filter="web" data-i18n="web">Web Development</button>
+                    <button class="filter-btn" data-filter="desktop" data-i18n="desktop">Desktop Applications</button>
+                    <button class="filter-btn" data-filter="mobile" data-i18n="mobile">Mobile Applications</button>
                 </div>
                 
                 <div class="projects-grid" data-aos="fade-up" data-aos-delay="300">
-                    <div class="project-card" data-categories="ai">
+                    <!-- AI Tokenizer Project -->
+                    <div class="project-card" data-categories="ai,web,desktop">
                         <div class="project-header">
-                            <div class="ai-chip-bg"></div>
-                            <i class="fas fa-microchip project-icon"></i>
+                            <!-- 项目图片将通过JavaScript动态加载 -->
                         </div>
                         <div class="project-content">
-                            <h3 data-i18n="proj1-title">AI Chip Design Project</h3>
-                            <p data-i18n="proj1-desc">Designed and implemented a specialized AI accelerator chip for edge computing applications, focusing on power efficiency and performance optimization.</p>
+                            <h3 data-i18n="proj-tokenizer-title">AI Tokenizer Visualizer</h3>
+                            <p data-i18n="proj-tokenizer-desc">An open-source web tool that visualizes token conversion and semantic embeddings based on OpenAI's tokenizer, helping users understand NLP concepts through interactive 3D visualization.</p>
                             <div class="project-tags">
-                                <span data-i18n="tag-asic">ASIC Design</span>
-                                <span data-i18n="tag-neural">Neural Networks</span>
-                                <span data-i18n="tag-edge">Edge Computing</span>
+                                <span data-i18n="tag-nlp">NLP</span>
+                                <span data-i18n="tag-visualization">Visualization</span>
+                                <span data-i18n="tag-web-app">Web App</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="more-details">More Details</span></a>
+                                <a href="https://tiktoken-visualizer.onrender.com" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-tokenizer-tooltip">
+                                This open-source visualization tool showcases how large language models convert text into tokens. Based on OpenAI's tokenizer, it transforms English text into tokens and special prompts, then presents them as 3D vectors to demonstrate semantic relationships. It's an excellent educational resource for understanding tokenization and semantic embedding in AI language processing.
                             </div>
                         </div>
                     </div>
                     
-                    <div class="project-card" data-categories="logistics">
+                    <!-- Lithography Apps -->
+                    <div class="project-card" data-categories="ai,litho,desktop">
                         <div class="project-header">
-                            <div class="logistics-bg">
-                                <i class="fas fa-truck"></i>
-                            </div>
-                            <i class="fas fa-route project-icon"></i>
+                            <!-- 项目图片将通过JavaScript动态加载 -->
                         </div>
                         <div class="project-content">
-                            <h3 data-i18n="proj2-title">Supply Chain Optimization System</h3>
-                            <p data-i18n="proj2-desc">Developed a comprehensive supply chain optimization system using advanced algorithms to minimize costs and improve delivery times for a medium-sized manufacturing company.</p>
+                            <h3 data-i18n="proj-litho-title">Lithography Simulation Suite</h3>
+                            <p data-i18n="proj-litho-desc">A comprehensive suite of desktop applications leveraging deep learning algorithms to simulate proximity effects in lithography, optimize masks, and enhance photoresist curve modeling with 2D/3D visualization capabilities.</p>
                             <div class="project-tags">
-                                <span data-i18n="tag-supply">Supply Chain</span>
-                                <span data-i18n="tag-optimization">Optimization</span>
-                                <span data-i18n="tag-logistics">Logistics</span>
+                                <span data-i18n="tag-deep-learning">Deep Learning</span>
+                                <span data-i18n="tag-simulation">Simulation</span>
+                                <span data-i18n="tag-gui">GUI</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="more-details">More Details</span></a>
+                                <a href="https://www.bilibili.com/video/BV1FEEGzeExD/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-1">OPC Simulation</span></a>
+                                <a href="https://www.bilibili.com/video/BV1FEEGzeE8q/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-2">Proximity Effect</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-litho-tooltip">
+                                This sophisticated desktop application suite simulates crucial lithography manufacturing processes with deep learning algorithms. It predicts proximity effects in lithography, generates optimized initial masks, and enhances photoresist curve modeling. The suite features advanced 2D/3D visualization tools, parameter management, and detailed operation logging, providing comprehensive control and analysis capabilities for semiconductor fabrication.
                             </div>
                         </div>
                     </div>
                     
-                    <div class="project-card" data-categories="web,ai">
+                    <!-- Lithography Support Platform -->
+                    <div class="project-card" data-categories="web,litho,desktop">
                         <div class="project-header">
-                            <div class="ai-chip-bg"></div>
-                            <i class="fas fa-code project-icon"></i>
+                            <!-- 项目图片将通过JavaScript动态加载 -->
                         </div>
                         <div class="project-content">
-                            <h3 data-i18n="proj3-title">AI-Powered Web Application</h3>
-                            <p data-i18n="proj3-desc">Created a web-based tool that uses machine learning algorithms to analyze and visualize complex data sets, helping users make data-driven decisions.</p>
+                            <h3 data-i18n="proj-support-title">Lithography Support Platform</h3>
+                            <p data-i18n="proj-support-desc">A real-time customer support web platform for lithography applications featuring separate user and admin interfaces, live chat functionality, and an intelligent assistant powered by keyword-matching algorithms.</p>
                             <div class="project-tags">
-                                <span data-i18n="tag-web">Web Development</span>
-                                <span data-i18n="tag-ml">Machine Learning</span>
-                                <span data-i18n="tag-data">Data Visualization</span>
+                                <span data-i18n="tag-customer-support">Customer Support</span>
+                                <span data-i18n="tag-real-time">Real-time</span>
+                                <span data-i18n="tag-database">Database</span>
                             </div>
                             <div class="project-links">
-                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="more-details">More Details</span></a>
+                                <a href="https://www.bilibili.com/video/BV1FEEGzeE4T/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-user">User Interface</span></a>
+                                <a href="https://www.bilibili.com/video/BV1JEEGzeERa/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-admin">Admin Panel</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
                             </div>
+                            <div class="project-tooltip" data-i18n="proj-support-tooltip">
+                                This integrated web and database system creates a networked customer support platform specifically for lithography applications. It features distinct login interfaces for users and administrators, a real-time communication system for efficient customer service, and backend management tools. The platform also incorporates an intelligent assistant with keyword-matching algorithms that automatically generates responses to common queries, significantly improving support efficiency.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- iOS Chat App -->
+                    <div class="project-card" data-categories="mobile">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-ios-title">iOS Social Messaging Application</h3>
+                            <p data-i18n="proj-ios-desc">A fully-functional iOS application replicating core social media features including instant messaging, group chats, social feeds, QR code scanning, and user profile management.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-ios">iOS</span>
+                                <span data-i18n="tag-swift">Swift</span>
+                                <span data-i18n="tag-social">Social Media</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1FEEGzeEX4/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-ios-tooltip">
+                                This comprehensive iOS application successfully replicates the core functionality of popular messaging platforms like WeChat. The app features real-time one-on-one and group messaging, social media feed capabilities, QR code scanning for contact additions, and detailed user profile management. Built with Swift and following iOS design principles, it demonstrates advanced mobile development skills and user experience design.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lithography AI Integration -->
+                    <div class="project-card" data-categories="ai,web,litho,desktop">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-ai-integration-title">Lithography AI Assistant</h3>
+                            <p data-i18n="proj-ai-integration-desc">An integrated AI assistant for lithography applications utilizing the Deepseek API, featuring an intuitive web interface that allows users to interact with the AI and view its chain-of-thought reasoning process.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-ai-integration">AI Integration</span>
+                                <span data-i18n="tag-llm">LLM</span>
+                                <span data-i18n="tag-web-interface">Web Interface</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1FEEGzeEvm/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-ai-integration-tooltip">
+                                This project integrates advanced AI capabilities into lithography applications through the Deepseek API. The system features a user-friendly web interface that facilitates natural interaction with the AI assistant. A standout feature is the transparent display of the AI's "chain-of-thought" reasoning process, allowing users to understand how conclusions are reached. This transparency enhances trust in the AI's recommendations and provides educational value about AI reasoning methods.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Specialized RAG System -->
+                    <div class="project-card" data-categories="ai,litho,desktop">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-rag-title">Specialized RAG System</h3>
+                            <p data-i18n="proj-rag-desc">A domain-specific AI assistant leveraging Retrieval-Augmented Generation technology and custom system prompts to enhance Deepseek AI with specialized lithography knowledge, improving accuracy and domain expertise.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-rag">RAG</span>
+                                <span data-i18n="tag-nlp">NLP</span>
+                                <span data-i18n="tag-domain-specific">Domain-Specific AI</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1nEEGzeETq/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-rag-tooltip">
+                                This advanced AI system combines Retrieval-Augmented Generation (RAG) technology with meticulously crafted system prompts to enhance the Deepseek AI model with specialized lithography knowledge. The implementation enables the AI to provide highly accurate, domain-specific responses about lithography applications. The system establishes clear boundaries for its expertise, defining its role as a lithography technology advisor and maintaining focus on relevant technical information to ensure high-quality, contextually appropriate assistance.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Non-conversational AI -->
+                    <div class="project-card" data-categories="ai,desktop">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-non-conv-title">Non-Conversational AI System</h3>
+                            <p data-i18n="proj-non-conv-desc">A backend AI integration system that processes structured API requests to AI models in standardized formats (JSON/JSONL), enabling automated task completion without requiring active user dialogue.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-api">API Integration</span>
+                                <span data-i18n="tag-automation">Automation</span>
+                                <span data-i18n="tag-backend">Backend</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1FEEGzeELp/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-non-streaming">Non-Streaming Output</span></a>
+                                <a href="https://www.bilibili.com/video/BV1nEEGzeEjp/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-streaming">Streaming Output</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-non-conv-tooltip">
+                                This innovative backend system integrates AI capabilities into applications without requiring conversational interaction. The system communicates with AI models through standardized API request formats such as JSON or JSONL, automatically extracting relevant information from user interfaces to construct appropriate prompts. This architecture enables AI to seamlessly perform specific tasks in the background while providing both non-streaming outputs for complete responses and streaming outputs for real-time feedback, enhancing user experience with invisible AI assistance.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- MNIST Web App -->
+                    <div class="project-card" data-categories="ai,web,desktop">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-mnist-title">MNIST Handwriting Recognition</h3>
+                            <p data-i18n="proj-mnist-desc">An educational web application for AI beginners showcasing handwritten digit recognition, allowing users to train models with custom parameters, compare performance, and understand the underlying machine learning principles.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-machine-learning">Machine Learning</span>
+                                <span data-i18n="tag-educational">Educational</span>
+                                <span data-i18n="tag-interactive">Interactive</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1FEEGzeEVE/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-mnist-tooltip">
+                                This educational web application provides an ideal introduction to machine learning concepts through the classic MNIST handwritten digit recognition problem. Users can interactively train their own models by adjusting various parameters, apply these models to recognize digits, and compare performance metrics between different model configurations. The interface transparently reveals the training and prediction processes, making it an excellent learning tool for AI beginners to understand fundamental machine learning concepts in a hands-on environment.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CC Curve Optimization and 2D Modeling -->
+                    <div class="project-card" data-categories="ai,litho,desktop">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-cc-curve-title">Photoresist CC Curve Optimization & 2D Modeling</h3>
+                            <p data-i18n="proj-cc-curve-desc">A specialized tool applying statistical methods to obtain more accurate and realistic photoresist characteristic curves through lithography experiments, enhancing simulation precision for semiconductor manufacturing processes.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-statistics">Statistical Analysis</span>
+                                <span data-i18n="tag-modeling">2D Modeling</span>
+                                <span data-i18n="tag-lithography">Lithography</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1FnEGzAELu/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-cc-curve-tooltip">
+                                This specialized application utilizes diverse statistical methods to analyze lithography experiment data and generate highly accurate photoresist characteristic curves. By implementing advanced data processing algorithms, the tool enables semiconductor engineers to create more precise models that represent real-world photoresist behavior. The resulting enhanced 2D models significantly improve lithography simulation accuracy, leading to better predictions and optimization of manufacturing processes in semiconductor fabrication.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Python Logging and Web Crawler System -->
+                    <div class="project-card" data-categories="ai,litho,desktop">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-python-crawler-title">Python-based Logging & Web Crawler System</h3>
+                            <p data-i18n="proj-python-crawler-desc">An integrated Python system that precisely monitors OPC processes through web crawling techniques, accurately obtaining parameter settings and workflow details from deep learning algorithms to reduce bugs and improve process reliability.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-python">Python</span>
+                                <span data-i18n="tag-web-crawler">Web Crawler</span>
+                                <span data-i18n="tag-logging">Process Logging</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1nEEGzeE77/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-python-crawler-tooltip">
+                                This advanced Python-based system employs sophisticated web crawling techniques to monitor and analyze OPC (Optical Proximity Correction) processes in semiconductor manufacturing. The system automatically tracks and logs specific parameters and workflow sequences of deep learning algorithms, creating comprehensive documentation of each processing step. By implementing detailed logging mechanisms and parameter extraction through web crawling, the system significantly reduces bugs and process failures, enhancing the reliability and efficiency of semiconductor lithography operations.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Coordinate Generation and Management System -->
+                    <div class="project-card" data-categories="desktop">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-3d-coordinate-title">3D Coordinate Generation & Management System</h3>
+                            <p data-i18n="proj-3d-coordinate-desc">A powerful system enabling users to freely create and manage points and geometric solids in 3D space, providing detailed morphological and statistical insights through advanced visualization and analytical capabilities.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-3d-visualization">3D Visualization</span>
+                                <span data-i18n="tag-morphology">Morphological Analysis</span>
+                                <span data-i18n="tag-spatial-analytics">Spatial Analytics</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-3d-coordinate-tooltip">
+                                This comprehensive 3D spatial management system offers a robust platform for creating, manipulating, and analyzing three-dimensional geometrical objects. Users can freely define points in 3D space and generate complex solids while accessing sophisticated analytical tools that provide detailed morphological properties and statistical insights. The system features advanced visualization capabilities, coordinate transformation functions, and statistical analysis tools, making it invaluable for applications in fields requiring spatial modeling and analysis, such as computer graphics, manufacturing simulation, and geometric modeling.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VRP APP Vehicle Routing Problem Solver -->
+                    <div class="project-card" data-categories="logistics,desktop">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-vrp-title">VRP APP: Vehicle Routing Problem Solver</h3>
+                            <p data-i18n="proj-vrp-desc">A comprehensive application for systematically solving vehicle routing problems using the Amap API, allowing users to add warehouse locations, vehicle parameters, and customer details while implementing five optimization algorithms including genetic algorithms.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-optimization-algorithms">Optimization Algorithms</span>
+                                <span data-i18n="tag-map-api">Map API Integration</span>
+                                <span data-i18n="tag-logistics-planning">Logistics Planning</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1DvRQYGEY3/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-vrp-tooltip">
+                                This advanced logistics application provides a comprehensive solution for vehicle routing problems (VRP) by seamlessly integrating with the Amap API. The system allows transportation planners to define warehouse locations, vehicle specifications (capacity, speed, cost), and customer parameters (location, demand) by simply clicking on the map to obtain geographical coordinates. The application implements multiple optimization algorithms, including genetic algorithms, tabu search, simulated annealing, ant colony optimization, and particle swarm optimization, to generate efficient delivery routes that minimize costs and delivery times while satisfying all constraints.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分页控件 -->
+                <div class="pagination-container" data-aos="fade-up" data-aos-delay="400">
+                    <div class="pagination">
+                        <div style="display: flex; align-items: center;">
+                            <button class="page-btn active" data-page="1">1</button>
+                            <button class="page-btn" data-page="2">2</button>
+                        </div>
+                        <div class="page-indicator">
+                            <span data-i18n="page-indicator">Page 1 of 2</span>
                         </div>
                     </div>
                 </div>
@@ -1514,9 +1972,14 @@
     <script>
     // 定义翻译对象
     window.translations = {
-        en: {
-            // Logo
-            "logo": "Liao Wang",
+            en: {
+                // Logo
+                "logo": "Liao Wang",
+                // 工作经验研究助理
+                "work-exp": "Work Experience",
+                "job-ra-title": "Research Assistant", 
+                "job-ra-company": "The University of Hong Kong",
+                "job-ra-resp": "Working in a research team focusing on lithography, deep learning and artificial intelligence. Responsible for model training, feature extraction, mask optimization, and validation through accurate simulations. Using deep learning methods to optimize lithography processes.",
             // 导航菜单
             "home": "Home",
             "about": "About Me",
@@ -1553,13 +2016,13 @@
             
             // 教育经历
             "education-title": "Education",
-            "edu1-date": "2024.08 - 2025.07 (Expected)",
+            "edu1-date": "2024.08 - 2025.07",
             "edu1-degree": "Master of Science in Microelectronics Science and Technology",
-            "edu1-school": "University of Hong Kong",
+            "edu1-school": "The University of Hong Kong",
             "edu1-courses": "Key Courses: Physical Properties of Materials, Integrated Circuit System Design, Nanotechnology, Nanophotonics.",
             "edu2-date": "2020.08 - 2024.06",
             "edu2-degree": "Bachelor of Engineering in Logistics Engineering",
-            "edu2-school": "Polytechnic University",
+            "edu2-school": "The Hong Kong Polytechnic University",
             "edu2-courses": "Key Courses: Operations Research, Supply Chain Management, Logistics Information Systems, Transportation Engineering.",
             
             // 工作经验
@@ -1633,9 +2096,9 @@
             "location": "Location",
             "social-media": "Social Media",
             "send-message": "Send Me a Message",
-            "name": "Name",
+            "name": "Name *",
             "subject": "Subject",
-            "message": "Message",
+            "message": "Message *",
             "send": "Send Message",
             
             // 页脚
@@ -1718,10 +2181,148 @@
             "practical3-team": "35 master's students from Hong Kong's top three universities",
             "practical3-org": "Huawei Technologies Co., Ltd. (Guangdong-Hong Kong-Macao Division)",
             "practical3-content": "Visited Huawei's Songshan Lake base to comprehensively understand the company's history, scale, and achievements. Gained insights into Huawei's internship and campus recruitment policies and positions.",
+            
+            // 项目过滤器新增分类
+            "tools": "Tools & Applications",
+            "mobile": "Mobile Applications",
+            "desktop": "Desktop Applications",
+            "litho": "Lithography & Microelectronics",
+            
+            // AI分词器项目
+            "proj-tokenizer-title": "AI Tokenizer Visualizer",
+            "proj-tokenizer-desc": "An open-source web tool that visualizes token conversion and semantic embeddings based on OpenAI's tokenizer, helping users understand NLP concepts through interactive 3D visualization.",
+            
+            // 光刻模拟套件
+            "proj-litho-title": "Lithography Simulation Suite",
+            "proj-litho-desc": "A comprehensive suite of desktop applications leveraging deep learning algorithms to simulate proximity effects in lithography, optimize masks, and enhance photoresist curve modeling with 2D/3D visualization capabilities.",
+            
+            // 光刻支持平台
+            "proj-support-title": "Lithography Support Platform",
+            "proj-support-desc": "A real-time customer support web platform for lithography applications featuring separate user and admin interfaces, live chat functionality, and an intelligent assistant powered by keyword-matching algorithms.",
+            
+            // iOS社交应用
+            "proj-ios-title": "iOS Social Messaging Application",
+            "proj-ios-desc": "A fully-functional iOS application replicating core social media features including instant messaging, group chats, social feeds, QR code scanning, and user profile management.",
+            
+            // 光刻AI助手
+            "proj-ai-integration-title": "Lithography AI Assistant",
+            "proj-ai-integration-desc": "An integrated AI assistant for lithography applications utilizing the Deepseek API, featuring an intuitive web interface that allows users to interact with the AI and view its chain-of-thought reasoning process.",
+            
+            // 专业RAG系统
+            "proj-rag-title": "Specialized RAG System",
+            "proj-rag-desc": "A domain-specific AI assistant leveraging Retrieval-Augmented Generation technology and custom system prompts to enhance Deepseek AI with specialized lithography knowledge, improving accuracy and domain expertise.",
+            
+            // 非对话式AI
+            "proj-non-conv-title": "Non-Conversational AI System",
+            "proj-non-conv-desc": "A backend AI integration system that processes structured API requests to AI models in standardized formats (JSON/JSONL), enabling automated task completion without requiring active user dialogue.",
+            
+            // MNIST手写识别
+            "proj-mnist-title": "MNIST Handwriting Recognition",
+            "proj-mnist-desc": "An educational web application for AI beginners showcasing handwritten digit recognition, allowing users to train models with custom parameters, compare performance, and understand the underlying machine learning principles.",
+            
+            // 新增标签
+            "tag-nlp": "NLP",
+            "tag-visualization": "Visualization",
+            "tag-web-app": "Web App",
+            "tag-deep-learning": "Deep Learning",
+            "tag-simulation": "Simulation",
+            "tag-gui": "GUI",
+            "tag-customer-support": "Customer Support",
+            "tag-real-time": "Real-time",
+            "tag-database": "Database",
+            "tag-ios": "iOS",
+            "tag-swift": "Swift",
+            "tag-social": "Social Media",
+            "tag-ai-integration": "AI Integration",
+            "tag-llm": "LLM",
+            "tag-web-interface": "Web Interface",
+            "tag-rag": "RAG",
+            "tag-domain-specific": "Domain-Specific AI",
+            "tag-api": "API Integration",
+            "tag-automation": "Automation",
+            "tag-backend": "Backend",
+            "tag-machine-learning": "Machine Learning",
+            "tag-educational": "Educational",
+            "tag-interactive": "Interactive",
+            
+            // 链接文本
+            "demo": "Live Demo",
+            "demo-user": "User Interface Demo",
+            "demo-admin": "Admin Panel Demo",
+            "source-code": "Source Code",
+            "demo-1": "OPC Simulation",
+            "demo-2": "Proximity Effect",
+            "demo-non-streaming": "Non-Streaming Output",
+            "demo-streaming": "Streaming Output",
+            
+            // 工具提示文本
+            "proj-tokenizer-tooltip": "This open-source visualization tool showcases how large language models convert text into tokens. Based on OpenAI's tokenizer, it transforms English text into tokens and special prompts, then presents them as 3D vectors to demonstrate semantic relationships. It's an excellent educational resource for understanding tokenization and semantic embedding in AI language processing.",
+            
+            "proj-litho-tooltip": "This sophisticated desktop application suite simulates crucial lithography manufacturing processes with deep learning algorithms. It predicts proximity effects in lithography, generates optimized initial masks, and enhances photoresist curve modeling. The suite features advanced 2D/3D visualization tools, parameter management, and detailed operation logging, providing comprehensive control and analysis capabilities for semiconductor fabrication.",
+            
+            "proj-support-tooltip": "This integrated web and database system creates a networked customer support platform specifically for lithography applications. It features distinct login interfaces for users and administrators, a real-time communication system for efficient customer service, and backend management tools. The platform also incorporates an intelligent assistant with keyword-matching algorithms that automatically generates responses to common queries, significantly improving support efficiency.",
+            
+            "proj-ios-tooltip": "This comprehensive iOS application successfully replicates the core functionality of popular messaging platforms like WeChat. The app features real-time one-on-one and group messaging, social media feed capabilities, QR code scanning for contact additions, and detailed user profile management. Built with Swift and following iOS design principles, it demonstrates advanced mobile development skills and user experience design.",
+            
+            "proj-ai-integration-tooltip": "This project integrates advanced AI capabilities into lithography applications through the Deepseek API. The system features a user-friendly web interface that facilitates natural interaction with the AI assistant. A standout feature is the transparent display of the AI's \"chain-of-thought\" reasoning process, allowing users to understand how conclusions are reached. This transparency enhances trust in the AI's recommendations and provides educational value about AI reasoning methods.",
+            
+            "proj-rag-tooltip": "This advanced AI system combines Retrieval-Augmented Generation (RAG) technology with meticulously crafted system prompts to enhance the Deepseek AI model with specialized lithography knowledge. The implementation enables the AI to provide highly accurate, domain-specific responses about lithography applications. The system establishes clear boundaries for its expertise, defining its role as a lithography technology advisor and maintaining focus on relevant technical information to ensure high-quality, contextually appropriate assistance.",
+            
+            "proj-non-conv-tooltip": "This innovative backend system integrates AI capabilities into applications without requiring conversational interaction. The system communicates with AI models through standardized API request formats such as JSON or JSONL, automatically extracting relevant information from user interfaces to construct appropriate prompts. This architecture enables AI to seamlessly perform specific tasks in the background while providing both non-streaming outputs for complete responses and streaming outputs for real-time feedback, enhancing user experience with invisible AI assistance.",
+            
+            "proj-mnist-tooltip": "This educational web application provides an ideal introduction to machine learning concepts through the classic MNIST handwritten digit recognition problem. Users can interactively train their own models by adjusting various parameters, apply these models to recognize digits, and compare performance metrics between different model configurations. The interface transparently reveals the training and prediction processes, making it an excellent learning tool for AI beginners to understand fundamental machine learning concepts in a hands-on environment.",
+            
+            // 分页控件
+            "page-indicator": "Page 1 of 2",
+            
+            // CC曲线优化项目
+            "proj-cc-curve-title": "Photoresist CC Curve Optimization & 2D Modeling",
+            "proj-cc-curve-desc": "A specialized tool applying statistical methods to obtain more accurate and realistic photoresist characteristic curves through lithography experiments, enhancing simulation precision for semiconductor manufacturing processes.",
+            "proj-cc-curve-tooltip": "This specialized application utilizes diverse statistical methods to analyze lithography experiment data and generate highly accurate photoresist characteristic curves. By implementing advanced data processing algorithms, the tool enables semiconductor engineers to create more precise models that represent real-world photoresist behavior. The resulting enhanced 2D models significantly improve lithography simulation accuracy, leading to better predictions and optimization of manufacturing processes in semiconductor fabrication.",
+            
+            // 新标签
+            "tag-statistics": "Statistical Analysis",
+            "tag-modeling": "2D Modeling",
+            "tag-lithography": "Lithography",
+
+            // Python爬虫系统
+            "proj-python-crawler-title": "Python-based Logging & Web Crawler System",
+            "proj-python-crawler-desc": "An integrated Python system that precisely monitors OPC processes through web crawling techniques, accurately obtaining parameter settings and workflow details from deep learning algorithms to reduce bugs and improve process reliability.",
+            "proj-python-crawler-tooltip": "This advanced Python-based system employs sophisticated web crawling techniques to monitor and analyze OPC (Optical Proximity Correction) processes in semiconductor manufacturing. The system automatically tracks and logs specific parameters and workflow sequences of deep learning algorithms, creating comprehensive documentation of each processing step. By implementing detailed logging mechanisms and parameter extraction through web crawling, the system significantly reduces bugs and process failures, enhancing the reliability and efficiency of semiconductor lithography operations.",
+
+            // 新标签
+            "tag-python": "Python",
+            "tag-web-crawler": "Web Crawler",
+            "tag-logging": "Process Logging",
+
+            // 3D坐标系统
+            "proj-3d-coordinate-title": "3D Coordinate Generation & Management System",
+            "proj-3d-coordinate-desc": "A powerful system enabling users to freely create and manage points and geometric solids in 3D space, providing detailed morphological and statistical insights through advanced visualization and analytical capabilities.",
+            "proj-3d-coordinate-tooltip": "This comprehensive 3D spatial management system offers a robust platform for creating, manipulating, and analyzing three-dimensional geometrical objects. Users can freely define points in 3D space and generate complex solids while accessing sophisticated analytical tools that provide detailed morphological properties and statistical insights. The system features advanced visualization capabilities, coordinate transformation functions, and statistical analysis tools, making it invaluable for applications in fields requiring spatial modeling and analysis, such as computer graphics, manufacturing simulation, and geometric modeling.",
+            
+            // 新标签
+            "tag-3d-visualization": "3D Visualization",
+            "tag-morphology": "Morphological Analysis",
+            "tag-spatial-analytics": "Spatial Analytics",
+
+            // VRP APP
+            "proj-vrp-title": "VRP APP: Vehicle Routing Problem Solver",
+            "proj-vrp-desc": "A comprehensive application for systematically solving vehicle routing problems using the Amap API, allowing users to add warehouse locations, vehicle parameters, and customer details while implementing five optimization algorithms including genetic algorithms.",
+            "proj-vrp-tooltip": "This advanced logistics application provides a comprehensive solution for vehicle routing problems (VRP) by seamlessly integrating with the Amap API. The system allows transportation planners to define warehouse locations, vehicle specifications (capacity, speed, cost), and customer parameters (location, demand) by simply clicking on the map to obtain geographical coordinates. The application implements multiple optimization algorithms, including genetic algorithms, tabu search, simulated annealing, ant colony optimization, and particle swarm optimization, to generate efficient delivery routes that minimize costs and delivery times while satisfying all constraints.",
+            
+            // 新标签
+            "tag-optimization-algorithms": "Optimization Algorithms",
+            "tag-map-api": "Map API Integration",
+            "tag-logistics-planning": "Logistics Planning",
         },
-        zh: {
-            // Logo
-            "logo": "廖望",
+                    zh: {
+                // Logo
+                "logo": "廖望",
+                // 工作经验研究助理
+                "work-exp": "工作经验",
+                "job-ra-title": "研究助理",
+                "job-ra-company": "香港大学",
+                "job-ra-resp": "在以光刻、深度学习和人工智能为重点的研究团队中工作。负责模型训练、特征提取、掩模(mask)优化，以及通过精确的光刻模拟进行验证。使用深度学习方法对光刻工艺进行优化。",
             // 导航菜单
             "home": "首页",
             "about": "关于我",
@@ -1758,7 +2359,7 @@
             
             // 教育经历
             "education-title": "教育经历",
-            "edu1-date": "2024.08 - 2025.07（预计）",
+            "edu1-date": "2024.08 - 2025.07",
             "edu1-degree": "微电子科学与技术理学硕士",
             "edu1-school": "香港大学",
             "edu1-courses": "主修课程：材料物理性质、集成电路系统设计、纳米技术、纳米光子学。",
@@ -1838,9 +2439,9 @@
             "location": "所在地",
             "social-media": "社交媒体",
             "send-message": "给我留言",
-            "name": "姓名",
+            "name": "姓名 *",
             "subject": "主题",
-            "message": "留言",
+            "message": "留言 *",
             "send": "发送留言",
             
             // 页脚
@@ -1923,59 +2524,258 @@
             "practical3-team": "来自香港前三大学的35名硕士研究生",
             "practical3-org": "华为技术有限公司（粤港澳区域）",
             "practical3-content": "参观华为松山湖基地，全面了解公司历史、规模及成就。了解华为实习和校园招聘政策和岗位。",
+            
+            // 项目过滤器新增分类
+            "tools": "工具与应用",
+            "mobile": "移动应用",
+            "desktop": "桌面应用",
+            "litho": "光刻与微电子",
+            
+            // AI分词器项目
+            "proj-tokenizer-title": "AI分词器可视化工具",
+            "proj-tokenizer-desc": "一款开源的网页工具，基于OpenAI的分词器，将文本转换为词元并生成语义嵌入的三维可视化展示，帮助用户理解自然语言处理的基本概念。",
+            
+            // 光刻模拟套件
+            "proj-litho-title": "光刻工艺模拟套件",
+            "proj-litho-desc": "一套完整的桌面应用程序，利用深度学习算法模拟光刻工艺中的邻近效应，优化掩模设计，并通过2D/3D可视化功能增强光刻胶曲线建模。",
+            
+            // 光刻支持平台
+            "proj-support-title": "光刻APP客户支持平台",
+            "proj-support-desc": "为光刻应用程序开发的实时客户支持网络平台，具有独立的用户和管理员界面、实时聊天功能和基于关键词匹配的智能助手系统。",
+            
+            // iOS社交应用
+            "proj-ios-title": "iOS社交通讯应用",
+            "proj-ios-desc": "功能齐全的iOS应用程序，复制了核心社交媒体功能，包括即时消息、群组聊天、朋友圈动态、二维码扫描和用户个人资料管理。",
+            
+            // 光刻AI助手
+            "proj-ai-integration-title": "光刻工艺AI助手",
+            "proj-ai-integration-desc": "集成Deepseek API的光刻应用程序AI助手，通过直观的网页界面允许用户与AI交互，并查看其思维链推理过程。",
+            
+            // 专业RAG系统
+            "proj-rag-title": "专业知识增强型RAG系统",
+            "proj-rag-desc": "领域特定AI助手，利用检索增强生成技术和自定义系统提示，为Deepseek AI注入专业光刻知识，提高准确性和专业领域专长。",
+            
+            // 非对话式AI系统
+            "proj-non-conv-title": "非对话式AI系统",
+            "proj-non-conv-desc": "后端AI集成系统，以标准格式（JSON/JSONL）处理结构化API请求，在无需用户主动对话的情况下实现自动化任务完成。",
+            
+            // MNIST手写识别
+            "proj-mnist-title": "MNIST手写数字识别应用",
+            "proj-mnist-desc": "面向AI初学者的教育网页应用，展示手写数字识别技术，允许用户使用自定义参数训练模型、比较性能并理解机器学习的基本原理。",
+            
+            // 新增标签
+            "tag-nlp": "自然语言处理",
+            "tag-visualization": "数据可视化",
+            "tag-web-app": "网页应用",
+            "tag-deep-learning": "深度学习",
+            "tag-simulation": "模拟仿真",
+            "tag-gui": "图形界面",
+            "tag-customer-support": "客户支持",
+            "tag-real-time": "实时系统",
+            "tag-database": "数据库",
+            "tag-ios": "iOS开发",
+            "tag-swift": "Swift",
+            "tag-social": "社交媒体",
+            "tag-ai-integration": "AI集成",
+            "tag-llm": "大语言模型",
+            "tag-web-interface": "网页界面",
+            "tag-rag": "检索增强生成",
+            "tag-domain-specific": "领域专用AI",
+            "tag-api": "API集成",
+            "tag-automation": "自动化",
+            "tag-backend": "后端开发",
+            "tag-machine-learning": "机器学习",
+            "tag-educational": "教育应用",
+            "tag-interactive": "交互式",
+            
+            // 链接文本
+            "demo": "演示",
+            "demo-user": "用户界面演示",
+            "demo-admin": "管理员面板演示",
+            "source-code": "源代码",
+            "demo-1": "OPC模拟演示",
+            "demo-2": "临近效应演示",
+            "demo-non-streaming": "非流式输出",
+            "demo-streaming": "流式输出",
+            
+            // 工具提示文本
+            "proj-tokenizer-tooltip": "这个开源可视化工具展示了大型语言模型如何将文本转换为词元。基于OpenAI的分词器，它将英文文本转换为词元和特殊提示词，然后以三维向量的形式呈现，展示语义关系。这是一个理解AI语言处理中的分词和语义嵌入概念的优秀教育资源。",
+            
+            "proj-litho-tooltip": "这套复杂的桌面应用程序套件使用深度学习算法模拟关键的光刻制造过程。它预测光刻中的邻近效应，生成优化的初始掩模，并增强光刻胶曲线建模。该套件具有先进的2D/3D可视化工具、参数管理和详细的操作日志记录功能，为半导体制造提供全面的控制和分析能力。",
+            
+            "proj-support-tooltip": "这个集成的网络和数据库系统专为光刻应用程序创建了一个实时联网的客户支持平台。它具有用户和管理员的独立登录界面、高效客户服务的实时通信系统和后台管理工具。该平台还集成了一个基于关键词匹配算法的智能助手，能自动生成对常见查询的回复，显著提高了支持效率。",
+            
+            "proj-ios-tooltip": "这个全面的iOS应用程序成功复制了像微信这样的流行消息平台的核心功能。该应用具有实时一对一和群组消息、社交媒体动态功能、用于添加联系人的二维码扫描和详细的用户资料管理。采用Swift构建并遵循iOS设计原则，展示了高级移动开发技能和用户体验设计。",
+            
+            "proj-ai-integration-tooltip": "该项目通过Deepseek API将先进的AI功能集成到光刻应用程序中。系统具有用户友好的网页界面，便于用户与AI助手自然交互。一个突出特点是透明显示AI的\"思维链\"推理过程，让用户了解结论是如何得出的。这种透明度增强了对AI建议的信任，并提供了有关AI推理方法的教育价值。",
+            
+            "proj-rag-tooltip": "这个先进的AI系统结合了检索增强生成（RAG）技术和精心设计的系统提示，为Deepseek AI模型注入专业的光刻知识。该实现使AI能够针对光刻应用提供高度准确、特定领域的回应。系统为其专业知识设定了明确的边界，确定其作为光刻技术顾问的角色，并保持对相关技术信息的专注，以确保高质量、上下文适当的支持。",
+            
+            "proj-non-conv-tooltip": "这个创新的后端系统将AI功能集成到应用程序中，无需对话交互。系统通过标准化的API请求格式（如JSON或JSONL）与AI模型通信，自动从用户界面提取相关信息来构建适当的提示。这种架构使AI能够在后台无缝执行特定任务，同时提供非流式输出以获得完整响应和流式输出以获得实时反馈，通过隐形AI辅助增强用户体验。",
+            
+            "proj-mnist-tooltip": "这个教育网页应用通过经典的MNIST手写数字识别问题为机器学习概念提供了理想的入门介绍。用户可以通过调整各种参数交互式地训练自己的模型，应用这些模型识别数字，并比较不同模型配置之间的性能指标。界面透明地展示了训练和预测过程，使其成为AI初学者在实践环境中理解基本机器学习概念的出色学习工具。",
+            
+            // 分页控件
+            "page-indicator": "第1页，共2页",
+            
+            // CC曲线优化项目
+            "proj-cc-curve-title": "光刻胶CC曲线优化与2D建模",
+            "proj-cc-curve-desc": "一种专业工具，通过多种统计学方法分析光刻实验数据，获取更真实准确的光刻胶特性曲线，提高半导体制造过程中的模拟精度。",
+            "proj-cc-curve-tooltip": "这款专业应用程序利用多种统计学方法分析光刻实验数据，生成高精度的光刻胶特性曲线。通过实施先进的数据处理算法，该工具使半导体工程师能够创建更准确地代表实际光刻胶行为的模型。由此产生的增强型2D模型显著提高了光刻模拟的准确性，从而改进半导体制造过程的预测和优化。",
+            
+            // 新标签
+            "tag-statistics": "统计分析",
+            "tag-modeling": "2D建模",
+            "tag-lithography": "光刻工艺",
+
+            // Python爬虫系统
+            "proj-python-crawler-title": "基于Python的日志和爬虫系统",
+            "proj-python-crawler-desc": "一种集成Python系统，通过网络爬虫技术精确监控OPC过程，准确获取深度学习算法的参数设置和工作流程细节，减少错误并提高过程可靠性。",
+            "proj-python-crawler-tooltip": "这个先进的基于Python的系统采用复杂的网络爬虫技术来监控和分析半导体制造中的OPC（光学接近校正）过程。系统自动跟踪并记录深度学习算法的特定参数和工作流程序列，为每个处理步骤创建全面的文档。通过实施详细的日志记录机制和通过网络爬虫进行的参数提取，该系统显著减少了错误和过程失败，提高了半导体光刻操作的可靠性和效率。",
+
+            // 新标签
+            "tag-python": "Python",
+            "tag-web-crawler": "网络爬虫",
+            "tag-logging": "过程日志",
+
+            // 3D坐标系统
+            "proj-3d-coordinate-title": "3D坐标生成与管理系统",
+            "proj-3d-coordinate-desc": "一个功能强大的系统，允许用户在三维空间中自由创建和管理点和几何实体，通过先进的可视化和分析能力提供详细的形态学和统计学见解。",
+            "proj-3d-coordinate-tooltip": "这个全面的3D空间管理系统为创建、操作和分析三维几何对象提供了一个强大的平台。用户可以在三维空间中自由定义点并生成复杂的实体，同时访问提供详细形态特性和统计见解的复杂分析工具。该系统具有先进的可视化功能、坐标转换功能和统计分析工具，使其在需要空间建模和分析的领域，如计算机图形学、制造模拟和几何建模等方面具有非常高的价值。",
+            
+            // 新标签
+            "tag-3d-visualization": "3D可视化",
+            "tag-morphology": "形态学分析",
+            "tag-spatial-analytics": "空间分析",
+
+            // VRP APP
+            "proj-vrp-title": "VRP APP：车辆路径问题解决系统",
+            "proj-vrp-desc": "一款全面的应用程序，使用高德地图API系统化解决车辆路径问题，允许用户添加仓库位置、车辆参数和客户详情，同时实现包括遗传算法在内的五种优化算法。",
+            "proj-vrp-tooltip": "这款先进的物流应用程序通过与高德地图API的无缝集成，为车辆路径问题(VRP)提供了全面的解决方案。该系统允许运输规划人员通过简单地点击地图来获取地理坐标，从而定义仓库位置、车辆规格（容量、速度、成本）和客户参数（位置、需求）。该应用程序实现了多种优化算法，包括遗传算法、禁忌搜索、模拟退火、蚁群优化和粒子群优化，生成高效的配送路线，在满足所有约束条件的同时最小化成本和配送时间。",
+            
+            // 新标签
+            "tag-optimization-algorithms": "优化算法",
+            "tag-map-api": "地图API集成",
+            "tag-logistics-planning": "物流规划",
         }
     };
 
+    // 新增：更新项目筛选按钮标签以显示项目数量
+    function updateProjectCounts() {
+        const projectCards = document.querySelectorAll('.projects-grid .project-card');
+        const categoryCounts = { all: 0 }; // 初始化 'all'
+        const filterButtons = document.querySelectorAll('.projects-filter .filter-btn');
+        
+        let currentLang = localStorage.getItem('preferredLanguage');
+        if (!currentLang) {
+            const activeLangButton = document.querySelector('.language-switch a.active');
+            if (activeLangButton && activeLangButton.dataset.lang) {
+                currentLang = activeLangButton.dataset.lang;
+            } else {
+                currentLang = (navigator.language || navigator.userLanguage).toLowerCase().startsWith('zh') ? 'zh' : 'en';
+            }
+        }
+
+        projectCards.forEach(card => {
+            const categoriesAttr = card.dataset.categories;
+            if (categoriesAttr) {
+                const categories = categoriesAttr.split(',');
+                categories.forEach(category => {
+                    const cleanCategory = category.trim();
+                    if (cleanCategory) {
+                        categoryCounts[cleanCategory] = (categoryCounts[cleanCategory] || 0) + 1;
+                    }
+                });
+            }
+        });
+        categoryCounts.all = projectCards.length;
+
+        filterButtons.forEach(btn => {
+            const filterCategory = btn.dataset.filter;
+            const i18nKey = btn.dataset.i18n;
+            let baseText = "";
+
+            if (i18nKey && window.translations && window.translations[currentLang] && window.translations[currentLang][i18nKey]) {
+                baseText = window.translations[currentLang][i18nKey];
+            } else {
+                console.warn(`Button with filter "${filterCategory}" is missing data-i18n key or translation for lang "${currentLang}". Attempting fallback.`);
+                baseText = btn.textContent.replace(/\\s*\\(\\d+\\)$/, '').trim(); // Try to strip old count
+                if (!baseText && btn.dataset.filter) { 
+                    baseText = btn.dataset.filter.charAt(0).toUpperCase() + btn.dataset.filter.slice(1);
+                     console.warn(`Fallback to filter name for button: ${filterCategory}`);
+                } else if (!baseText) {
+                    console.error(`Could not determine base text for button: ${filterCategory}`);
+                }
+            }
+            
+            const count = categoryCounts[filterCategory] === undefined ? 0 : categoryCounts[filterCategory];
+            
+            if (baseText) {
+               btn.textContent = `${baseText} (${count})`;
+            }
+        });
+    }
+
+    // 新增：根据语言调整项目筛选区域的布局
+    function adjustProjectFilterLayout(currentLang) {
+        const projectsFilterContainer = document.querySelector('.projects-filter');
+        if (!projectsFilterContainer) return;
+
+        // 1. 移除任何已存在的换行辅助元素
+        const existingBreak = projectsFilterContainer.querySelector('#project-filter-break');
+        if (existingBreak) {
+            existingBreak.remove();
+        }
+
+        // 2. 如果是英文，则在"Desktop Applications"按钮前添加换行辅助元素
+        if (currentLang === 'en') {
+            const desktopButton = projectsFilterContainer.querySelector('button[data-filter="desktop"]');
+            if (desktopButton) {
+                const breakEl = document.createElement('div');
+                breakEl.id = 'project-filter-break';
+                breakEl.style.flexBasis = '100%'; // 强制占据整行宽度以实现换行
+                breakEl.style.height = '0'; // 使其不可见且不占用垂直空间
+                breakEl.style.margin = '0';
+                breakEl.style.padding = '0';
+                breakEl.style.fontSize = '0';
+                projectsFilterContainer.insertBefore(breakEl, desktopButton);
+            }
+        }
+    }
+
     // 在DOM加载完成后初始化
     document.addEventListener('DOMContentLoaded', function() {
-        // 获取所有需要切换语言的元素
         const langSwitchers = document.querySelectorAll('.language-switch a');
         
+        // 辅助函数：设置当前激活的语言按钮样式
+        function setActiveButton(lang) {
+            langSwitchers.forEach(s => {
+                s.classList.toggle('active', s.getAttribute('data-lang') === lang);
+            });
+        }
+
+        // 确定并设置初始语言
+        let initialLang = localStorage.getItem('preferredLanguage');
+        if (!initialLang || (initialLang !== 'en' && initialLang !== 'zh')) { // 验证存储的语言或设置默认
+            // 如果本地存储中没有有效语言偏好，则默认设置为英文
+            initialLang = 'en'; 
+        }
+        
+        changeLanguage(initialLang); // 调用此函数以应用初始语言相关的翻译、计数和布局
+        setActiveButton(initialLang); // 设置初始激活的按钮
+
         // 为每个语言按钮添加点击事件
         langSwitchers.forEach(switcher => {
             switcher.addEventListener('click', function(e) {
                 e.preventDefault();
                 const lang = this.getAttribute('data-lang');
                 changeLanguage(lang);
-                
-                // 更新活跃按钮
-                langSwitchers.forEach(s => s.classList.remove('active'));
-                this.classList.add('active');
-                
-                // 保存语言选择到本地存储
-                localStorage.setItem('preferredLanguage', lang);
+                localStorage.setItem('preferredLanguage', lang); // 保存用户选择
+                setActiveButton(lang);
             });
         });
         
-        // 检查本地存储中的语言偏好
-        const savedLang = localStorage.getItem('preferredLanguage');
-        if (savedLang && (savedLang === 'en' || savedLang === 'zh')) {
-            changeLanguage(savedLang);
-            
-            // 更新活跃按钮
-            langSwitchers.forEach(s => {
-                if (s.getAttribute('data-lang') === savedLang) {
-                    s.classList.add('active');
-                } else {
-                    s.classList.remove('active');
-                }
-            });
-        }
-        
-        // 如果用户浏览器语言是中文，则默认显示中文
-        if (!savedLang) {
-            const userLang = navigator.language || navigator.userLanguage;
-            if (userLang.includes('zh')) {
-                changeLanguage('zh');
-                langSwitchers.forEach(s => {
-                    if (s.getAttribute('data-lang') === 'zh') {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
-                    }
-                });
-            }
-        }
+        // 此处不再需要独立的 updateProjectCounts() 调用，因为它已包含在 changeLanguage() 中
     });
 
     // 切换语言的函数
@@ -2034,6 +2834,14 @@
                 console.log('Explicitly updated contact title to:', translations[lang]['contact-title']);
             }
         }
+
+        // 直接更新表单元素
+        updateFormElements(lang);
+
+        // 更新项目计数
+        updateProjectCounts();
+        // 根据语言调整项目筛选按钮布局
+        adjustProjectFilterLayout(lang);
     }
 
     // 更新特殊元素的函数
@@ -2060,8 +2868,9 @@
         document.querySelectorAll('.btn.primary-btn').forEach(btn => {
             if (btn.textContent.includes('Contact')) {
                 btn.textContent = translations[lang]["contact-me"];
-            } else if (btn.textContent.includes('Send')) {
+            } else if (btn.textContent.includes('Send') || btn.textContent.includes('发送')) {
                 btn.textContent = translations[lang]["send"];
+                console.log('Updated send button to:', translations[lang]["send"]);
             }
         });
         
@@ -2071,6 +2880,172 @@
             }
         });
     }
+
+    // 专门用于更新表单元素的函数
+    function updateFormElements(lang) {
+        // 更新表单标签
+        const formLabels = document.querySelectorAll('.form-group label');
+        formLabels.forEach(label => {
+            const key = label.getAttribute('data-i18n');
+            if (key && translations[lang] && translations[lang][key]) {
+                label.textContent = translations[lang][key];
+                console.log('Updated form label:', key, 'to:', translations[lang][key]);
+            }
+        });
+
+        // 更新表单占位符
+        const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+        formInputs.forEach(input => {
+            // 根据输入类型设置适当的占位符
+            if (input.id === 'name') {
+                input.placeholder = lang === 'zh' ? '您的姓名' : 'Your name';
+            } else if (input.id === 'email') {
+                input.placeholder = lang === 'zh' ? '您的电子邮箱' : 'your.email@example.com';
+            } else if (input.id === 'subject') {
+                input.placeholder = lang === 'zh' ? '留言主题' : 'Message subject';
+            } else if (input.id === 'message') {
+                input.placeholder = lang === 'zh' ? '请在这里输入您的留言...' : 'Your message here...';
+            }
+        });
+
+        // 更新发送按钮
+        const submitButton = document.querySelector('#contact-form button[type="submit"]');
+        if (submitButton) {
+            submitButton.textContent = translations[lang]["send"];
+            console.log('Explicitly updated submit button to:', translations[lang]["send"]);
+        }
+    }
     </script>
+    
+    <!-- Added CSS for Mobile Responsiveness -->
+    <style>
+        @media (max-width: 768px) {
+            /* Header and Navigation Adjustments */
+            header .container {
+                flex-direction: column; /* Stack logo, nav, lang-switch */
+                align-items: center; /* Center them */
+                padding-top: 15px; /* Add some padding when content stacks */
+                padding-bottom: 15px;
+            }
+
+            header .logo {
+                margin-bottom: 15px; /* Space below logo */
+            }
+
+            header nav {
+                width: 100%; /* Nav takes full width */
+                margin-top: 0; /* Reset margin if any, use li for spacing */
+                order: 2; /* Ensure nav comes after logo */
+            }
+
+            header nav ul {
+                flex-direction: column; /* Stack nav items */
+                align-items: center; /* Center nav items */
+                padding-left: 0; /* Remove default ul padding */
+                gap: 0; /* Reset gap, use li margin for spacing */
+            }
+
+            header nav ul li {
+                margin-bottom: 12px; /* Space between nav items */
+                width: 100%; /* List items take full width */
+                text-align: center; /* Center text in list items */
+            }
+
+            header nav ul li:last-child {
+                margin-bottom: 0;
+            }
+
+            /* Adjust existing .language-switch for stacked header */
+            .language-switch {
+                position: static; /* Override absolute positioning from other rule */
+                margin-top: 20px; /* Space below nav */
+                order: 3; /* Ensure language switch comes after nav */
+                /* Resetting potentially conflicting styles from the more specific .language-switch rule */
+                right: auto;
+                background: none;
+                padding: 0;
+            }
+            .language-switch a {
+                font-size: 14px; /* Ensure readability */
+                padding: 5px 8px;
+                color: #586069; /* Match non-active desktop link color, or choose mobile-specific */
+            }
+            .language-switch a.active {
+                color: #0366d6; /* Active color */
+                background-color: rgba(3, 102, 214, 0.1); /* Light background for active */
+                border-radius: 4px;
+            }
+            .language-switch .divider {
+                color: #e1e4e8; /* Divider color */
+            }
+
+            /* About Me Cards Stacking */
+            .about-cards {
+                flex-direction: column; /* Stack cards vertically */
+                align-items: center; /* Center cards when stacked */
+            }
+
+            .about-card {
+                width: 90%; /* Adjust width for mobile */
+                max-width: 400px; /* Optional: max width for better readability */
+                margin-bottom: 20px; /* Space between stacked cards */
+            }
+            .about-card:last-child {
+                margin-bottom: 0;
+            }
+
+            /* Section Title Font Size Reduction */
+            h2, .section-title /* General section titles, add .section-title if used */ {
+                font-size: 26px; /* Slightly reduce from typical desktop size */
+                margin-bottom: 25px; /* Adjust space below title */
+            }
+            .section-subtitle {
+                font-size: 20px; /* Adjust subtitle font size */
+            }
+
+            /* Section Padding Reduction */
+            .hero-section { /* Special handling for hero if needed */
+                padding-top: 20px; 
+                padding-bottom: 40px;
+            }
+            .about-section,
+            .education-section,
+            .experience-section,
+            .projects-section,
+            .certifications-section,
+            .skills-section,
+            .awards-section,
+            .contact-section {
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
+
+            /* Timeline adjustments for better mobile readability */
+            .timeline::before {
+                left: 20px; /* Adjust timeline line position */
+            }
+            .timeline-item {
+                width: 100%; /* Make items full width */
+                padding-left: 50px; /* Adjust padding for content */
+                padding-right: 10px;
+            }
+            .timeline-item-left,
+            .timeline-item-right {
+                text-align: left; /* Align all text to left */
+            }
+            .timeline-item-left::before,
+            .timeline-item-right::before {
+                left: 13px; /* Adjust dot position */
+            }
+            .timeline-content {
+                text-align: left;
+            }
+            .timeline-date {
+                position: static; /* Make date flow normally */
+                margin-bottom: 5px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
 </body>
 </html> 

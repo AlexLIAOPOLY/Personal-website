@@ -1335,14 +1335,28 @@
             <div class="container">
                 <h2 data-aos="fade-up">Projects</h2>
                 
-                <div class="projects-filter" data-aos="fade-up" data-aos-delay="200">
+                <!-- 桌面端显示的按钮过滤器 -->
+                <div class="projects-filter desktop-filter" data-aos="fade-up" data-aos-delay="200">
                     <button class="filter-btn active" data-filter="all" data-i18n="all">All</button>
                     <button class="filter-btn" data-filter="litho" data-i18n="litho">Lithography & Microelectronics</button>
                     <button class="filter-btn" data-filter="ai" data-i18n="ai">AI</button>
                     <button class="filter-btn" data-filter="web" data-i18n="web">Web Development</button>
+                    <button class="filter-btn" data-filter="logistics" data-i18n="logistics-filter">Logistics</button>
                     <button class="filter-btn" data-filter="desktop" data-i18n="desktop">Desktop Applications</button>
                     <button class="filter-btn" data-filter="mobile" data-i18n="mobile">Mobile Applications</button>
-                    <button class="filter-btn" data-filter="logistics" data-i18n="logistics-filter">Logistics</button>
+                </div>
+                
+                <!-- 移动端显示的下拉选择框 -->
+                <div class="projects-filter-mobile" data-aos="fade-up" data-aos-delay="200">
+                    <select id="mobile-filter-select" class="mobile-filter-select">
+                        <option value="all" data-i18n="all" selected>All</option>
+                        <option value="litho" data-i18n="litho">Lithography & Microelectronics</option>
+                        <option value="ai" data-i18n="ai">AI</option>
+                        <option value="web" data-i18n="web">Web Development</option>
+                        <option value="desktop" data-i18n="desktop">Desktop Applications</option>
+                        <option value="mobile" data-i18n="mobile">Mobile Applications</option>
+                        <option value="logistics" data-i18n="logistics-filter">Logistics</option>
+                    </select>
                 </div>
                 
                 <div class="projects-grid" data-aos="fade-up" data-aos-delay="300">
@@ -1968,6 +1982,111 @@
     });
     </script>
     
+    <!-- 项目过滤器JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取下拉选择框元素
+        const mobileFilterSelect = document.getElementById('mobile-filter-select');
+        
+        if (mobileFilterSelect) {
+            // 为移动端下拉框添加变化事件监听器
+            mobileFilterSelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+                
+                // 获取所有项目卡片
+                const projectCards = document.querySelectorAll('.project-card');
+                
+                // 清除所有桌面按钮的激活状态
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // 设置对应的桌面按钮为激活状态（为了保持同步）
+                const correspondingBtn = document.querySelector(`.filter-btn[data-filter="${selectedCategory}"]`);
+                if (correspondingBtn) {
+                    correspondingBtn.classList.add('active');
+                }
+                
+                // 对所有项目卡片应用过滤
+                if (selectedCategory === 'all') {
+                    // 显示所有项目
+                    projectCards.forEach(card => {
+                        card.classList.remove('hidden');
+                        // 添加动画效果
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                        }, 50);
+                    });
+                } else {
+                    // 过滤项目
+                    projectCards.forEach(card => {
+                        const cardCategories = card.dataset.categories.split(',');
+                        if (cardCategories.includes(selectedCategory)) {
+                            card.classList.remove('hidden');
+                            // 添加动画效果
+                            setTimeout(() => {
+                                card.classList.add('animate');
+                            }, 50);
+                        } else {
+                            card.classList.add('hidden');
+                            card.classList.remove('animate');
+                        }
+                    });
+                }
+            });
+        }
+        
+        // 同步桌面按钮点击事件到移动端下拉框
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-filter');
+                
+                // 移除所有按钮的活跃状态
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // 添加当前按钮的活跃状态
+                this.classList.add('active');
+                
+                // 同步设置移动端下拉框的值
+                if (mobileFilterSelect) {
+                    mobileFilterSelect.value = category;
+                }
+                
+                // 应用过滤逻辑
+                const projectCards = document.querySelectorAll('.project-card');
+                
+                if (category === 'all') {
+                    // 显示所有项目
+                    projectCards.forEach(card => {
+                        card.classList.remove('hidden');
+                        // 添加动画效果
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                        }, 50);
+                    });
+                } else {
+                    // 过滤项目
+                    projectCards.forEach(card => {
+                        const cardCategories = card.dataset.categories.split(',');
+                        if (cardCategories.includes(category)) {
+                            card.classList.remove('hidden');
+                            // 添加动画效果
+                            setTimeout(() => {
+                                card.classList.add('animate');
+                            }, 50);
+                        } else {
+                            card.classList.add('hidden');
+                            card.classList.remove('animate');
+                        }
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
     <!-- 多语言支持 -->
     <script>
     // 定义翻译对象
@@ -2851,7 +2970,7 @@
         adjustProjectFilterLayout(lang);
     }
 
-    // 更新特殊元素的函数
+            // 更新特殊元素的函数
     function updateSpecialElements(lang) {
         // 更新导航菜单
         const navItems = document.querySelectorAll('nav ul li a');
@@ -2859,6 +2978,15 @@
             const href = item.getAttribute('href').substring(1);
             if (translations[lang][href]) {
                 item.textContent = translations[lang][href];
+            }
+        });
+        
+        // 更新项目筛选下拉选择框
+        const mobileFilterOptions = document.querySelectorAll('.mobile-filter-select option');
+        mobileFilterOptions.forEach(option => {
+            const key = option.getAttribute('data-i18n');
+            if (key && translations[lang] && translations[lang][key]) {
+                option.textContent = translations[lang][key];
             }
         });
         
@@ -2989,65 +3117,71 @@
                 flex-wrap: wrap;
             }
             
-            /* 只针对英文版移动端的项目标签优化 */
-            html[lang="en"] .projects-filter {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-                justify-content: center;
-                margin-bottom: 25px;
-            }
-            
-            html[lang="en"] .filter-btn {
-                width: 100%;
-                font-size: 11px;
-                padding: 7px 3px;
+            /* 移动端显示下拉框，隐藏按钮 */
+            .projects-filter-mobile {
+                display: none;
+                margin: 15px auto 35px;
                 text-align: center;
-                white-space: nowrap;
-                overflow: hidden;
+                padding: 0 15px;
+                position: relative;
+            }
+            
+            .projects-filter-mobile::before {
+                content: '';
+                position: absolute;
+                top: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 40px;
+                height: 3px;
+                background-color: #0366d6;
+                border-radius: 3px;
+            }
+            
+            .mobile-filter-select {
+                width: 80%;
+                max-width: 300px;
+                padding: 12px 40px 12px 20px;
+                border-radius: 30px;
+                border: 1px solid #e1e4e8;
+                background-color: #fff;
+                color: #586069;
+                font-size: 14px;
+                font-weight: 500;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background-image: url("data:image/svg+xml;utf8,<svg fill='%230366d6' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+                background-repeat: no-repeat;
+                background-position: right 15px center;
+                background-size: 20px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                transition: all 0.3s ease;
+                cursor: pointer;
                 text-overflow: ellipsis;
-                border-radius: 20px;
-                margin: 0;
             }
             
-            /* 确保"All"按钮独占一行且居中 */
-            html[lang="en"] .filter-btn[data-filter="all"] {
-                grid-column: 1 / span 2;
-                width: 50%;
-                justify-self: center;
-                font-size: 12px;
-                padding: 8px 5px;
+            /* 中文版下拉框样式优化 */
+            html[lang="zh"] .mobile-filter-select {
+                font-size: 15px;
+                letter-spacing: 1px;
             }
             
-            /* 优化长标签的布局 */
-            html[lang="en"] .filter-btn[data-filter="litho"] {
-                grid-column: 1 / span 2;
-                width: 90%;
-                justify-self: center;
-                font-size: 10px;
+            .mobile-filter-select:focus {
+                outline: none;
+                border-color: #0366d6;
+                box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.15);
             }
             
-            /* 更合理地排列按钮，使每行有意义的组合 */
-            html[lang="en"] .filter-btn[data-filter="ai"] {
-                grid-column: 1 / 2;
-            }
-            
-            html[lang="en"] .filter-btn[data-filter="web"] {
-                grid-column: 2 / 3;
-            }
-            
-            html[lang="en"] .filter-btn[data-filter="desktop"] {
-                grid-column: 1 / 2;
-            }
-            
-            html[lang="en"] .filter-btn[data-filter="mobile"] {
-                grid-column: 2 / 3;
-            }
-            
-            html[lang="en"] .filter-btn[data-filter="logistics"] {
-                grid-column: 1 / span 2;
-                width: 50%;
-                justify-self: center;
+            /* 移动端显示下拉框，隐藏按钮 */
+            @media (max-width: 768px) {
+                .projects-filter.desktop-filter {
+                    display: none;
+                }
+                
+                .projects-filter-mobile {
+                    display: block;
+                }
             }
         }
     </style>

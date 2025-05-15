@@ -2818,7 +2818,7 @@
                 baseText = window.translations[currentLang][i18nKey];
             } else {
                 console.warn(`Button with filter "${filterCategory}" is missing data-i18n key or translation for lang "${currentLang}". Attempting fallback.`);
-                baseText = btn.textContent.replace(/\\s*\\(\\d+\\)$/, '').trim(); // Try to strip old count
+                baseText = btn.textContent.replace(/\s*\(\d+\)$/, '').trim(); // Try to strip old count
                 if (!baseText && btn.dataset.filter) { 
                     baseText = btn.dataset.filter.charAt(0).toUpperCase() + btn.dataset.filter.slice(1);
                      console.warn(`Fallback to filter name for button: ${filterCategory}`);
@@ -2831,6 +2831,26 @@
             
             if (baseText) {
                btn.textContent = `${baseText} (${count})`;
+            }
+        });
+
+        // 更新移动端下拉选项的文本以包含计数
+        const mobileFilterOptions = document.querySelectorAll('#mobile-filter-select option');
+        mobileFilterOptions.forEach(option => {
+            const filterCategory = option.value;
+            // 基础文本应已由 changeLanguage -> updateSpecialElements 设置为翻译后的文本
+            let baseText = option.textContent.replace(/\s*\(\d+\)$/, '').trim(); // 移除可能存在的旧计数
+            const i18nKey = option.dataset.i18n;
+
+            // 如果baseText为空（可能在初始加载时发生），则从translations获取
+            if (!baseText && i18nKey && window.translations && window.translations[currentLang] && window.translations[currentLang][i18nKey]) {
+                baseText = window.translations[currentLang][i18nKey];
+            }
+            
+            const count = categoryCounts[filterCategory] === undefined ? 0 : categoryCounts[filterCategory];
+            
+            if (baseText && baseText.trim()) { // 确保baseText不为空
+               option.textContent = `${baseText} (${count})`;
             }
         });
     }
@@ -3119,7 +3139,7 @@
             
             /* 移动端显示下拉框，隐藏按钮 */
             .projects-filter-mobile {
-                display: none;
+                display: block;
                 margin: 15px auto 35px;
                 text-align: center;
                 padding: 0 15px;
@@ -3182,6 +3202,11 @@
                 .projects-filter-mobile {
                     display: block;
                 }
+            }
+
+            /* 减小移动端项目卡片之间的间距 */
+            .projects-grid {
+                gap: 15px; /* 将桌面端的30px间距减小到15px */
             }
         }
     </style>

@@ -1985,103 +1985,62 @@
     <!-- 项目过滤器JavaScript -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 获取下拉选择框元素
         const mobileFilterSelect = document.getElementById('mobile-filter-select');
-        
+        const desktopFilterButtons = document.querySelectorAll('.projects-filter.desktop-filter .filter-btn');
+        const projectCards = document.querySelectorAll('.projects-grid .project-card');
+
+        function filterAndAnimateProjects(selectedCategory) {
+            const cardsToShow = [];
+
+            // 第一步：重置所有卡片的动画状态，并确定哪些卡片需要隐藏
+            projectCards.forEach(card => {
+                card.classList.remove('animate'); // 移除现有动画类
+                const cardCategories = card.dataset.categories ? card.dataset.categories.split(',') : [];
+                
+                if (selectedCategory === 'all' || cardCategories.includes(selectedCategory)) {
+                    cardsToShow.push(card);
+                } else {
+                    card.classList.add('hidden'); // 隐藏不匹配的卡片
+                }
+            });
+
+            // 第二步：在一个微小的延迟后显示和动画化匹配的卡片
+            // 这允许浏览器在隐藏卡片后首先处理布局重排
+            setTimeout(() => {
+                cardsToShow.forEach(card => {
+                    card.classList.remove('hidden'); // 确保卡片可见
+                    
+                    // 强制重排/重绘，以确保动画从正确状态开始
+                    void card.offsetHeight; 
+                    
+                    card.classList.add('animate'); // 添加动画类
+                });
+            }, 0); // 使用0毫秒延迟将操作推迟到下一个事件循环
+        }
+
         if (mobileFilterSelect) {
-            // 为移动端下拉框添加变化事件监听器
             mobileFilterSelect.addEventListener('change', function() {
                 const selectedCategory = this.value;
-                
-                // 获取所有项目卡片
-                const projectCards = document.querySelectorAll('.project-card');
-                
-                // 清除所有桌面按钮的激活状态
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
+                // 同步桌面按钮的激活状态
+                desktopFilterButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === selectedCategory);
                 });
-                
-                // 设置对应的桌面按钮为激活状态（为了保持同步）
-                const correspondingBtn = document.querySelector(`.filter-btn[data-filter="${selectedCategory}"]`);
-                if (correspondingBtn) {
-                    correspondingBtn.classList.add('active');
-                }
-                
-                // 对所有项目卡片应用过滤
-                if (selectedCategory === 'all') {
-                    // 显示所有项目
-                    projectCards.forEach(card => {
-                        card.classList.remove('hidden');
-                        // 添加动画效果
-                        setTimeout(() => {
-                            card.classList.add('animate');
-                        }, 50);
-                    });
-                } else {
-                    // 过滤项目
-                    projectCards.forEach(card => {
-                        const cardCategories = card.dataset.categories.split(',');
-                        if (cardCategories.includes(selectedCategory)) {
-                            card.classList.remove('hidden');
-                            // 添加动画效果
-                            setTimeout(() => {
-                                card.classList.add('animate');
-                            }, 50);
-                        } else {
-                            card.classList.add('hidden');
-                            card.classList.remove('animate');
-                        }
-                    });
-                }
+                filterAndAnimateProjects(selectedCategory);
             });
         }
         
-        // 同步桌面按钮点击事件到移动端下拉框
-        document.querySelectorAll('.filter-btn').forEach(btn => {
+        desktopFilterButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 const category = this.getAttribute('data-filter');
-                
-                // 移除所有按钮的活跃状态
-                document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
-                
-                // 添加当前按钮的活跃状态
+                // 同步桌面按钮的激活状态
+                desktopFilterButtons.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 
-                // 同步设置移动端下拉框的值
+                // 同步移动端下拉框的值
                 if (mobileFilterSelect) {
                     mobileFilterSelect.value = category;
                 }
-                
-                // 应用过滤逻辑
-                const projectCards = document.querySelectorAll('.project-card');
-                
-                if (category === 'all') {
-                    // 显示所有项目
-                    projectCards.forEach(card => {
-                        card.classList.remove('hidden');
-                        // 添加动画效果
-                        setTimeout(() => {
-                            card.classList.add('animate');
-                        }, 50);
-                    });
-                } else {
-                    // 过滤项目
-                    projectCards.forEach(card => {
-                        const cardCategories = card.dataset.categories.split(',');
-                        if (cardCategories.includes(category)) {
-                            card.classList.remove('hidden');
-                            // 添加动画效果
-                            setTimeout(() => {
-                                card.classList.add('animate');
-                            }, 50);
-                        } else {
-                            card.classList.add('hidden');
-                            card.classList.remove('animate');
-                        }
-                    });
-                }
+                filterAndAnimateProjects(category);
             });
         });
     });

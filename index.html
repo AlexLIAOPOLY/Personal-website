@@ -1339,10 +1339,10 @@
                     <button class="filter-btn active" data-filter="all" data-i18n="all">All</button>
                     <button class="filter-btn" data-filter="litho" data-i18n="litho">Lithography & Microelectronics</button>
                     <button class="filter-btn" data-filter="ai" data-i18n="ai">AI</button>
-                    <button class="filter-btn" data-filter="logistics" data-i18n="logistics-filter">Logistics</button>
                     <button class="filter-btn" data-filter="web" data-i18n="web">Web Development</button>
                     <button class="filter-btn" data-filter="desktop" data-i18n="desktop">Desktop Applications</button>
                     <button class="filter-btn" data-filter="mobile" data-i18n="mobile">Mobile Applications</button>
+                    <button class="filter-btn" data-filter="logistics" data-i18n="logistics-filter">Logistics</button>
                 </div>
                 
                 <div class="projects-grid" data-aos="fade-up" data-aos-delay="300">
@@ -2747,6 +2747,10 @@
     document.addEventListener('DOMContentLoaded', function() {
         const langSwitchers = document.querySelectorAll('.language-switch a');
         
+        // 设置初始HTML语言属性
+        let defaultLang = localStorage.getItem('preferredLanguage') || 'en';
+        document.documentElement.setAttribute('lang', defaultLang);
+        
         // 辅助函数：设置当前激活的语言按钮样式
         function setActiveButton(lang) {
             langSwitchers.forEach(s => {
@@ -2781,6 +2785,9 @@
     // 切换语言的函数
     function changeLanguage(lang) {
         console.log('Changing language to: ' + lang); // 添加调试信息
+        
+        // 设置 html 元素的 lang 属性，用于CSS选择器
+        document.documentElement.setAttribute('lang', lang);
         
         // 更新所有带有data-i18n属性的元素
         const elements = document.querySelectorAll('[data-i18n]');
@@ -2975,6 +2982,72 @@
                 position: static; /* Make date flow normally */
                 margin-bottom: 5px;
                 font-size: 0.85em;
+            }
+            
+            /* 项目过滤器在移动端的优化 */
+            .projects-filter {
+                flex-wrap: wrap;
+            }
+            
+            /* 只针对英文版移动端的项目标签优化 */
+            html[lang="en"] .projects-filter {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                justify-content: center;
+                margin-bottom: 25px;
+            }
+            
+            html[lang="en"] .filter-btn {
+                width: 100%;
+                font-size: 11px;
+                padding: 7px 3px;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                border-radius: 20px;
+                margin: 0;
+            }
+            
+            /* 确保"All"按钮独占一行且居中 */
+            html[lang="en"] .filter-btn[data-filter="all"] {
+                grid-column: 1 / span 2;
+                width: 50%;
+                justify-self: center;
+                font-size: 12px;
+                padding: 8px 5px;
+            }
+            
+            /* 优化长标签的布局 */
+            html[lang="en"] .filter-btn[data-filter="litho"] {
+                grid-column: 1 / span 2;
+                width: 90%;
+                justify-self: center;
+                font-size: 10px;
+            }
+            
+            /* 更合理地排列按钮，使每行有意义的组合 */
+            html[lang="en"] .filter-btn[data-filter="ai"] {
+                grid-column: 1 / 2;
+            }
+            
+            html[lang="en"] .filter-btn[data-filter="web"] {
+                grid-column: 2 / 3;
+            }
+            
+            html[lang="en"] .filter-btn[data-filter="desktop"] {
+                grid-column: 1 / 2;
+            }
+            
+            html[lang="en"] .filter-btn[data-filter="mobile"] {
+                grid-column: 2 / 3;
+            }
+            
+            html[lang="en"] .filter-btn[data-filter="logistics"] {
+                grid-column: 1 / span 2;
+                width: 50%;
+                justify-self: center;
             }
         }
     </style>

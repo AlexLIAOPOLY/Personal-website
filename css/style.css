@@ -254,7 +254,6 @@ header .language-switch .divider {
 .hero-section {
     background: linear-gradient(135deg, #eef1f9, #e0e7ff); /* 浅蓝灰色渐变背景 */
     color: #3e4555;
-    padding: 0;
     text-align: center;
     min-height: 100vh; /* Full viewport height */
     display: flex;
@@ -1310,6 +1309,41 @@ header .language-switch .divider {
         white-space: nowrap;
         overflow: visible;
     }
+    
+    /* 恢复一些重要的样式 */
+    .container {
+        width: 95%;
+        padding: 0 10px;
+    }
+    
+    .hero-slider {
+        margin-bottom: 20px;
+    }
+    
+    .hero-slider-container {
+        height: 300px;
+    }
+    
+    .hero-slide-content {
+        padding: 10px;
+    }
+    
+    .hero-slide h2 {
+        font-size: 1.5em;
+    }
+    
+    .hero-slide p {
+        font-size: 1em;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-card {
+        flex: 0 0 100%;
+        margin-bottom: 20px;
+    }
 }
 
 /* 输入字段动画效果 */
@@ -1391,100 +1425,93 @@ footer p {
 /* Mobile Responsiveness */
 @media(max-width: 768px) {
     header {
-        padding: 8px 0;
+        padding: 3px 0; /* 进一步减小padding */
     }
     
     header .container {
-        padding: 0 10px;
+        padding: 0 8px;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: nowrap;
+        height: 40px; /* 固定高度确保一致性 */
+        max-height: 40px;
     }
     
     header .logo {
-        font-size: 1.2em;
+        font-size: 1.1em;
         margin: 0;
+        flex: 0 0 auto;
+        white-space: nowrap;
     }
     
     header nav {
+        flex: 0 1 auto;
+        margin: 0 5px;
         display: flex;
-        align-items: center;
-        margin: 0;
+        justify-content: center;
     }
     
     header nav ul {
-        display: flex;
-        margin: 0;
-        padding: 0;
-    }
-    
-    header nav ul li {
-        margin-left: 12px;
+        display: none; /* 隐藏所有导航项 */
     }
     
     header .language-switch {
-        margin-left: 12px;
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0;
+        position: static;
         display: flex;
         align-items: center;
+        justify-content: flex-end;
     }
     
     header .language-switch a {
-        padding: 4px 6px;
+        padding: 3px 4px;
         font-size: 0.8em;
     }
     
-    .nav-toggle {
-        display: none;
+    header .language-switch .divider {
+        font-size: 0.8em;
+        margin: 0 2px;
     }
     
     .hero-section {
-        margin-top: 45px;
+        margin-top: 40px; /* 确保内容不被覆盖 */
+        min-height: auto; /* 覆盖桌面端的min-height: 100vh设置 */
+        display: block; /* 覆盖桌面端flex布局 */
+        padding-top: 40px;
+        padding-bottom: 30px;
     }
     
-    header nav.nav-collapsed {
-        display: flex;
+    /* 对其他section的调整 */
+    section {
+        padding: 40px 0;
+    }
+    
+    /* 其他内容优化 */
+    .profile-container {
+        width: 120px;
+        height: 120px;
     }
     
     .hero-section h1 {
-        font-size: 2em;
+        font-size: 1.8em;
+        margin-bottom: 10px;
     }
     
     .hero-section .subtitle {
-        font-size: 1.1em;
-    }
-    
-    .container {
-        width: 95%;
-        padding: 0 10px;
-    }
-    
-    .hero-slider {
-        margin-bottom: 20px;
-    }
-    
-    .hero-slider-container {
-        height: 300px;
-    }
-    
-    .hero-slide-content {
-        padding: 10px;
-    }
-    
-    .hero-slide h2 {
-        font-size: 1.5em;
-    }
-    
-    .hero-slide p {
         font-size: 1em;
+        margin-bottom: 15px;
     }
     
-    .projects-grid {
-        grid-template-columns: 1fr;
+    .hero-buttons {
+        gap: 10px;
     }
     
-    .about-card {
-        flex: 0 0 100%;
-        margin-bottom: 20px;
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.9em;
     }
     
     .timeline::after {
@@ -1592,45 +1619,6 @@ footer p {
 
 .nav-active {
     display: block;
-}
-
-@media (max-width: 768px) {
-    .nav-toggle {
-        display: block;
-    }
-    
-    header .container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    header nav {
-        width: 100%;
-    }
-    
-    header nav ul {
-        width: 100%;
-        flex-direction: column;
-        padding: 10px 0;
-    }
-    
-    header nav ul li {
-        margin: 8px 0;
-        text-align: center;
-    }
-    
-    header nav ul li a {
-        display: block;
-        padding: 8px 0;
-    }
-    
-    header nav ul li a::after {
-        display: none;
-    }
-    
-    .hero-section {
-        margin-top: 70px;
-    }
 }
 
 .preloader {

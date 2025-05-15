@@ -2917,68 +2917,9 @@
     }
     </script>
     
-    <!-- Added CSS for Mobile Responsiveness -->
+    <!-- Mobile Specific Styles - Only for non-header content -->
     <style>
         @media (max-width: 768px) {
-            /* Header and Navigation Adjustments */
-            header .container {
-                flex-direction: column; /* Stack logo, nav, lang-switch */
-                align-items: center; /* Center them */
-                padding-top: 15px; /* Add some padding when content stacks */
-                padding-bottom: 15px;
-            }
-
-            header .logo {
-                margin-bottom: 15px; /* Space below logo */
-            }
-
-            header nav {
-                width: 100%; /* Nav takes full width */
-                margin-top: 0; /* Reset margin if any, use li for spacing */
-                order: 2; /* Ensure nav comes after logo */
-            }
-
-            header nav ul {
-                flex-direction: column; /* Stack nav items */
-                align-items: center; /* Center nav items */
-                padding-left: 0; /* Remove default ul padding */
-                gap: 0; /* Reset gap, use li margin for spacing */
-            }
-
-            header nav ul li {
-                margin-bottom: 12px; /* Space between nav items */
-                width: 100%; /* List items take full width */
-                text-align: center; /* Center text in list items */
-            }
-
-            header nav ul li:last-child {
-                margin-bottom: 0;
-            }
-
-            /* Adjust existing .language-switch for stacked header */
-            .language-switch {
-                position: static; /* Override absolute positioning from other rule */
-                margin-top: 20px; /* Space below nav */
-                order: 3; /* Ensure language switch comes after nav */
-                /* Resetting potentially conflicting styles from the more specific .language-switch rule */
-                right: auto;
-                background: none;
-                padding: 0;
-            }
-            .language-switch a {
-                font-size: 14px; /* Ensure readability */
-                padding: 5px 8px;
-                color: #586069; /* Match non-active desktop link color, or choose mobile-specific */
-            }
-            .language-switch a.active {
-                color: #0366d6; /* Active color */
-                background-color: rgba(3, 102, 214, 0.1); /* Light background for active */
-                border-radius: 4px;
-            }
-            .language-switch .divider {
-                color: #e1e4e8; /* Divider color */
-            }
-
             /* About Me Cards Stacking */
             .about-cards {
                 flex-direction: column; /* Stack cards vertically */
@@ -2990,6 +2931,7 @@
                 max-width: 400px; /* Optional: max width for better readability */
                 margin-bottom: 20px; /* Space between stacked cards */
             }
+            
             .about-card:last-child {
                 margin-bottom: 0;
             }
@@ -2999,47 +2941,36 @@
                 font-size: 26px; /* Slightly reduce from typical desktop size */
                 margin-bottom: 25px; /* Adjust space below title */
             }
+            
             .section-subtitle {
                 font-size: 20px; /* Adjust subtitle font size */
-            }
-
-            /* Section Padding Reduction */
-            .hero-section { /* Special handling for hero if needed */
-                padding-top: 20px; 
-                padding-bottom: 40px;
-            }
-            .about-section,
-            .education-section,
-            .experience-section,
-            .projects-section,
-            .certifications-section,
-            .skills-section,
-            .awards-section,
-            .contact-section {
-                padding-top: 40px;
-                padding-bottom: 40px;
             }
 
             /* Timeline adjustments for better mobile readability */
             .timeline::before {
                 left: 20px; /* Adjust timeline line position */
             }
+            
             .timeline-item {
                 width: 100%; /* Make items full width */
                 padding-left: 50px; /* Adjust padding for content */
                 padding-right: 10px;
             }
+            
             .timeline-item-left,
             .timeline-item-right {
                 text-align: left; /* Align all text to left */
             }
+            
             .timeline-item-left::before,
             .timeline-item-right::before {
                 left: 13px; /* Adjust dot position */
             }
+            
             .timeline-content {
                 text-align: left;
             }
+            
             .timeline-date {
                 position: static; /* Make date flow normally */
                 margin-bottom: 5px;

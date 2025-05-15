@@ -1969,4 +1969,75 @@ header .language-switch .divider {
 .project-content {
     line-height: normal; /* 恢复内容区的行高 */
     font-size: 1rem; /* 恢复内容区字体大小 */
+}
+
+/* 桌面端项目过滤器 */
+.projects-filter.desktop-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+/* 移动端项目过滤器 */
+.projects-filter-mobile {
+    display: none;
+    margin: 15px auto 35px;
+    text-align: center;
+    padding: 0 15px;
+    position: relative;
+}
+
+/* 移动端下拉框样式 */
+.mobile-filter-select {
+    width: 80%;
+    max-width: 300px;
+    padding: 12px 40px 12px 20px;
+    border-radius: 30px;
+    border: 1px solid #e1e4e8;
+    background-color: #fff;
+    color: #586069;
+    font-size: 14px;
+    font-weight: 500;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%230366d6' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* 移动端下拉框悬停和焦点样式 */
+.mobile-filter-select:hover,
+.mobile-filter-select:focus {
+    border-color: #0366d6;
+    box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.15);
+    outline: none;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .projects-filter.desktop-filter {
+        display: none;
+    }
+    
+    .projects-filter-mobile {
+        display: block;
+    }
+}
+
+/* 桌面端适配 */
+@media (min-width: 769px) {
+    .projects-filter.desktop-filter {
+        display: flex;
+    }
+    
+    .projects-filter-mobile {
+        display: none;
+    }
 } 

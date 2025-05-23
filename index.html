@@ -591,6 +591,7 @@
         .project-header {
             position: relative;
             width: 100%;
+            height: 180px; /* 固定高度确保一致性 */
             overflow: hidden;
             background-color: #f6f8fa;
             border-top-left-radius: 10px;
@@ -1091,6 +1092,169 @@
         .subtitle .uni-name-highlight {
             font-weight: 500;
         }
+
+        /* 项目卡片的日期样式 */
+        .project-meta {
+            display: flex;
+            /* justify-content: flex-end; */ /* 改为左对齐或按需调整 */
+            justify-content: flex-start; /* 日期显示在左边 */
+            align-items: center; /* 确保图标和文字垂直对齐 */
+            margin-top: 15px; /* 增加与上方内容的间距 */
+            margin-bottom: 0; /* 移除底部外边距，如果链接在下方则不需要 */
+            padding-top: 10px; /* 顶部留一些空间 */
+            /* border-top: 1px dashed rgba(0, 0, 0, 0.07); */ /* 移除虚线 */
+            font-size: 11px; /* 减小字号 */
+            color: #999; /* 使用更浅的灰色 */
+        }
+
+        .project-meta .project-date {
+            display: flex;
+            align-items: center;
+        }
+
+        .project-meta .project-date i {
+            margin-right: 6px; /* 图标和文字间距 */
+            color: #0366d6; /* 可以保持图标颜色或也变浅 */
+            font-size: 11px; /* 统一字号 */
+        }
+
+        /* 根据语言显示相应的日期和浏览量文本 */
+        html[lang="en"] .date-text .zh,
+        html[lang="en"] .project-views .views-text .zh {
+            display: none;
+        }
+
+        html[lang="zh"] .date-text .en,
+        html[lang="zh"] .project-views .views-text .en {
+            display: none;
+        }
+
+        /* 将阅读次数放到图片右下角并调整样式 */
+        .project-header {
+            position: relative;
+            width: 100%;
+            height: 180px; /* 固定高度确保一致性 */
+            overflow: hidden;
+            background-color: #f6f8fa;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            z-index: 1; /* 确保header在内容之下，但在背景之上 */
+        }
+
+        /* 项目头图的图片/占位符样式 */
+        .project-header .ai-chip-bg,
+        .project-header .logistics-bg,
+        .project-header img { /* 假设有img标签用于实际图片 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 确保图片覆盖整个区域 */
+            z-index: 2; /* 图片在header背景之上，但在浏览量之下 */
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .project-views {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5); /* 稍微调整透明度以获得更好的可见性 */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            backdrop-filter: blur(3px);
+            z-index: 3; /* 确保浏览量在图片之上 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+        }
+
+        .project-views .views-count {
+            margin-right: 4px; /* 添加右侧外边距，在数字和文本之间创建空间 */
+        }
+
+        .project-views i {
+            margin-right: 5px;
+            font-size: 13px;
+            opacity: 0.7; /* 降低图标不透明度 */
+        }
+
+        /* 确保在暗模式下依然可见 */
+        @media (prefers-color-scheme: dark) {
+            .project-meta {
+                color: #aaa;
+            }
+            
+            .project-views {
+                background: rgba(255, 255, 255, 0.3);
+                color: #fff;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .project-meta {
+                justify-content: flex-end;
+                font-size: 11px;
+            }
+            
+            .project-header {
+                height: 160px; /* 移动端稍微减小高度 */
+            }
+            .project-views {
+                font-size: 11px;
+                padding: 4px 8px;
+            }
+            .project-views i {
+                font-size: 12px;
+            }
+        }
+
+        /* Force visibility for contact section elements affected by AOS */
+        #contact h2[data-aos],
+        #contact .contact-cards[data-aos],
+        #contact .contact-form[data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+        }
+
+        /* Force visibility for skills section elements affected by AOS */
+        #skills h2[data-aos],
+        #skills .skills-grid[data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+        }
+
+        /* Force visibility for awards section elements affected by AOS */
+        #awards h2[data-aos],
+        #awards .awards-grid[data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+        }
+
+        /* Force visibility for projects section elements affected by AOS */
+        #projects h2[data-aos],
+        #projects .projects-grid[data-aos],
+        #projects .projects-filter[data-aos],
+        #projects .projects-filter-mobile[data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+        }
+
+        /* Force visibility for certifications section elements affected by AOS */
+        #certifications h2[data-aos],
+        #certifications .certifications-grid[data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+            visibility: visible !important;
+        }
     </style>
 </head>
 <body>
@@ -1136,7 +1300,7 @@
                     <div class="hero-slider" data-aos="fade-up">
                         <div class="hero-slider-container">
                             <div class="hero-slide">
-                                <img src="images/slider/slide1.jpg" alt="Welcome Slide">
+                                <img src="BGM.JPG" alt="Welcome Slide">
                                 <div class="hero-slide-overlay"></div>
                                 <div class="hero-slide-content">
                                     <div class="profile-container">
@@ -1368,6 +1532,13 @@
                     <div class="project-card" data-categories="ai,web,desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="312">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">312</span> <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-tokenizer-title">AI Tokenizer Visualizer</h3>
@@ -1377,6 +1548,17 @@
                                 <span data-i18n="tag-visualization">Visualization</span>
                                 <span data-i18n="tag-web-app">Web App</span>
                             </div>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-05-03">
+                                        <span class="en">May 3, 2025</span>
+                                        <span class="zh">2025年5月3日</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <div class="project-links">
                                 <a href="https://tiktoken-visualizer.onrender.com" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> <span data-i18n="try-now-tokenizer">Try Now</span></a>
                                 <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
@@ -1391,6 +1573,13 @@
                     <div class="project-card" data-categories="ai,litho,desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="327">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">327</span> <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-litho-title">Lithography Simulation Suite</h3>
@@ -1400,6 +1589,17 @@
                                 <span data-i18n="tag-simulation">Simulation</span>
                                 <span data-i18n="tag-gui">GUI</span>
                             </div>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-05-12">
+                                        <span class="en">May 12, 2025</span>
+                                        <span class="zh">2025年5月12日</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1FEEGzeExD/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-1">OPC Simulation</span></a>
                                 <a href="https://www.bilibili.com/video/BV1FEEGzeE8q/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-2">Proximity Effect</span></a>
@@ -1415,6 +1615,13 @@
                     <div class="project-card" data-categories="web,litho,desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="343">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">343</span> <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-support-title">Lithography Support Platform</h3>
@@ -1424,6 +1631,17 @@
                                 <span data-i18n="tag-real-time">Real-time</span>
                                 <span data-i18n="tag-database">Database</span>
                             </div>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-05-18">
+                                        <span class="en">May 18, 2025</span>
+                                        <span class="zh">2025年5月18日</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1FEEGzeE4T/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-user">User Interface</span></a>
                                 <a href="https://www.bilibili.com/video/BV1JEEGzeERa/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-admin">Admin Panel</span></a>
@@ -1439,6 +1657,13 @@
                     <div class="project-card" data-categories="mobile">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="356">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">356</span> <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-ios-title">iOS Social Messaging Application</h3>
@@ -1448,6 +1673,17 @@
                                 <span data-i18n="tag-swift">Swift</span>
                                 <span data-i18n="tag-social">Social Media</span>
                             </div>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-05-05">
+                                        <span class="en">May 5, 2025</span>
+                                        <span class="zh">2025年5月5日</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1FEEGzeEX4/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
                                 <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
@@ -1462,6 +1698,13 @@
                     <div class="project-card" data-categories="ai,web,litho,desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="398">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">398</span> <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-ai-integration-title">Lithography AI Assistant</h3>
@@ -1471,52 +1714,17 @@
                                 <span data-i18n="tag-llm">LLM</span>
                                 <span data-i18n="tag-web-interface">Web Interface</span>
                             </div>
-                            <div class="project-links">
-                                <a href="https://www.bilibili.com/video/BV1FEEGzeEvm/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
-                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-05-22">
+                                        <span class="en">May 22, 2025</span>
+                                        <span class="zh">2025年5月22日</span>
+                                    </span>
+                                </div>
                             </div>
-                            <div class="project-tooltip" data-i18n="proj-ai-integration-tooltip">
-                                This project integrates advanced AI capabilities into lithography applications through the Deepseek API. The system features a user-friendly web interface that facilitates natural interaction with the AI assistant. A standout feature is the transparent display of the AI's "chain-of-thought" reasoning process, allowing users to understand how conclusions are reached. This transparency enhances trust in the AI's recommendations and provides educational value about AI reasoning methods.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Specialized RAG System -->
-                    <div class="project-card" data-categories="ai,litho,desktop">
-                        <div class="project-header">
-                            <!-- 项目图片将通过JavaScript动态加载 -->
-                        </div>
-                        <div class="project-content">
-                            <h3 data-i18n="proj-rag-title">Specialized RAG System</h3>
-                            <p data-i18n="proj-rag-desc">A domain-specific AI assistant leveraging Retrieval-Augmented Generation technology and custom system prompts to enhance Deepseek AI with specialized lithography knowledge, improving accuracy and domain expertise.</p>
-                            <div class="project-tags">
-                                <span data-i18n="tag-rag">RAG</span>
-                                <span data-i18n="tag-nlp">NLP</span>
-                                <span data-i18n="tag-domain-specific">Domain-Specific AI</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="https://www.bilibili.com/video/BV1nEEGzeETq/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
-                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
-                            </div>
-                            <div class="project-tooltip" data-i18n="proj-rag-tooltip">
-                                This advanced AI system combines Retrieval-Augmented Generation (RAG) technology with meticulously crafted system prompts to enhance the Deepseek AI model with specialized lithography knowledge. The implementation enables the AI to provide highly accurate, domain-specific responses about lithography applications. The system establishes clear boundaries for its expertise, defining its role as a lithography technology advisor and maintaining focus on relevant technical information to ensure high-quality, contextually appropriate assistance.
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Non-conversational AI -->
-                    <div class="project-card" data-categories="ai,desktop">
-                        <div class="project-header">
-                            <!-- 项目图片将通过JavaScript动态加载 -->
-                        </div>
-                        <div class="project-content">
-                            <h3 data-i18n="proj-non-conv-title">Non-Conversational AI System</h3>
-                            <p data-i18n="proj-non-conv-desc">A backend AI integration system that processes structured API requests to AI models in standardized formats (JSON/JSONL), enabling automated task completion without requiring active user dialogue.</p>
-                            <div class="project-tags">
-                                <span data-i18n="tag-api">API Integration</span>
-                                <span data-i18n="tag-automation">Automation</span>
-                                <span data-i18n="tag-backend">Backend</span>
-                            </div>
+                            
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1FEEGzeELp/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-non-streaming">Non-Streaming Output</span></a>
                                 <a href="https://www.bilibili.com/video/BV1nEEGzeEjp/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-streaming">Streaming Output</span></a>
@@ -1532,6 +1740,13 @@
                     <div class="project-card" data-categories="ai,web,desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="150">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">150</span> <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-mnist-title">MNIST Handwriting Recognition</h3>
@@ -1540,6 +1755,15 @@
                                 <span data-i18n="tag-machine-learning">Machine Learning</span>
                                 <span data-i18n="tag-educational">Educational</span>
                                 <span data-i18n="tag-interactive">Interactive</span>
+                            </div>
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-04-20">
+                                        <span class="en">Apr 20, 2025</span>
+                                        <span class="zh">2025年4月20日</span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1FEEGzeEVE/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
@@ -1555,6 +1779,14 @@
                     <div class="project-card" data-categories="ai,litho,desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="120">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">120</span>
+                                <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-cc-curve-title">Photoresist CC Curve Optimization & 2D Modeling</h3>
@@ -1563,6 +1795,15 @@
                                 <span data-i18n="tag-statistics">Statistical Analysis</span>
                                 <span data-i18n="tag-modeling">2D Modeling</span>
                                 <span data-i18n="tag-lithography">Lithography</span>
+                            </div>
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-04-15">
+                                        <span class="en">Apr 15, 2025</span>
+                                        <span class="zh">2025年4月15日</span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1FnEGzAELu/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
@@ -1578,6 +1819,14 @@
                     <div class="project-card" data-categories="ai,litho,desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="180">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">180</span>
+                                <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-python-crawler-title">Python-based Logging & Web Crawler System</h3>
@@ -1586,6 +1835,15 @@
                                 <span data-i18n="tag-python">Python</span>
                                 <span data-i18n="tag-web-crawler">Web Crawler</span>
                                 <span data-i18n="tag-logging">Process Logging</span>
+                            </div>
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-04-10">
+                                        <span class="en">Apr 10, 2025</span>
+                                        <span class="zh">2025年4月10日</span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1nEEGzeE77/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
@@ -1601,6 +1859,14 @@
                     <div class="project-card" data-categories="desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="100">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">100</span>
+                                <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-3d-coordinate-title">3D Coordinate Generation & Management System</h3>
@@ -1624,6 +1890,14 @@
                     <div class="project-card" data-categories="logistics,desktop">
                         <div class="project-header">
                             <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="220">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">220</span>
+                                <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="project-content">
                             <h3 data-i18n="proj-vrp-title">VRP APP: Vehicle Routing Problem Solver</h3>
@@ -2182,6 +2456,10 @@
             "location": "Location",
             "social-media": "Social Media",
             "send-message": "Send Me a Message",
+            "name": "Name *",
+            "subject": "Subject",
+            "message": "Message *",
+            "send": "Send Message",
             
             // 页脚
             "copyright": "All Rights Reserved.",
@@ -2397,6 +2675,7 @@
             "tag-map-api": "Map API Integration",
             "tag-logistics-planning": "Logistics Planning",
             "try-now-tokenizer": "Try Now",
+            "demo-3d-coordinate": "Live Demo", // Added missing key
         },
                     zh: {
                 // Logo
@@ -2938,6 +3217,7 @@
             }
         }
         
+        /*
         if (translations[lang]['contact-title']) {
             const contactTitle = document.querySelector('#contact h2');
             if (contactTitle) {
@@ -2945,6 +3225,7 @@
                 console.log('Explicitly updated contact title to:', translations[lang]['contact-title']);
             }
         }
+        */
 
         // 直接更新表单元素
         updateFormElements(lang);
@@ -3178,3 +3459,4 @@
     </style>
 </body>
 </html> 
+</rewritten_file>

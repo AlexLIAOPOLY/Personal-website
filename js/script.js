@@ -748,27 +748,93 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // 初始化项目卡片功能
+    // 初始化项目卡片功能，并处理基于LocalStorage的浏览量增加
     const initProjectCards = () => {
-        // 添加项目卡片悬停效果
         const projectCards = document.querySelectorAll('.project-card');
-        
+        const today = new Date().toISOString().split('T')[0]; // 获取 YYYY-MM-DD格式的今天日期
+
+        const observerOptions = {
+            root: null, // 使用浏览器视口作为根
+            rootMargin: '0px',
+            threshold: 0.1 // 卡片至少10%可见时触发
+        };
+
+        const  projectCardObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    const projectTitleKey = card.querySelector('h3[data-i18n]')?.getAttribute('data-i18n');
+
+                    if (!projectTitleKey) {
+                        console.warn('Project card missing h3[data-i18n] attribute, cannot track views for:', card);
+                        observer.unobserve(card); // 停止观察无效卡片
+                        return;
+                    }
+
+                    const viewCountStorageKey = `viewCount_${projectTitleKey}`;
+                    const lastIncrementDateStorageKey = `lastViewIncrement_${projectTitleKey}`;
+
+                    let currentViews = 0;
+                    const storedViews = localStorage.getItem(viewCountStorageKey);
+                    const htmlDataViewCount = card.querySelector('.project-views')?.getAttribute('data-view-count');
+                    
+                    if (storedViews !== null) {
+                        currentViews = parseInt(storedViews, 10);
+                    } else if (htmlDataViewCount !== null && !isNaN(parseInt(htmlDataViewCount, 10))) {
+                        currentViews = parseInt(htmlDataViewCount, 10);
+                    } else {
+                        currentViews = 0; // 如果都没有，则从0开始
+                    }
+
+                    const lastIncrementDate = localStorage.getItem(lastIncrementDateStorageKey);
+
+                    if (lastIncrementDate !== today) {
+                        currentViews++; // 增加浏览量
+                        localStorage.setItem(viewCountStorageKey, currentViews.toString());
+                        localStorage.setItem(lastIncrementDateStorageKey, today);
+                        console.log(`View count for ${projectTitleKey} incremented to ${currentViews} on ${today}`);
+                    }
+
+                    // 更新页面上的浏览量显示
+                    const viewsCountElement = card.querySelector('.project-views .views-count');
+                    if (viewsCountElement) {
+                        viewsCountElement.textContent = currentViews;
+                    }
+                    // 更新 data-view-count 属性，以便其他依赖此属性的逻辑（如果有）能获取到最新值
+                    const projectViewsDiv = card.querySelector('.project-views');
+                    if (projectViewsDiv) {
+                        projectViewsDiv.setAttribute('data-view-count', currentViews.toString());
+                    }
+
+                    // 处理完后停止观察此卡片，避免重复触发
+                    observer.unobserve(card);
+                }
+            });
+        }, observerOptions);
+
         projectCards.forEach(card => {
-            // 确保卡片一开始是可见的并带有动画
-            card.style.display = 'flex';
-            card.classList.add('animate');
-            
-            // 处理卡片中的图像
-            const header = card.querySelector('.project-header');
-            if (header) {
-                // 确保16:9比例显示
-                const headerBg = header.querySelector('.ai-chip-bg, .logistics-bg');
-                if (headerBg) {
-                    headerBg.style.position = 'absolute';
-                    headerBg.style.width = '100%';
-                    headerBg.style.height = '100%';
+            // 确保卡片一开始是可见的并带有动画 (如果初始过滤器允许)
+            // card.style.display = 'flex'; //  这个由过滤器控制
+            // card.classList.add('animate'); // 这个也由过滤器控制
+
+            const viewsCountElement = card.querySelector('.project-views .views-count');
+            const projectViewsDiv = card.querySelector('.project-views');
+            const projectTitleKey = card.querySelector('h3[data-i18n]')?.getAttribute('data-i18n');
+            const htmlDataViewCount = projectViewsDiv?.getAttribute('data-view-count');
+
+            // 初始化显示：优先从LocalStorage读取，否则用HTML中的值
+            if (projectTitleKey) {
+                const storedViews = localStorage.getItem(`viewCount_${projectTitleKey}`);
+                if (storedViews !== null) {
+                    if (viewsCountElement) viewsCountElement.textContent = storedViews;
+                    if (projectViewsDiv) projectViewsDiv.setAttribute('data-view-count', storedViews);
+                } else if (htmlDataViewCount !== null && viewsCountElement) {
+                     viewsCountElement.textContent = htmlDataViewCount; // 确保初始显示HTML值
                 }
             }
+
+            // 开始观察卡片
+            projectCardObserver.observe(card);
         });
     };
 
@@ -921,8 +987,14 @@ function initProjectImageSliders() {
         const projectHeader = card.querySelector('.project-header');
         if (!projectHeader) return;
         
-        // 清空现有内容，确保没有额外的文本节点
-        projectHeader.textContent = '';
+        // 保存现有的 project-views 元素（如果存在）
+        const existingViews = projectHeader.querySelector('.project-views');
+        
+        // 清空现有内容，确保没有额外的文本节点，但保留 project-views
+        projectHeader.innerHTML = ''; // 使用 innerHTML 清空，以便后续可以重新插入元素
+        if (existingViews) {
+            projectHeader.appendChild(existingViews); // 先把views加回去，确保它在最上层（如果需要）
+        }
         
         // 创建图片滑动容器
         const sliderContainer = document.createElement('div');

@@ -935,10 +935,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const totalPages = Math.ceil(totalMatchingCards / cardsPerPage);
         
-        // 如果只有一页，隐藏分页
-        if (totalPages <= 1) {
-            paginationContainer.style.display = 'none';
-        } else {
+        // 始终显示分页控件，即使只有一页
             paginationContainer.style.display = 'flex';
             
             // 确保只显示需要的页码按钮
@@ -946,7 +943,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (index < totalPages) {
                     btn.style.display = 'flex';
                 } else {
-                    btn.style.display = 'none';
+                // 即使没有内容也显示按钮，但禁用它
+                btn.style.display = 'flex';
+                btn.disabled = index >= totalPages;
+                btn.style.opacity = index >= totalPages ? '0.5' : '1';
+                btn.style.cursor = index >= totalPages ? 'not-allowed' : 'pointer';
                 }
             });
             
@@ -955,10 +956,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (pageIndicator) {
                 const lang = localStorage.getItem('preferredLanguage') || 'en';
                 if (lang === 'en') {
-                    pageIndicator.textContent = `Page 1 of ${totalPages}`;
+                pageIndicator.textContent = `Page 1 of ${Math.max(1, totalPages)}`;
                 } else {
-                    pageIndicator.textContent = `第1页，共${totalPages}页`;
-                }
+                pageIndicator.textContent = `第1页，共${Math.max(1, totalPages)}页`;
             }
         }
     }
@@ -1093,7 +1093,9 @@ function getFolderNameForProject(projectTitle) {
         'proj-cc-curve-title': 'Photoresist-CC-Curve-Optimization',
         'proj-python-crawler-title': 'Python-Logging-Web-Crawler',
         'proj-3d-coordinate-title': '3D-Coordinate-Generation',
-        'proj-vrp-title': 'VRP-APP-Vehicle-Routing'
+        'proj-vrp-title': 'VRP-APP-Vehicle-Routing',
+        'proj-langchain-rag-title': 'Langchain_RAG_Streamlit',
+        'proj-langchain-agent-title': 'Langchain_Agent_Functioncalling_Streamlit'
     };
     
     const folder = titleToFolder[projectTitle] || 'default';
@@ -1118,7 +1120,9 @@ function getProjectName(projectTitle) {
         'proj-cc-curve-title': 'Photoresist CC Curve Optimization',
         'proj-python-crawler-title': 'Python Logging Web Crawler',
         'proj-3d-coordinate-title': '3D Coordinate Generation',
-        'proj-vrp-title': 'VRP APP Vehicle Routing'
+        'proj-vrp-title': 'VRP APP Vehicle Routing',
+        'proj-langchain-rag-title': 'Langchain RAG Streamlit',
+        'proj-langchain-agent-title': 'Langchain Agent with Function Calling'
     };
     
     return titleToName[projectTitle] || 'Project';

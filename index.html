@@ -1035,8 +1035,11 @@
         /* 分页控件样式 */
         .pagination-container {
             margin-top: 50px;
-            display: flex;
+            display: flex !important; /* 强制显示 */
             justify-content: center;
+            opacity: 1 !important; /* 确保始终可见 */
+            visibility: visible !important; /* 确保始终可见 */
+            transform: none !important; /* 移除所有变换效果 */
         }
         
         /* 工作经验区块样式 */
@@ -1051,42 +1054,52 @@
             display: flex;
             align-items: center;
             background: white;
-            padding: 10px 15px;
-            border-radius: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 12px 16px;
+            border-radius: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e1e4e8;
         }
         
         .page-btn {
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: none;
-            border: none;
-            font-weight: 500;
-            margin: 0 5px;
+            background: #f6f8fa;
+            border: 2px solid #e1e4e8;
+            font-weight: 600;
+            margin: 0 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 14px;
-            color: #586069;
+            color: #24292e;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
         .page-btn:hover {
-            background: #f6f8fa;
+            background: #eef2ff;
             color: #0366d6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(3, 102, 214, 0.2);
         }
         
         .page-btn.active {
             background: #0366d6;
             color: white;
+            border-color: #0366d6;
+            box-shadow: 0 4px 12px rgba(3, 102, 214, 0.4);
         }
         
         .page-indicator {
-            margin-left: 15px;
+            margin-left: 18px;
             font-size: 14px;
-            color: #586069;
+            font-weight: 500;
+            color: #24292e;
+            background: #f6f8fa;
+            padding: 6px 12px;
+            border-radius: 18px;
+            border: 1px solid #e1e4e8;
         }
 
         .subtitle .uni-name-highlight {
@@ -1876,6 +1889,17 @@
                                 <span data-i18n="tag-morphology">Morphological Analysis</span>
                                 <span data-i18n="tag-spatial-analytics">Spatial Analytics</span>
                             </div>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-04-01">
+                                        <span class="en">Apr 1, 2025</span>
+                                        <span class="zh">2025年4月1日</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1kVJ8z9EVV/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo-3d-coordinate">Live Demo</span></a>
                                 <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
@@ -1907,6 +1931,17 @@
                                 <span data-i18n="tag-map-api">Map API Integration</span>
                                 <span data-i18n="tag-logistics-planning">Logistics Planning</span>
                             </div>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-03-20">
+                                        <span class="en">Mar 20, 2025</span>
+                                        <span class="zh">2025年3月20日</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
                             <div class="project-links">
                                 <a href="https://www.bilibili.com/video/BV1DvRQYGEY3/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
                                 <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
@@ -1916,10 +1951,94 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Langchain RAG Streamlit -->
+                    <div class="project-card" data-categories="ai,desktop,web">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="50">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">50</span>
+                                <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-langchain-rag-title">Langchain RAG Streamlit</h3>
+                            <p data-i18n="proj-langchain-rag-desc">A RAG (Retrieval Augmented Generation) application built with LangChain framework and using local Ollama models, featuring knowledge base creation from various sources and efficient similarity search with FAISS vector database.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-rag">RAG</span>
+                                <span data-i18n="tag-langchain">LangChain</span>
+                                <span data-i18n="tag-ollama">Ollama</span>
+                            </div>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-06-15">
+                                        <span class="en">Jun 15, 2025</span>
+                                        <span class="zh">2025年6月15日</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV18UM8z6EW5/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-langchain-rag-tooltip">
+                                This LangChain-based RAG application uses local Ollama models for generating responses and embeddings without requiring internet connectivity. It offers multiple knowledge base creation options including default text, file uploads, or custom input. The system leverages FAISS vector database for efficient similarity searches and supports document reranking to improve retrieval quality. Users can customize initial retrieval quantity and final TOP K document count, while the friendly Streamlit interface displays complete prompt content in JSON format and supports various text chunking strategies.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Langchain Agent Functioncalling Streamlit -->
+                    <div class="project-card" data-categories="ai,desktop,web">
+                        <div class="project-header">
+                            <!-- 项目图片将通过JavaScript动态加载 -->
+                            <div class="project-views" data-view-count="42">
+                                <i class="far fa-eye"></i>
+                                <span class="views-count">42</span>
+                                <span class="views-text">
+                                    <span class="en">views</span>
+                                    <span class="zh">次阅读</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 data-i18n="proj-langchain-agent-title">Langchain Agent with Function Calling</h3>
+                            <p data-i18n="proj-langchain-agent-desc">An intelligent assistant system integrating multiple tools through OLLAMA models, featuring weather queries, geocoding, and transit route planning with an intuitive Streamlit interface.</p>
+                            <div class="project-tags">
+                                <span data-i18n="tag-agent">Agent</span>
+                                <span data-i18n="tag-function-calling">Function Calling</span>
+                                <span data-i18n="tag-ollama">Ollama</span>
+                            </div>
+                            
+                            <div class="project-meta">
+                                <div class="project-date">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="date-text" data-upload-date="2025-06-28">
+                                        <span class="en">Jun 28, 2025</span>
+                                        <span class="zh">2025年6月28日</span>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="project-links">
+                                <a href="https://www.bilibili.com/video/BV1DKM8zuEsb/" target="_blank" class="project-link"><i class="fas fa-play-circle"></i> <span data-i18n="demo">Live Demo</span></a>
+                                <a href="https://github.com/AlexLIAOPOLY" target="_blank" class="project-link"><i class="fab fa-github"></i> <span data-i18n="source-code">Source Code</span></a>
+                            </div>
+                            <div class="project-tooltip" data-i18n="proj-langchain-agent-tooltip">
+                                This intelligent assistant system leverages local OLLAMA models to provide a comprehensive question-answering experience with integrated tools. It features weather queries, geocoding services, and transit route planning capabilities through an intuitive Streamlit interface. The system supports multiple models like qwen3 and llama3, displays interaction flows through various visualization modes, and includes real-time performance monitoring and customizable system prompts for enhanced user experience.
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 分页控件 -->
-                <div class="pagination-container" data-aos="fade-up" data-aos-delay="400">
+                <div class="pagination-container">
                     <div class="pagination">
                         <div style="display: flex; align-items: center;">
                             <button class="page-btn active" data-page="1">1</button>
@@ -2456,10 +2575,6 @@
             "location": "Location",
             "social-media": "Social Media",
             "send-message": "Send Me a Message",
-            "name": "Name *",
-            "subject": "Subject",
-            "message": "Message *",
-            "send": "Send Message",
             
             // 页脚
             "copyright": "All Rights Reserved.",
@@ -2658,9 +2773,9 @@
             // 3D坐标系统
             "proj-3d-coordinate-title": "3D Coordinate Generation & Management System",
             "proj-3d-coordinate-desc": "A powerful system enabling users to freely create and manage points and geometric solids in 3D space, providing detailed morphological and statistical insights through advanced visualization and analytical capabilities.",
-            "proj-3d-coordinate-tooltip": "This comprehensive 3D spatial management system offers a robust platform for creating, manipulating, and analyzing three-dimensional geometrical objects. Users can freely define points in 3D space and generate complex solids while accessing sophisticated analytical tools that provide detailed morphological properties and statistical insights. The system features advanced visualization capabilities, coordinate transformation functions, and statistical analysis tools, making it invaluable for applications in fields requiring spatial modeling and analysis, such as computer graphics, manufacturing simulation, and geometric modeling.",
-            
-            // 新标签
+                        "proj-3d-coordinate-tooltip": "This comprehensive 3D spatial management system offers a robust platform for creating, manipulating, and analyzing three-dimensional geometrical objects. Users can freely define points in 3D space and generate complex solids while accessing sophisticated analytical tools that provide detailed morphological properties and statistical insights. The system features advanced visualization capabilities, coordinate transformation functions, and statistical analysis tools, making it invaluable for applications in fields requiring spatial modeling and analysis, such as computer graphics, manufacturing simulation, and geometric modeling.",
+              
+              // 新标签
             "tag-3d-visualization": "3D Visualization",
             "tag-morphology": "Morphological Analysis",
             "tag-spatial-analytics": "Spatial Analytics",
@@ -2668,17 +2783,36 @@
             // VRP APP
             "proj-vrp-title": "VRP APP: Vehicle Routing Problem Solver",
             "proj-vrp-desc": "A comprehensive application for systematically solving vehicle routing problems using the Amap API, allowing users to add warehouse locations, vehicle parameters, and customer details while implementing five optimization algorithms including genetic algorithms.",
-            "proj-vrp-tooltip": "This advanced logistics application provides a comprehensive solution for vehicle routing problems (VRP) by seamlessly integrating with the Amap API. The system allows transportation planners to define warehouse locations, vehicle specifications (capacity, speed, cost), and customer parameters (location, demand) by simply clicking on the map to obtain geographical coordinates. The application implements multiple optimization algorithms, including genetic algorithms, tabu search, simulated annealing, ant colony optimization, and particle swarm optimization, to generate efficient delivery routes that minimize costs and delivery times while satisfying all constraints.",
-            
-            // 新标签
+                        "proj-vrp-tooltip": "This advanced logistics application provides a comprehensive solution for vehicle routing problems (VRP) by seamlessly integrating with the Amap API. The system allows transportation planners to define warehouse locations, vehicle specifications (capacity, speed, cost), and customer parameters (location, demand) by simply clicking on the map to obtain geographical coordinates. The application implements multiple optimization algorithms, including genetic algorithms, tabu search, simulated annealing, ant colony optimization, and particle swarm optimization, to generate efficient delivery routes that minimize costs and delivery times while satisfying all constraints.",
+              
+              // 新标签
             "tag-optimization-algorithms": "Optimization Algorithms",
             "tag-map-api": "Map API Integration",
             "tag-logistics-planning": "Logistics Planning",
             "try-now-tokenizer": "Try Now",
             "demo-3d-coordinate": "Live Demo", // Added missing key
+            
+            // Langchain RAG Streamlit项目
+            "proj-langchain-rag-title": "Langchain RAG Streamlit应用",
+            "proj-langchain-rag-desc": "基于LangChain框架的检索增强生成(RAG)应用，使用本地Ollama模型，支持从多种来源构建知识库并通过FAISS向量数据库进行高效相似性搜索。",
+            "proj-langchain-rag-tooltip": "这个基于LangChain的RAG应用使用本地Ollama模型进行响应生成和嵌入，无需互联网连接。它提供多种知识库创建选项，包括默认文本、文件上传或自定义输入。系统利用FAISS向量数据库进行高效相似性搜索，支持文档重排序以提高检索质量。用户可以自定义初始检索数量和最终使用的TOP K文档数量，友好的Streamlit界面以JSON格式显示完整提示内容，并支持多种文本分段策略。",
+            
+            // 新标签
+            "tag-rag": "检索增强生成",
+            "tag-langchain": "LangChain",
+            "tag-ollama": "Ollama模型",
+            
+            // Langchain Agent Function Calling项目
+            "proj-langchain-agent-title": "Langchain函数调用智能助手",
+            "proj-langchain-agent-desc": "基于OLLAMA模型的智能问答系统，集成了天气查询、地址转坐标、公交路线查询等多种实用工具，通过Streamlit提供直观友好的用户界面。",
+            "proj-langchain-agent-tooltip": "这个智能助手系统利用本地OLLAMA模型提供全面的问答体验，集成了多种工具功能。它具有天气查询、地理编码服务和公交路线规划功能，通过直观的Streamlit界面呈现。系统支持qwen3、llama3等多种模型，提供多种交互流程可视化模式，包括实时性能监控和可自定义系统提示，以增强用户体验。",
+            
+            // 新标签
+            "tag-agent": "智能代理",
+            "tag-function-calling": "函数调用"
         },
-                    zh: {
-                // Logo
+        zh: {
+            // Logo
                 "logo": "廖望",
                 // 工作经验研究助理
                 "work-exp": "工作经验",
@@ -3020,6 +3154,25 @@
             "tag-map-api": "地图API集成",
             "tag-logistics-planning": "物流规划",
             "try-now-tokenizer": "立即尝试",
+            
+            // Langchain RAG Streamlit项目
+            "proj-langchain-rag-title": "Langchain RAG Streamlit应用",
+            "proj-langchain-rag-desc": "基于LangChain框架的检索增强生成(RAG)应用，使用本地Ollama模型，支持从多种来源构建知识库并通过FAISS向量数据库进行高效相似性搜索。",
+            "proj-langchain-rag-tooltip": "这个基于LangChain的RAG应用使用本地Ollama模型进行响应生成和嵌入，无需互联网连接。它提供多种知识库创建选项，包括默认文本、文件上传或自定义输入。系统利用FAISS向量数据库进行高效相似性搜索，支持文档重排序以提高检索质量。用户可以自定义初始检索数量和最终使用的TOP K文档数量，友好的Streamlit界面以JSON格式显示完整提示内容，并支持多种文本分段策略。",
+            
+            // 新标签
+            "tag-rag": "检索增强生成",
+            "tag-langchain": "LangChain",
+            "tag-ollama": "Ollama模型",
+            
+            // Langchain Agent Function Calling项目
+            "proj-langchain-agent-title": "Langchain函数调用智能助手",
+            "proj-langchain-agent-desc": "基于OLLAMA模型的智能问答系统，集成了天气查询、地址转坐标、公交路线查询等多种实用工具，通过Streamlit提供直观友好的用户界面。",
+            "proj-langchain-agent-tooltip": "这个智能助手系统利用本地OLLAMA模型提供全面的问答体验，集成了多种工具功能。它具有天气查询、地理编码服务和公交路线规划功能，通过直观的Streamlit界面呈现。系统支持qwen3、llama3等多种模型，提供多种交互流程可视化模式，包括实时性能监控和可自定义系统提示，以增强用户体验。",
+            
+            // 新标签
+            "tag-agent": "智能代理",
+            "tag-function-calling": "函数调用"
         }
     };
 

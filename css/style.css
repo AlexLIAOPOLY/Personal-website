@@ -754,6 +754,374 @@ header .language-switch .divider {
     font-weight: 600;
 }
 
+/* Company Logo styles */
+.company-logo {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 2px solid rgba(3, 102, 214, 0.1);
+    animation: breathe 4s ease-in-out infinite, glow-pulse 6s ease-in-out infinite;
+    overflow: hidden;
+}
+
+.company-logo::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+        transparent, 
+        rgba(3, 102, 214, 0.1), 
+        transparent);
+    transform: rotate(45deg);
+    animation: sweep 8s linear infinite;
+}
+
+.company-logo:hover {
+    transform: scale(1.1) rotateZ(5deg);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgba(3, 102, 214, 0.4);
+    animation-play-state: paused;
+}
+
+.company-logo:hover::after {
+    animation-play-state: paused;
+}
+
+.timeline-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation: subtle-bounce 5s ease-in-out infinite;
+}
+
+.timeline-logo:hover {
+    transform: scale(1.05) rotateZ(-3deg);
+    filter: brightness(1.1) saturate(1.2);
+    animation-play-state: paused;
+}
+
+/* Adjust timeline content padding to accommodate logo */
+.work-experience .timeline-content {
+    padding: 15px 80px 15px 15px;
+}
+
+/* University Logo styles for Education section */
+.university-logo {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 80px;
+    height: 50px;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid rgba(3, 102, 214, 0.2);
+    z-index: 10;
+}
+
+.university-logo::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 12px;
+    background: radial-gradient(circle at center, 
+        rgba(3, 102, 214, 0.15), 
+        rgba(33, 136, 255, 0.1), 
+        transparent 70%);
+    z-index: -1;
+    animation: academic-glow 5s ease-in-out infinite;
+}
+
+.university-logo:hover {
+    transform: scale(1.08) rotateY(10deg);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    border-color: rgba(3, 102, 214, 0.6);
+    background: linear-gradient(135deg, #ffffff, #e3f2fd);
+    animation-play-state: paused;
+}
+
+.edu-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.edu-logo {
+    animation: knowledge-pulse 6s ease-in-out infinite;
+}
+
+.edu-logo:hover {
+    transform: scale(1.08) rotateY(5deg);
+    filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.25)) brightness(1.15) saturate(1.1);
+    animation-play-state: paused;
+}
+
+/* Different styles for different universities */
+.timeline-item-right .university-logo {
+    border-color: rgba(186, 32, 47, 0.2); /* HKU红色 */
+    animation: wisdom-sway 8s ease-in-out infinite, academic-breathe 4s ease-in-out infinite;
+    animation-delay: -2s, 0s;
+}
+
+.timeline-item-right .edu-logo {
+    animation-delay: 1s;
+}
+
+.timeline-item-right .university-logo::before {
+    background: radial-gradient(circle at center, 
+        rgba(186, 32, 47, 0.15), 
+        rgba(220, 50, 70, 0.1), 
+        transparent 70%);
+    animation-delay: -1s;
+}
+
+.timeline-item-right .university-logo:hover {
+    border-color: rgba(186, 32, 47, 0.6);
+    background: linear-gradient(135deg, #ffffff, #ffebee);
+    animation-play-state: paused;
+}
+
+.timeline-item-left .university-logo {
+    border-color: rgba(218, 41, 28, 0.2); /* PolyU红色 */
+    animation: wisdom-sway 8s ease-in-out infinite, academic-breathe 4s ease-in-out infinite;
+    animation-delay: -4s, 0.5s;
+}
+
+.timeline-item-left .edu-logo {
+    animation-delay: 2s;
+}
+
+.timeline-item-left .university-logo::before {
+    background: radial-gradient(circle at center, 
+        rgba(218, 41, 28, 0.15), 
+        rgba(245, 60, 45, 0.1), 
+        transparent 70%);
+    animation-delay: -3s;
+}
+
+.timeline-item-left .university-logo:hover {
+    border-color: rgba(218, 41, 28, 0.6);
+    background: linear-gradient(135deg, #ffffff, #ffebee);
+    animation-play-state: paused;
+}
+
+/* Different animation delays for work experience company logos */
+.work-experience .timeline-item:nth-child(1) .company-logo {
+    animation-delay: 0s, 1s;
+}
+
+.work-experience .timeline-item:nth-child(1) .company-logo::after {
+    animation-delay: 2s;
+}
+
+.work-experience .timeline-item:nth-child(1) .timeline-logo {
+    animation-delay: 0.5s;
+}
+
+.work-experience .timeline-item:nth-child(2) .company-logo {
+    animation-delay: 1s, 2s;
+}
+
+.work-experience .timeline-item:nth-child(2) .company-logo::after {
+    animation-delay: 4s;
+}
+
+.work-experience .timeline-item:nth-child(2) .timeline-logo {
+    animation-delay: 1.5s;
+}
+
+/* Animation keyframes for education logos */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Default animation for university logos (fallback) */
+.university-logo {
+    animation: wisdom-sway 8s ease-in-out infinite, academic-breathe 4s ease-in-out infinite;
+    animation-fill-mode: both;
+}
+
+@keyframes pulse-subtle {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* New animation keyframes for work experience logos */
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.03);
+    }
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        box-shadow: 0 6px 20px rgba(3, 102, 214, 0.2);
+    }
+}
+
+@keyframes sweep {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+@keyframes subtle-bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-2px);
+    }
+    60% {
+        transform: translateY(-1px);
+    }
+}
+
+/* New academic-themed animations for education logos */
+@keyframes wisdom-sway {
+    0%, 100% {
+        transform: rotate(0deg) translateY(0px);
+    }
+    25% {
+        transform: rotate(1deg) translateY(-2px);
+    }
+    50% {
+        transform: rotate(0deg) translateY(-3px);
+    }
+    75% {
+        transform: rotate(-1deg) translateY(-2px);
+    }
+}
+
+@keyframes academic-breathe {
+    0%, 100% {
+        border-width: 3px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    50% {
+        border-width: 4px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    }
+}
+
+@keyframes academic-glow {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes knowledge-pulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: brightness(1) contrast(1);
+    }
+    33% {
+        transform: scale(1.02);
+        filter: brightness(1.05) contrast(1.05);
+    }
+    66% {
+        transform: scale(0.98);
+        filter: brightness(0.98) contrast(0.98);
+    }
+}
+
+/* Adjust education timeline content padding to accommodate logo */
+.education-section .timeline-content {
+    padding: 15px 100px 15px 15px;
+    position: relative;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .company-logo {
+        width: 45px;
+        height: 45px;
+        top: 10px;
+        right: 10px;
+        padding: 5px;
+    }
+    
+    .work-experience .timeline-content {
+        padding: 15px 60px 15px 15px;
+    }
+    
+    .university-logo {
+        width: 60px;
+        height: 35px;
+        top: 10px;
+        right: 10px;
+        padding: 6px;
+    }
+    
+    .education-section .timeline-content {
+        padding: 15px 75px 15px 15px;
+    }
+}
+
 /* Parallax Elements */
 .parallax-bg {
     background-attachment: fixed;
@@ -2040,4 +2408,32 @@ header .language-switch .divider {
     .projects-filter-mobile {
         display: none;
     }
+}
+
+/* 多语言控制 */
+html[lang="en"] .zh {
+    display: none !important;
+}
+
+html[lang="zh"] .en {
+    display: none !important;
+}
+
+html[lang="en"] .en {
+    display: inline !important;
+}
+
+html[lang="zh"] .zh {
+    display: inline !important;
+}
+
+/* 确保默认语言为英文时的显示 */
+html:not([lang]) .zh,
+html[lang=""] .zh {
+    display: none !important;
+}
+
+html:not([lang]) .en,
+html[lang=""] .en {
+    display: inline !important;
 } 

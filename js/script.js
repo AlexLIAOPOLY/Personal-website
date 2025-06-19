@@ -309,6 +309,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                 });
+
+                // 初始加载时，基于所有项目更新分页
+                updatePagination(projectCards.length, 'all');
             });
         });
         
@@ -669,85 +672,59 @@ document.addEventListener('DOMContentLoaded', function() {
     const initProjectFilters = () => {
         const filterBtns = document.querySelectorAll('.filter-btn');
         const projectCards = document.querySelectorAll('.project-card');
-        const cardsPerPage = 6; // 每页最多显示6个项目
-        
-        if (filterBtns.length > 0 && projectCards.length > 0) {
-            console.log('Initializing project filters');
-            
-            // 初始化 - 只显示前6个项目卡片
-            projectCards.forEach((card, index) => {
-                if (index < cardsPerPage) {
+        const cardsPerPage = 6;
+
+        if (filterBtns.length === 0 || projectCards.length === 0) {
+            return;
+        }
+
+        // 初始加载：显示前6个项目
+        projectCards.forEach((card, index) => {
+            card.style.display = index < cardsPerPage ? 'flex' : 'none';
+            if (index < cardsPerPage) {
+                setTimeout(() => card.classList.add('animate'), 50);
+            }
+        });
+
+        // 关键修复：在页面首次加载时，使用所有项目的总数来初始化分页控件
+        updatePagination(projectCards.length, 'all');
+
+        // 为所有过滤按钮添加点击事件
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filterValue = this.getAttribute('data-filter');
+                const matchingCards = [];
+
+                projectCards.forEach(card => {
+                    const categories = card.getAttribute('data-categories').split(',');
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        matchingCards.push(card);
+                    }
+                    card.style.display = 'none'; // 先隐藏所有卡片
+                });
+
+                // 显示匹配项的第一页
+                matchingCards.slice(0, cardsPerPage).forEach((card, index) => {
                     card.style.display = 'flex';
-                    setTimeout(() => {
-                        card.classList.add('animate');
-                    }, 300);
-                } else {
-                    card.style.display = 'none';
+                    setTimeout(() => card.classList.add('animate'), 50 * (index + 1));
+                });
+
+                // 更新分页以匹配新的筛选结果
+                updatePagination(matchingCards.length, filterValue);
+
+                // 重置分页按钮到第一页
+                const pageButtons = document.querySelectorAll('.page-btn');
+                pageButtons.forEach(b => b.classList.remove('active'));
+                if (pageButtons.length > 0) {
+                    pageButtons[0].classList.add('active');
                 }
             });
-            
-            // 添加过滤按钮点击事件
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // 更新活跃按钮状态
-                    filterBtns.forEach(filterBtn => filterBtn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // 获取过滤类别
-                    const filterValue = this.getAttribute('data-filter');
-                    console.log('Filtering projects by:', filterValue);
-                    
-                    // 收集匹配的项目卡片
-                    const matchingCards = [];
-                    
-                    // 先隐藏所有卡片并移除动画
-                    projectCards.forEach(card => {
-                        card.classList.remove('animate');
-                        card.style.display = 'none';
-                    });
-                    
-                    // 找出所有匹配的卡片
-                    projectCards.forEach(card => {
-                        // 获取卡片类别
-                        const categories = card.getAttribute('data-categories');
-                        
-                        if (!categories) {
-                            console.warn('Project card missing data-categories attribute');
-                            return;
-                        }
-                        
-                        const categoriesList = categories.split(',');
-                        
-                        // 检查是否匹配过滤条件
-                        if (filterValue === 'all' || categoriesList.includes(filterValue)) {
-                            matchingCards.push(card);
-                        }
-                    });
-                    
-                    // 只显示匹配卡片中的前6个
-                    matchingCards.slice(0, cardsPerPage).forEach(card => {
-                        setTimeout(() => {
-                            card.style.display = 'flex';
-                            setTimeout(() => {
-                                card.classList.add('animate');
-                            }, 50);
-                        }, 50);
-                    });
-                    
-                    // 更新分页状态 - 根据匹配卡片的数量决定是否显示分页
-                    updatePagination(matchingCards.length, filterValue);
-                    
-                    // 重置为第一页
-                    const pageButtons = document.querySelectorAll('.page-btn');
-                    if (pageButtons.length > 0) {
-                        pageButtons.forEach(b => b.classList.remove('active'));
-                        pageButtons[0].classList.add('active');
-                    }
-                });
-            });
-        }
+        });
     };
-    
+
     // 初始化项目卡片功能，并处理基于LocalStorage的浏览量增加
     const initProjectCards = () => {
         const projectCards = document.querySelectorAll('.project-card');
@@ -847,10 +824,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (pageButtons.length === 0 || projectCards.length === 0) return;
         
-        // 设置初始状态 - 只显示第一页
-        showPage(1);
-        
-        // 添加页面按钮点击事件
+        // 为所有分页按钮添加点击事件
         pageButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 const page = parseInt(this.getAttribute('data-page'));
@@ -868,10 +842,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 更新页面指示器文本
                 if (pageIndicator) {
                     const lang = localStorage.getItem('preferredLanguage') || 'en';
+                    // 计算当前筛选条件下的匹配卡片数量
+                    const allProjectCards = document.querySelectorAll('.project-card');
+                    let matchingCardsCount = 0;
+                    allProjectCards.forEach(card => {
+                        const categories = card.getAttribute('data-categories');
+                        if (categories) {
+                            const categoriesList = categories.split(',');
+                            if (filterValue === 'all' || categoriesList.includes(filterValue)) {
+                                matchingCardsCount++;
+                            }
+                        }
+                    });
+                    const totalPages = Math.ceil(matchingCardsCount / cardsPerPage);
                     if (lang === 'en') {
-                        pageIndicator.textContent = `Page ${page} of 2`;
+                        pageIndicator.textContent = `Page ${page} of ${Math.max(1, totalPages)}`;
                     } else {
-                        pageIndicator.textContent = `第${page}页，共2页`;
+                        pageIndicator.textContent = `第${page}页，共${Math.max(1, totalPages)}页`;
                     }
                 }
                 
@@ -938,18 +925,18 @@ document.addEventListener('DOMContentLoaded', function() {
         // 始终显示分页控件，即使只有一页
             paginationContainer.style.display = 'flex';
             
-            // 确保只显示需要的页码按钮
-            pageButtons.forEach((btn, index) => {
-                if (index < totalPages) {
-                    btn.style.display = 'flex';
-                } else {
-                // 即使没有内容也显示按钮，但禁用它
+                    // 确保只显示需要的页码按钮
+        pageButtons.forEach((btn, index) => {
+            if (index < totalPages) {
                 btn.style.display = 'flex';
-                btn.disabled = index >= totalPages;
-                btn.style.opacity = index >= totalPages ? '0.5' : '1';
-                btn.style.cursor = index >= totalPages ? 'not-allowed' : 'pointer';
-                }
-            });
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            } else {
+                // 隐藏不需要的页面按钮
+                btn.style.display = 'none';
+            }
+        });
             
             // 更新页面指示器文本
             const pageIndicator = document.querySelector('.page-indicator span');
@@ -1095,6 +1082,7 @@ function getFolderNameForProject(projectTitle) {
         'proj-3d-coordinate-title': '3D-Coordinate-Generation',
         'proj-vrp-title': 'VRP-APP-Vehicle-Routing',
         'proj-langchain-rag-title': 'Langchain_RAG_Streamlit',
+        'proj-mcp-title': 'MCP_definition_stdio_demo',
         'proj-langchain-agent-title': 'Langchain_Agent_Functioncalling_Streamlit'
     };
     
@@ -1122,6 +1110,7 @@ function getProjectName(projectTitle) {
         'proj-3d-coordinate-title': '3D Coordinate Generation',
         'proj-vrp-title': 'VRP APP Vehicle Routing',
         'proj-langchain-rag-title': 'Langchain RAG Streamlit',
+        'proj-mcp-title': 'MCP Geospatial API Tools',
         'proj-langchain-agent-title': 'Langchain Agent with Function Calling'
     };
     
@@ -1203,4 +1192,268 @@ function initProjectSlider(card) {
     sliderContainer.addEventListener('mouseleave', () => {
         autoSlideInterval = setInterval(nextImage, 5000);
     });
-} 
+}
+
+// 多语言翻译对象
+window.translations = {
+    en: {
+        // 导航
+        'logo': 'Liao Wang',
+        'home': 'Home',
+        'about': 'About Me',
+        'education': 'Education',
+        'experience': 'Experience',
+        'projects': 'Projects',
+        'certifications': 'Certifications',
+        'skills': 'Skills',
+        'awards': 'Awards',
+        'contact': 'Contact',
+        
+        // Hero部分
+        'welcome': 'Welcome to My Portfolio',
+        'aspiring': 'Aspiring AI & Technology Professional',
+        'hero-title-ai-researcher': 'AI Researcher',
+        'hero-desc-ai-researcher': 'Exploring the infinite possibilities of AI',
+        'hero-title-litho-explorer': 'Lithography Explorer',
+        'hero-desc-litho-explorer': 'Dedicated to advancing cutting-edge lithography',
+        'hero-subtitle-education': 'Aspiring AI & Technology Professional | Master of Science Student',
+        'contact-me': 'Contact Me',
+        'download-cv': 'Download CV',
+        
+        // About部分
+        'about-me': 'About Me',
+        'ai-tech': 'AI Technology',
+        'ai-tech-desc': 'Passionate about artificial intelligence and its applications in various domains.',
+        'academic': 'Academic Excellence',
+        'academic-desc': 'SGPA 3.92/4.00, Dean\'s List at The Hong Kong Polytechnic University.',
+        'industry': 'Industry Experience',
+        'industry-desc': 'Experience in AI chip design, new media operations, bidding management, and telecom industry.',
+        'about-p1': 'I am a dedicated student currently pursuing a Master of Science in Microelectronics Science and Technology at the University of Hong Kong. With a strong foundation in Logistics Engineering from my undergraduate studies at The Hong Kong Polytechnic University, I have developed a comprehensive understanding of both technical and operational aspects of technology.',
+        'about-p2': 'My academic journey has been marked by excellence, maintaining a SGPA of 3.92/4.00 and earning a place on the Dean\'s List. This achievement reflects my commitment to academic rigor and my passion for continuous learning in the rapidly evolving field of technology.',
+        'about-p3': 'Through various internships and practical experiences, I have gained valuable insights into AI chip design, lithography simulation, and technology management. My goal is to contribute to the advancement of AI and microelectronics technologies while bridging the gap between theoretical knowledge and practical applications.',
+        
+        // 项目部分
+        'all': 'All',
+        'litho': 'Lithography & Microelectronics',
+        'ai': 'AI',
+        'web': 'Web Development',
+        'logistics-filter': 'Logistics',
+        'desktop': 'Desktop Applications',
+        'mobile': 'Mobile Applications',
+        'source-code': 'Source Code',
+        'try-now-tokenizer': 'Try Now',
+        'demo': 'Live Demo',
+        'demo-1': 'OPC Simulation',
+        'demo-2': 'Proximity Effect',
+        'demo-user': 'User Interface',
+        'demo-admin': 'Admin Panel',
+        
+        // 项目标题和描述
+        'proj-tokenizer-title': 'AI Tokenizer Visualizer',
+        'proj-tokenizer-desc': 'An open-source web tool that visualizes token conversion and semantic embeddings based on OpenAI\'s tokenizer, helping users understand NLP concepts through interactive 3D visualization.',
+        'proj-tokenizer-tooltip': 'This open-source visualization tool showcases how large language models convert text into tokens. Based on OpenAI\'s tokenizer, it transforms English text into tokens and special prompts, then presents them as 3D vectors to demonstrate semantic relationships. It\'s an excellent educational resource for understanding tokenization and semantic embedding in AI language processing.',
+        
+        'proj-litho-title': 'Lithography Simulation Suite',
+        'proj-litho-desc': 'A comprehensive suite of desktop applications leveraging deep learning algorithms to simulate proximity effects in lithography, optimize masks, and enhance photoresist curve modeling with 2D/3D visualization capabilities.',
+        'proj-litho-tooltip': 'This sophisticated desktop application suite simulates crucial lithography manufacturing processes with deep learning algorithms. It predicts proximity effects in lithography, generates optimized initial masks, and enhances photoresist curve modeling. The suite features advanced 2D/3D visualization tools, parameter management, and detailed operation logging, providing comprehensive control and analysis capabilities for semiconductor fabrication.',
+        
+        'proj-support-title': 'Lithography Support Platform',
+        'proj-support-desc': 'A real-time customer support web platform for lithography applications featuring separate user and admin interfaces, live chat functionality, and an intelligent assistant powered by keyword-matching algorithms.',
+        'proj-support-tooltip': 'This integrated web and database system creates a networked customer support platform specifically for lithography applications. It features distinct login interfaces for users and administrators, a real-time communication system for efficient customer service, and backend management tools. The platform also incorporates an intelligent assistant with keyword-matching algorithms that automatically generates responses to common queries, significantly improving support efficiency.',
+        
+        'proj-ios-title': 'iOS Social Messaging Application',
+        'proj-ios-desc': 'A fully-functional iOS application replicating core social media features including instant messaging, group chats, social feeds, QR code scanning, and user profile management.',
+        'proj-ios-tooltip': 'This comprehensive iOS application successfully replicates the core functionality of popular messaging platforms like WeChat. The app features real-time one-on-one and group messaging, social media feed capabilities, QR code scanning for contact additions, and detailed user profile management. Built with Swift and following iOS design principles, it demonstrates advanced mobile development skills and user experience design.',
+        
+        // 项目标签
+        'tag-nlp': 'NLP',
+        'tag-visualization': 'Visualization',
+        'tag-web-app': 'Web App',
+        'tag-deep-learning': 'Deep Learning',
+        'tag-simulation': 'Simulation',
+        'tag-gui': 'GUI',
+        'tag-customer-support': 'Customer Support',
+        'tag-real-time': 'Real-time',
+        'tag-database': 'Database',
+        'tag-ios': 'iOS',
+        'tag-swift': 'Swift',
+        'tag-social': 'Social Media',
+        
+        // 其他
+        'work-experience': 'Work Experience',
+        'work-exp': 'Work Experience',
+        'internship-exp': 'Internship Experience',
+        'practical-exp': 'Practical Experience',
+        'responsibilities': 'Responsibilities',
+        'achievements': 'Achievements',
+        'team-label': 'Practice Team',
+        'org-label': 'Organizing Unit',
+        'content-label': 'Practice Content',
+        
+        // 联系表单
+        'send-message': 'Send Me a Message',
+        'name': 'Name',
+        'subject': 'Subject',
+        'message': 'Message',
+        'send': 'Send Message'
+    },
+    zh: {
+        // 导航
+        'logo': '廖望',
+        'home': '首页',
+        'about': '关于我',
+        'education': '教育背景',
+        'experience': '工作经验',
+        'projects': '项目展示',
+        'certifications': '资格认证',
+        'skills': '技能专长',
+        'awards': '荣誉奖项',
+        'contact': '联系方式',
+        
+        // Hero部分
+        'welcome': '欢迎来到我的作品集',
+        'aspiring': '未来的人工智能与技术专业人才',
+        'hero-title-ai-researcher': 'AI研究员',
+        'hero-desc-ai-researcher': '探索人工智能的无限可能',
+        'hero-title-litho-explorer': '光刻技术探索者',
+        'hero-desc-litho-explorer': '致力于推进前沿光刻技术',
+        'hero-subtitle-education': '未来的人工智能与技术专业人才 | 理学硕士研究生',
+        'contact-me': '联系我',
+        'download-cv': '下载简历',
+        
+        // About部分
+        'about-me': '关于我',
+        'ai-tech': '人工智能技术',
+        'ai-tech-desc': '对人工智能及其在各个领域的应用充满热情。',
+        'academic': '学术卓越',
+        'academic-desc': 'SGPA 3.92/4.00，香港理工大学院长嘉许名单。',
+        'industry': '行业经验',
+        'industry-desc': '在AI芯片设计、新媒体运营、招投标管理和电信行业拥有丰富经验。',
+        'about-p1': '我是一名专注的学生，目前在香港大学攻读微电子科学与技术理学硕士学位。在香港理工大学物流工程本科学习的坚实基础上，我对技术的技术和运营方面都有了全面的理解。',
+        'about-p2': '我的学术历程以卓越为标志，保持着3.92/4.00的SGPA，并获得院长嘉许名单的认可。这一成就反映了我对学术严谨性的承诺以及我对在快速发展的技术领域持续学习的热情。',
+        'about-p3': '通过各种实习和实践经验，我在AI芯片设计、光刻仿真和技术管理方面获得了宝贵的见解。我的目标是为AI和微电子技术的进步做出贡献，同时在理论知识和实际应用之间架起桥梁。',
+        
+        // 项目部分
+        'all': '全部',
+        'litho': '光刻与微电子',
+        'ai': '人工智能',
+        'web': '网页开发',
+        'logistics-filter': '物流',
+        'desktop': '桌面应用',
+        'mobile': '移动应用',
+        'source-code': '源代码',
+        'try-now-tokenizer': '立即体验',
+        'demo': '在线演示',
+        'demo-1': 'OPC仿真',
+        'demo-2': '邻近效应',
+        'demo-user': '用户界面',
+        'demo-admin': '管理面板',
+        
+        // 项目标题和描述
+        'proj-tokenizer-title': 'AI分词可视化工具',
+        'proj-tokenizer-desc': '基于OpenAI分词器的开源网页工具，通过交互式3D可视化帮助用户理解NLP概念，展示文本转换为标记和语义嵌入的过程。',
+        'proj-tokenizer-tooltip': '这个开源可视化工具展示了大型语言模型如何将文本转换为标记。基于OpenAI的分词器，它将英文文本转换为标记和特殊提示符，然后以3D向量的形式呈现，展示语义关系。这是理解AI语言处理中分词和语义嵌入的优秀教育资源。',
+        
+        'proj-litho-title': '光刻仿真套件',
+        'proj-litho-desc': '利用深度学习算法的桌面应用程序套件，用于仿真光刻中的邻近效应、优化掩模，并通过2D/3D可视化功能增强光阻曲线建模。',
+        'proj-litho-tooltip': '这个复杂的桌面应用程序套件使用深度学习算法仿真关键的光刻制造过程。它预测光刻中的邻近效应，生成优化的初始掩模，并增强光阻曲线建模。该套件具有先进的2D/3D可视化工具、参数管理和详细的操作日志记录，为半导体制造提供全面的控制和分析能力。',
+        
+        'proj-support-title': '光刻支持平台',
+        'proj-support-desc': '面向光刻应用的实时客户支持网页平台，具有独立的用户和管理员界面、实时聊天功能，以及基于关键词匹配算法的智能助手。',
+        'proj-support-tooltip': '这个集成的网页和数据库系统专为光刻应用创建了网络化的客户支持平台。它具有用户和管理员的独立登录界面、高效客户服务的实时通信系统，以及后台管理工具。该平台还集成了具有关键词匹配算法的智能助手，可以自动生成对常见查询的响应，显著提高支持效率。',
+        
+        'proj-ios-title': 'iOS社交消息应用',
+        'proj-ios-desc': '功能齐全的iOS应用程序，复制核心社交媒体功能，包括即时消息、群聊、社交动态、二维码扫描和用户资料管理。',
+        'proj-ios-tooltip': '这个综合性的iOS应用程序成功复制了微信等流行消息平台的核心功能。该应用具有实时一对一和群组消息传递、社交媒体动态功能、用于添加联系人的二维码扫描，以及详细的用户资料管理。使用Swift构建并遵循iOS设计原则，展示了先进的移动开发技能和用户体验设计。',
+        
+        // 项目标签
+        'tag-nlp': '自然语言处理',
+        'tag-visualization': '可视化',
+        'tag-web-app': '网页应用',
+        'tag-deep-learning': '深度学习',
+        'tag-simulation': '仿真',
+        'tag-gui': '图形界面',
+        'tag-customer-support': '客户支持',
+        'tag-real-time': '实时',
+        'tag-database': '数据库',
+        'tag-ios': 'iOS',
+        'tag-swift': 'Swift',
+        'tag-social': '社交媒体',
+        
+        // 其他
+        'work-experience': '工作经验',
+        'work-exp': '工作经验',
+        'internship-exp': '实习经验',
+        'practical-exp': '实践经验',
+        'responsibilities': '职责',
+        'achievements': '成就',
+        'team-label': '实践团队',
+        'org-label': '组织单位',
+        'content-label': '实践内容',
+        
+        // 联系表单
+        'send-message': '给我留言',
+        'name': '姓名',
+        'subject': '主题',
+        'message': '留言',
+        'send': '发送留言'
+    }
+};
+
+// 更新页面内容的函数
+function updateContent(lang) {
+    console.log('Updating content for language:', lang);
+    
+    // 更新所有具有 data-i18n 属性的元素
+    const elementsWithI18n = document.querySelectorAll('[data-i18n]');
+    elementsWithI18n.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (window.translations[lang] && window.translations[lang][key]) {
+            element.textContent = window.translations[lang][key];
+        }
+    });
+    
+    // 更新分页指示器
+    updatePaginationLanguage(lang);
+    
+    // 更新语言特定的显示/隐藏元素
+    updateLanguageSpecificElements(lang);
+}
+
+// 更新分页指示器语言
+function updatePaginationLanguage(lang) {
+    const pageIndicator = document.querySelector('.page-indicator span');
+    if (pageIndicator) {
+        const currentText = pageIndicator.textContent;
+        // 提取页码信息
+        const pageMatch = currentText.match(/\d+/g);
+        if (pageMatch && pageMatch.length >= 2) {
+            const currentPage = pageMatch[0];
+            const totalPages = pageMatch[1];
+            
+            if (lang === 'en') {
+                pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
+            } else {
+                pageIndicator.textContent = `第${currentPage}页，共${totalPages}页`;
+            }
+        }
+    }
+}
+
+// 更新语言特定的显示/隐藏元素
+function updateLanguageSpecificElements(lang) {
+    // 通过设置HTML lang属性来控制语言显示，CSS会自动处理
+    // 移除之前的内联样式设置，让CSS规则接管
+    const enElements = document.querySelectorAll('.en');
+    const zhElements = document.querySelectorAll('.zh');
+    
+    // 清除任何内联样式，让CSS规则生效
+    enElements.forEach(el => el.style.display = '');
+    zhElements.forEach(el => el.style.display = '');
+}
+
+// 页面加载完成后立即应用语言设置
+document.addEventListener('DOMContentLoaded', function() {
+    const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+    updateContent(currentLang);
+}); 
